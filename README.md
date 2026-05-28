@@ -15,6 +15,8 @@ A [Model Context Protocol (MCP)](https://modelcontextprotocol.io/) server for th
 
 Manage your applications, databases, static sites, deployments, pipelines, and more -- all from your AI assistant.
 
+> **This fork ([bgvo/sevalla-mcp](https://github.com/bgvo/sevalla-mcp))** ships **v1.0.1** with Sevalla API v3-aligned create tools (`cluster_id`, `resource_type_id`, `repo_url`, `source`, etc.) and a working `sevalla.validate` endpoint. Pin it in MCP with `github:bgvo/sevalla-mcp#v1.0.1`.
+
 ## Quick Start
 
 ### Prerequisites
