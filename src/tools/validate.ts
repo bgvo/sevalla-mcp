@@ -34,7 +34,7 @@ export function registerValidateTool(server: McpServer): void {
 
       const result = await clientResult.client.request<unknown>({
         path: "/api-keys/validate",
-        method: "POST",
+        method: "GET",
       });
 
       if (!result.success) return formatError(result.error);

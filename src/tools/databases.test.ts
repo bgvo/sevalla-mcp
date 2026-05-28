@@ -154,6 +154,11 @@ describe("Database Tools", () => {
       const result = await ctx.callTool("sevalla.databases.create", {
         display_name: "Test DB",
         type: "postgresql",
+        version: "17",
+        cluster_id: "fb5e5168-4281-4bec-94c5-0d1584e9e657",
+        resource_type_id: "rt-uuid-1",
+        db_name: "test_db",
+        db_password: "secret123",
       });
       expect(result).toHaveProperty("isError", true);
     });
@@ -164,41 +169,41 @@ describe("Database Tools", () => {
       const result = await ctx.callTool("sevalla.databases.create", {
         display_name: "Test DB",
         type: "postgresql",
+        version: "17",
+        cluster_id: "fb5e5168-4281-4bec-94c5-0d1584e9e657",
+        resource_type_id: "rt-uuid-1",
+        db_name: "test_db",
+        db_password: "secret123",
       });
       expect(result).toHaveProperty("isError", true);
     });
 
-    it("should return success with required fields", async () => {
+    it("should return validation error without cluster_id", async () => {
       mockClientSuccess(mock, ctx);
-      mockRequestSuccess(ctx, { id: "new-db-uuid" });
       const result = await ctx.callTool("sevalla.databases.create", {
         display_name: "Test DB",
         type: "postgresql",
+        version: "17",
+        resource_type_id: "rt-uuid-1",
+        db_name: "test_db",
+        db_password: "secret123",
       });
-      expect(result).not.toHaveProperty("isError");
-      expect(ctx.mockClient.request).toHaveBeenCalledWith(
-        expect.objectContaining({
-          path: "/databases",
-          method: "POST",
-          body: expect.objectContaining({
-            company: "default-company-id",
-            display_name: "Test DB",
-            type: "postgresql",
-          }),
-        })
-      );
+      expect(result).toHaveProperty("isError", true);
+      expect(ctx.mockClient.request).not.toHaveBeenCalled();
     });
 
-    it("should pass optional fields in body", async () => {
+    it("should return success with required v3 fields", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestSuccess(ctx, { id: "new-db-uuid" });
+      const clusterId = "fb5e5168-4281-4bec-94c5-0d1584e9e657";
       const result = await ctx.callTool("sevalla.databases.create", {
-        company: "custom-company-id",
         display_name: "Test DB",
-        type: "mariadb",
-        version: "10.6",
-        location: "us-east-1",
-        resource_type: "db-small",
+        type: "postgresql",
+        version: "17",
+        cluster_id: clusterId,
+        resource_type_id: "rt-uuid-1",
+        db_name: "test_db",
+        db_password: "secret123",
       });
       expect(result).not.toHaveProperty("isError");
       expect(ctx.mockClient.request).toHaveBeenCalledWith(
@@ -206,13 +211,40 @@ describe("Database Tools", () => {
           path: "/databases",
           method: "POST",
           body: {
-            company: "custom-company-id",
             display_name: "Test DB",
-            type: "mariadb",
-            version: "10.6",
-            location: "us-east-1",
-            resource_type: "db-small",
+            type: "postgresql",
+            version: "17",
+            cluster_id: clusterId,
+            resource_type_id: "rt-uuid-1",
+            db_name: "test_db",
+            db_password: "secret123",
           },
+        })
+      );
+    });
+
+    it("should map legacy location and resource_type aliases", async () => {
+      mockClientSuccess(mock, ctx);
+      mockRequestSuccess(ctx, { id: "new-db-uuid" });
+      const clusterId = "fb5e5168-4281-4bec-94c5-0d1584e9e657";
+      const result = await ctx.callTool("sevalla.databases.create", {
+        display_name: "Test DB",
+        type: "mariadb",
+        version: "10.6",
+        location: clusterId,
+        resource_type: "rt-uuid-2",
+        db_name: "test_db",
+        db_password: "secret123",
+      });
+      expect(result).not.toHaveProperty("isError");
+      expect(ctx.mockClient.request).toHaveBeenCalledWith(
+        expect.objectContaining({
+          path: "/databases",
+          method: "POST",
+          body: expect.objectContaining({
+            cluster_id: clusterId,
+            resource_type_id: "rt-uuid-2",
+          }),
         })
       );
     });
@@ -248,7 +280,7 @@ describe("Database Tools", () => {
       const result = await ctx.callTool("sevalla.databases.update", {
         id: "db-uuid-1",
         display_name: "Updated DB",
-        resource_type: "db-large",
+        resource_type_id: "rt-uuid-large",
       });
       expect(result).not.toHaveProperty("isError");
       expect(ctx.mockClient.request).toHaveBeenCalledWith(
@@ -257,7 +289,7 @@ describe("Database Tools", () => {
           method: "PATCH",
           body: {
             display_name: "Updated DB",
-            resource_type: "db-large",
+            resource_type_id: "rt-uuid-large",
           },
         })
       );

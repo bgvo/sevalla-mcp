@@ -12,9 +12,24 @@ import {
   formatAuthError,
   formatError,
   formatSuccess,
+  formatValidationError,
   buildParams,
+  resolveClusterId,
   sevallaOutputSchema,
 } from "./utils.js";
+
+const clusterIdSchema = z
+  .uuid()
+  .optional()
+  .describe(
+    "Cluster UUID (data center). Use sevalla.resources.clusters to list options."
+  );
+
+const applicationSourceSchema = z
+  .enum(["privateGit", "publicGit", "dockerImage"])
+  .describe(
+    "Source type: privateGit (OAuth-connected repo), publicGit (public repo URL), dockerImage"
+  );
 
 export function registerApplicationTools(server: McpServer): void {
   // sevalla.applications.list
@@ -104,23 +119,46 @@ export function registerApplicationTools(server: McpServer): void {
     "sevalla.applications.create",
     {
       title: "Create Application",
-      description: "Create a new application.",
+      description:
+        "Create a new application from Git or Docker. Requires cluster_id from sevalla.resources.clusters.",
       inputSchema: z.object({
-        company: z
-          .uuid()
-          .optional()
-          .describe("Company UUID (defaults to SEVALLA_COMPANY_ID env var)"),
         display_name: z.string().describe("Display name for the application"),
-        repository: z.string().describe("Git repository URL"),
-        branch: z.string().describe("Git branch to deploy"),
-        build_type: z
-          .enum(["nixpacks", "buildpacks", "dockerfile"])
+        cluster_id: clusterIdSchema,
+        source: applicationSourceSchema,
+        repo_url: z
+          .string()
           .optional()
-          .describe("Build type"),
+          .describe("Git repository URL (required for privateGit/publicGit)"),
+        default_branch: z
+          .string()
+          .optional()
+          .describe("Git branch for deployments"),
+        git_type: z
+          .enum(["github", "bitbucket", "gitlab"])
+          .optional()
+          .describe("Git provider (required for some privateGit repos)"),
+        docker_image: z
+          .string()
+          .optional()
+          .describe("Docker image reference (required for dockerImage)"),
+        docker_registry_credential_id: z
+          .string()
+          .optional()
+          .describe("Docker registry credential UUID"),
+        project_id: z.uuid().optional().describe("Project UUID to assign"),
+        // Legacy aliases
+        repository: z
+          .string()
+          .optional()
+          .describe("Deprecated: use repo_url instead"),
+        branch: z
+          .string()
+          .optional()
+          .describe("Deprecated: use default_branch instead"),
         location: z
           .string()
           .optional()
-          .describe("Data center location identifier"),
+          .describe("Deprecated: use cluster_id (cluster UUID) instead"),
       }),
       outputSchema: sevallaOutputSchema,
       annotations: { openWorldHint: true },
@@ -129,19 +167,42 @@ export function registerApplicationTools(server: McpServer): void {
       const clientResult = getSevallaClient(extra);
       if (!clientResult.success) return formatAuthError(clientResult.error);
 
-      const companyId = args.company ?? getCompanyId();
-      if (!companyId) {
-        return formatAuthError(
-          "No company ID provided. Pass 'company' or set SEVALLA_COMPANY_ID."
+      const clusterId = resolveClusterId(args.cluster_id, args.location);
+      const repoUrl = args.repo_url ?? args.repository;
+      const defaultBranch = args.default_branch ?? args.branch;
+
+      if (!clusterId) {
+        return formatValidationError(
+          args.location
+            ? `location "${args.location}" is not a cluster UUID. Call sevalla.resources.clusters and pass cluster_id.`
+            : "cluster_id is required. Call sevalla.resources.clusters to list cluster UUIDs."
         );
       }
+
+      if (
+        (args.source === "privateGit" || args.source === "publicGit") &&
+        !repoUrl
+      ) {
+        return formatValidationError(
+          "repo_url is required when source is privateGit or publicGit."
+        );
+      }
+      if (args.source === "dockerImage" && !args.docker_image) {
+        return formatValidationError(
+          "docker_image is required when source is dockerImage."
+        );
+      }
+
       const body = buildParams({
-        company: companyId,
         display_name: args.display_name,
-        repository: args.repository,
-        branch: args.branch,
-        build_type: args.build_type,
-        location: args.location,
+        cluster_id: clusterId,
+        source: args.source,
+        repo_url: repoUrl,
+        default_branch: defaultBranch,
+        git_type: args.git_type,
+        docker_image: args.docker_image,
+        docker_registry_credential_id: args.docker_registry_credential_id,
+        project_id: args.project_id,
       });
 
       const result = await clientResult.client.request<unknown>({

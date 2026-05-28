@@ -49,7 +49,7 @@ describe("Validate Tool", () => {
       expect(ctx.mockClient.request).toHaveBeenCalledWith(
         expect.objectContaining({
           path: "/api-keys/validate",
-          method: "POST",
+          method: "GET",
         })
       );
     });

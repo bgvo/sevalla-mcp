@@ -33,6 +33,26 @@ export interface ToolSuccessResponse {
 
 export const sevallaOutputSchema = z.looseObject({});
 
+const UUID_RE =
+  /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$/;
+
+export function isUuid(value: string): boolean {
+  return UUID_RE.test(value);
+}
+
+/**
+ * Resolve cluster_id from the current field or the legacy `location` alias.
+ * The v3 API expects a cluster UUID, not a region slug.
+ */
+export function resolveClusterId(
+  clusterId: string | undefined,
+  legacyLocation: string | undefined
+): string | undefined {
+  if (clusterId) return clusterId;
+  if (legacyLocation && isUuid(legacyLocation)) return legacyLocation;
+  return undefined;
+}
+
 // ---------------------------------------------------------------------------
 // Error Formatting
 // ---------------------------------------------------------------------------
@@ -111,18 +131,34 @@ export function formatValidationError(message: string): ToolErrorResponse {
  * Format a successful JSON response.
  */
 export function formatSuccess(data: unknown): ToolSuccessResponse {
+  const structuredContent = normalizeStructuredContent(data);
   const base: ToolSuccessResponse = {
     content: [
       {
         type: "text" as const,
-        text: JSON.stringify(data, null, 2),
+        text: JSON.stringify(structuredContent ?? data, null, 2),
       },
     ],
   };
-  if (data !== null && typeof data === "object") {
-    base.structuredContent = data as Record<string, unknown>;
+  if (structuredContent) {
+    base.structuredContent = structuredContent;
   }
   return base;
+}
+
+/**
+ * MCP structured output must be an object. Wrap bare arrays from catalog endpoints.
+ */
+function normalizeStructuredContent(
+  data: unknown
+): Record<string, unknown> | undefined {
+  if (Array.isArray(data)) {
+    return { data };
+  }
+  if (data !== null && typeof data === "object") {
+    return data as Record<string, unknown>;
+  }
+  return undefined;
 }
 
 /**

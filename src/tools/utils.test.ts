@@ -6,6 +6,8 @@ import {
   formatSuccess,
   formatMessage,
   buildParams,
+  resolveClusterId,
+  isUuid,
   sevallaOutputSchema,
 } from "./utils.js";
 
@@ -79,9 +81,39 @@ describe("Tool Utilities", () => {
       expect(result.structuredContent).toEqual(data);
     });
 
+    it("should wrap array data for MCP structured output", () => {
+      const data = [{ id: "cluster-1" }];
+      const result = formatSuccess(data);
+      expect(result.structuredContent).toEqual({ data });
+      expect(result.content[0]?.text).toContain('"data"');
+    });
+
     it("should not include structuredContent for non-object data", () => {
       const result = formatSuccess(null);
       expect(result.structuredContent).toBeUndefined();
+    });
+  });
+
+  describe("resolveClusterId", () => {
+    const clusterId = "fb5e5168-4281-4bec-94c5-0d1584e9e657";
+
+    it("should prefer cluster_id", () => {
+      expect(resolveClusterId(clusterId, "europe-west1")).toBe(clusterId);
+    });
+
+    it("should accept legacy location when it is a UUID", () => {
+      expect(resolveClusterId(undefined, clusterId)).toBe(clusterId);
+    });
+
+    it("should reject legacy region slugs", () => {
+      expect(resolveClusterId(undefined, "europe-west1")).toBeUndefined();
+    });
+  });
+
+  describe("isUuid", () => {
+    it("should validate UUIDs", () => {
+      expect(isUuid("fb5e5168-4281-4bec-94c5-0d1584e9e657")).toBe(true);
+      expect(isUuid("europe-west1")).toBe(false);
     });
   });
 

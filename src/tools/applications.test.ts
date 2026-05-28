@@ -147,13 +147,16 @@ describe("Application Tools", () => {
   // -------------------------------------------------------------------------
 
   describe("sevalla.applications.create", () => {
+    const clusterId = "fb5e5168-4281-4bec-94c5-0d1584e9e657";
+
     it("should handle auth failure", async () => {
       mockClientAuthFailure(mock);
       const result = await ctx.callTool("sevalla.applications.create", {
-        company: "company-uuid-1",
         display_name: "New App",
-        repository: "https://github.com/org/repo",
-        branch: "main",
+        cluster_id: clusterId,
+        source: "publicGit",
+        repo_url: "https://github.com/org/repo",
+        default_branch: "main",
       });
       expect(result).toHaveProperty("isError", true);
     });
@@ -162,38 +165,36 @@ describe("Application Tools", () => {
       mockClientSuccess(mock, ctx);
       mockRequestError(ctx, "VALIDATION_ERROR", "invalid");
       const result = await ctx.callTool("sevalla.applications.create", {
-        company: "company-uuid-1",
         display_name: "New App",
-        repository: "https://github.com/org/repo",
-        branch: "main",
+        cluster_id: clusterId,
+        source: "publicGit",
+        repo_url: "https://github.com/org/repo",
+        default_branch: "main",
       });
       expect(result).toHaveProperty("isError", true);
     });
 
-    it("should return clear error when no company ID is available", async () => {
-      mockGetCompanyId.mockReturnValue(undefined);
+    it("should return validation error without cluster_id", async () => {
       mockClientSuccess(mock, ctx);
       const result = await ctx.callTool("sevalla.applications.create", {
         display_name: "New App",
-        repository: "https://github.com/org/repo",
-        branch: "main",
+        source: "publicGit",
+        repo_url: "https://github.com/org/repo",
       });
       expect(result).toHaveProperty("isError", true);
-      expect(result).toHaveProperty(
-        "content.0.text",
-        expect.stringContaining("SEVALLA_COMPANY_ID")
-      );
       expect(ctx.mockClient.request).not.toHaveBeenCalled();
     });
 
-    it("should send POST with body", async () => {
+    it("should send POST with v3 body fields", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestSuccess(ctx, { id: "app-uuid-2", display_name: "New App" });
       const result = await ctx.callTool("sevalla.applications.create", {
-        company: "company-uuid-1",
         display_name: "New App",
-        repository: "https://github.com/org/repo",
-        branch: "main",
+        cluster_id: clusterId,
+        source: "publicGit",
+        repo_url: "https://github.com/org/repo",
+        default_branch: "main",
+        git_type: "github",
       });
       expect(result).not.toHaveProperty("isError");
       expect(ctx.mockClient.request).toHaveBeenCalledWith(
@@ -201,26 +202,34 @@ describe("Application Tools", () => {
           path: "/applications",
           method: "POST",
           body: {
-            company: "company-uuid-1",
             display_name: "New App",
-            repository: "https://github.com/org/repo",
-            branch: "main",
+            cluster_id: clusterId,
+            source: "publicGit",
+            repo_url: "https://github.com/org/repo",
+            default_branch: "main",
+            git_type: "github",
           },
         })
       );
     });
 
-    it("should use env company ID when not provided", async () => {
+    it("should map legacy repository, branch, and location aliases", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestSuccess(ctx, { id: "app-uuid-2" });
       await ctx.callTool("sevalla.applications.create", {
         display_name: "New App",
+        location: clusterId,
+        source: "publicGit",
         repository: "https://github.com/org/repo",
         branch: "main",
       });
       expect(ctx.mockClient.request).toHaveBeenCalledWith(
         expect.objectContaining({
-          body: expect.objectContaining({ company: "company-uuid-1" }),
+          body: expect.objectContaining({
+            cluster_id: clusterId,
+            repo_url: "https://github.com/org/repo",
+            default_branch: "main",
+          }),
         })
       );
     });

@@ -12,9 +12,21 @@ import {
   formatAuthError,
   formatError,
   formatSuccess,
+  formatValidationError,
   buildParams,
+  resolveClusterId,
   sevallaOutputSchema,
 } from "./utils.js";
+
+const clusterIdSchema = z
+  .uuid()
+  .describe(
+    "Cluster UUID (data center). Use sevalla.resources.clusters to list options."
+  );
+
+const databaseTypeSchema = z
+  .enum(["postgresql", "mariadb", "mysql", "redis", "valkey"])
+  .describe("Database engine type");
 
 export function registerDatabaseTools(server: McpServer): void {
   // sevalla.databases.list
@@ -104,32 +116,41 @@ export function registerDatabaseTools(server: McpServer): void {
     "sevalla.databases.create",
     {
       title: "Create Database",
-      description: "Create a new database.",
+      description:
+        "Create a new database. Requires cluster_id and resource_type_id from sevalla.resources.clusters and sevalla.resources.database-resource-types.",
       inputSchema: z.object({
-        company: z
-          .uuid()
-          .optional()
-          .describe("Company UUID (defaults to SEVALLA_COMPANY_ID env var)"),
         display_name: z.string().describe("Display name for the database"),
-        type: z
-          .enum([
-            "postgresql",
-            "mariadb",
-            "mysql",
-            "mongodb",
-            "redis",
-            "valkey",
-          ])
-          .describe("Database engine type"),
-        version: z.string().optional().describe("Database engine version"),
+        type: databaseTypeSchema,
+        version: z.string().describe("Database engine version (e.g. 17)"),
+        cluster_id: clusterIdSchema.optional(),
+        resource_type_id: z
+          .string()
+          .optional()
+          .describe(
+            "Database resource type UUID. Use sevalla.resources.database-resource-types."
+          ),
+        db_name: z
+          .string()
+          .describe("Database name inside the server (alphanumeric, _, -, +)"),
+        db_password: z.string().describe("Password for the database user"),
+        db_user: z
+          .string()
+          .optional()
+          .describe("Database username (optional; engine default if omitted)"),
+        project_id: z.uuid().optional().describe("Project UUID to assign"),
+        extensions: z
+          .array(z.string())
+          .optional()
+          .describe("PostgreSQL extensions to enable"),
+        // Legacy aliases kept for older prompts/tools (mapped before the API call)
         location: z
           .string()
           .optional()
-          .describe("Data center location identifier"),
+          .describe("Deprecated: use cluster_id (cluster UUID) instead"),
         resource_type: z
           .string()
           .optional()
-          .describe("Resource type/size identifier"),
+          .describe("Deprecated: use resource_type_id instead"),
       }),
       outputSchema: sevallaOutputSchema,
       annotations: { openWorldHint: true },
@@ -138,14 +159,33 @@ export function registerDatabaseTools(server: McpServer): void {
       const clientResult = getSevallaClient(extra);
       if (!clientResult.success) return formatAuthError(clientResult.error);
 
-      const companyId = args.company ?? getCompanyId();
+      const clusterId = resolveClusterId(args.cluster_id, args.location);
+      const resourceTypeId = args.resource_type_id ?? args.resource_type;
+
+      if (!clusterId) {
+        return formatValidationError(
+          args.location
+            ? `location "${args.location}" is not a cluster UUID. Call sevalla.resources.clusters and pass cluster_id.`
+            : "cluster_id is required. Call sevalla.resources.clusters to list cluster UUIDs."
+        );
+      }
+      if (!resourceTypeId) {
+        return formatValidationError(
+          "resource_type_id is required. Call sevalla.resources.database-resource-types to list options."
+        );
+      }
+
       const body = buildParams({
-        company: companyId,
         display_name: args.display_name,
         type: args.type,
         version: args.version,
-        location: args.location,
-        resource_type: args.resource_type,
+        cluster_id: clusterId,
+        resource_type_id: resourceTypeId,
+        db_name: args.db_name,
+        db_password: args.db_password,
+        db_user: args.db_user,
+        project_id: args.project_id,
+        extensions: args.extensions,
       });
 
       const result = await clientResult.client.request<unknown>({
@@ -168,7 +208,14 @@ export function registerDatabaseTools(server: McpServer): void {
       inputSchema: z.object({
         id: z.uuid().describe("Database UUID"),
         display_name: z.string().optional().describe("New display name"),
-        resource_type: z.string().optional().describe("New resource type/size"),
+        resource_type_id: z
+          .string()
+          .optional()
+          .describe("New database resource type UUID"),
+        resource_type: z
+          .string()
+          .optional()
+          .describe("Deprecated: use resource_type_id instead"),
       }),
       outputSchema: sevallaOutputSchema,
       annotations: { openWorldHint: true },
@@ -177,9 +224,10 @@ export function registerDatabaseTools(server: McpServer): void {
       const clientResult = getSevallaClient(extra);
       if (!clientResult.success) return formatAuthError(clientResult.error);
 
+      const resourceTypeId = args.resource_type_id ?? args.resource_type;
       const body = buildParams({
         display_name: args.display_name,
-        resource_type: args.resource_type,
+        resource_type_id: resourceTypeId,
       });
 
       const result = await clientResult.client.request<unknown>({

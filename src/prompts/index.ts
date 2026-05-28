@@ -56,7 +56,7 @@ export function registerPrompts(server: McpServer): void {
           .string()
           .optional()
           .describe(
-            "Database type (postgresql, mariadb, mysql, mongodb, redis, valkey)"
+            "Database type (postgresql, mariadb, mysql, redis, valkey)"
           ),
         display_name: z
           .string()
@@ -75,10 +75,10 @@ export function registerPrompts(server: McpServer): void {
               (args.type ? `Database type: ${args.type}\n` : "") +
               (args.display_name ? `Name: ${args.display_name}\n` : "") +
               `\nSteps:\n` +
-              `1. ${args.type ? "Skip" : "Help me choose a database type (PostgreSQL, MariaDB, MySQL, MongoDB, Redis, or Valkey)"}\n` +
+              `1. ${args.type ? "Skip" : "Help me choose a database type (PostgreSQL, MariaDB, MySQL, Redis, or Valkey)"}\n` +
               `2. ${args.display_name ? "Skip" : "Help me choose a name for the database"}\n` +
-              `3. Ask about version preference and location\n` +
-              `4. Use sevalla.databases.create to create the database\n` +
+              `3. Use sevalla.resources.clusters and sevalla.resources.database-resource-types for cluster_id and resource_type_id\n` +
+              `4. Collect version, db_name, and db_password, then use sevalla.databases.create\n` +
               `5. Use sevalla.databases.get to confirm creation and show connection details`,
           },
         },
