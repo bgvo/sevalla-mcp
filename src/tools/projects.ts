@@ -17,9 +17,9 @@ import {
 } from "./utils.js";
 
 export function registerProjectTools(server: McpServer): void {
-  // sevalla.projects.list
+  // sevalla_projects_list
   server.registerTool(
-    "sevalla.projects.list",
+    "sevalla_projects_list",
     {
       title: "List Projects",
       description: "List all projects for a company.",
@@ -74,9 +74,9 @@ export function registerProjectTools(server: McpServer): void {
     }
   );
 
-  // sevalla.projects.get
+  // sevalla_projects_get
   server.registerTool(
-    "sevalla.projects.get",
+    "sevalla_projects_get",
     {
       title: "Get Project",
       description: "Get details of a specific project.",
@@ -104,9 +104,9 @@ export function registerProjectTools(server: McpServer): void {
     }
   );
 
-  // sevalla.projects.create
+  // sevalla_projects_create
   server.registerTool(
-    "sevalla.projects.create",
+    "sevalla_projects_create",
     {
       title: "Create Project",
       description: "Create a new project.",
@@ -146,9 +146,9 @@ export function registerProjectTools(server: McpServer): void {
     }
   );
 
-  // sevalla.projects.update
+  // sevalla_projects_update
   server.registerTool(
-    "sevalla.projects.update",
+    "sevalla_projects_update",
     {
       title: "Update Project",
       description: "Update an existing project's configuration.",
@@ -180,9 +180,9 @@ export function registerProjectTools(server: McpServer): void {
     }
   );
 
-  // sevalla.projects.delete
+  // sevalla_projects_delete
   server.registerTool(
-    "sevalla.projects.delete",
+    "sevalla_projects_delete",
     {
       title: "Delete Project",
       description:
@@ -211,9 +211,9 @@ export function registerProjectTools(server: McpServer): void {
     }
   );
 
-  // sevalla.projects.services.add
+  // sevalla_projects_services_add
   server.registerTool(
-    "sevalla.projects.services.add",
+    "sevalla_projects_services_add",
     {
       title: "Add Service to Project",
       description: "Add a service to an existing project.",
@@ -245,9 +245,9 @@ export function registerProjectTools(server: McpServer): void {
     }
   );
 
-  // sevalla.projects.services.remove
+  // sevalla_projects_services_remove
   server.registerTool(
-    "sevalla.projects.services.remove",
+    "sevalla_projects_services_remove",
     {
       title: "Remove Service from Project",
       description: "Remove a service from a project.",

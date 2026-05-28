@@ -45,10 +45,10 @@ function createServer(): McpServer {
     {
       instructions:
         "Sevalla MCP server for cloud hosting management. " +
-        "Start with sevalla.validate to verify connectivity. " +
-        "Use sevalla.applications.list to discover applications. " +
-        "Use sevalla.databases.list to discover databases. " +
-        "Use sevalla.deployments.start to deploy applications.",
+        "Start with sevalla_validate to verify connectivity. " +
+        "Use sevalla_applications_list to discover applications. " +
+        "Use sevalla_databases_list to discover databases. " +
+        "Use sevalla_deployments_start to deploy applications.",
     }
   );
 

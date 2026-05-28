@@ -31,46 +31,46 @@ describe("Webhook Tools", () => {
   });
 
   it("should register all tools", () => {
-    expect(ctx.tools.has("sevalla.webhooks.list")).toBe(true);
-    expect(ctx.tools.has("sevalla.webhooks.get")).toBe(true);
-    expect(ctx.tools.has("sevalla.webhooks.create")).toBe(true);
-    expect(ctx.tools.has("sevalla.webhooks.update")).toBe(true);
-    expect(ctx.tools.has("sevalla.webhooks.delete")).toBe(true);
-    expect(ctx.tools.has("sevalla.webhooks.toggle")).toBe(true);
-    expect(ctx.tools.has("sevalla.webhooks.roll-secret")).toBe(true);
-    expect(ctx.tools.has("sevalla.webhooks.event-deliveries.list")).toBe(true);
-    expect(ctx.tools.has("sevalla.webhooks.event-deliveries.get")).toBe(true);
+    expect(ctx.tools.has("sevalla_webhooks_list")).toBe(true);
+    expect(ctx.tools.has("sevalla_webhooks_get")).toBe(true);
+    expect(ctx.tools.has("sevalla_webhooks_create")).toBe(true);
+    expect(ctx.tools.has("sevalla_webhooks_update")).toBe(true);
+    expect(ctx.tools.has("sevalla_webhooks_delete")).toBe(true);
+    expect(ctx.tools.has("sevalla_webhooks_toggle")).toBe(true);
+    expect(ctx.tools.has("sevalla_webhooks_roll_secret")).toBe(true);
+    expect(ctx.tools.has("sevalla_webhooks_event_deliveries_list")).toBe(true);
+    expect(ctx.tools.has("sevalla_webhooks_event_deliveries_get")).toBe(true);
   });
 
   // ---------------------------------------------------------------------------
-  // sevalla.webhooks.list
+  // sevalla_webhooks_list
   // ---------------------------------------------------------------------------
 
-  describe("sevalla.webhooks.list", () => {
+  describe("sevalla_webhooks_list", () => {
     it("should handle auth failure", async () => {
       mockClientAuthFailure(mock);
-      const result = await ctx.callTool("sevalla.webhooks.list", {});
+      const result = await ctx.callTool("sevalla_webhooks_list", {});
       expect(result).toHaveProperty("isError", true);
     });
 
     it("should return error when no company ID is available", async () => {
       mockGetCompanyId.mockReturnValue(undefined);
       mockClientSuccess(mock, ctx);
-      const result = await ctx.callTool("sevalla.webhooks.list", {});
+      const result = await ctx.callTool("sevalla_webhooks_list", {});
       expect(result).toHaveProperty("isError", true);
     });
 
     it("should handle API error", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestError(ctx, "SERVER_ERROR", "fail");
-      const result = await ctx.callTool("sevalla.webhooks.list", {});
+      const result = await ctx.callTool("sevalla_webhooks_list", {});
       expect(result).toHaveProperty("isError", true);
     });
 
     it("should use company ID from env by default", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestSuccess(ctx, { webhooks: [] });
-      const result = await ctx.callTool("sevalla.webhooks.list", {});
+      const result = await ctx.callTool("sevalla_webhooks_list", {});
       expect(result).not.toHaveProperty("isError");
       expect(ctx.mockClient.request).toHaveBeenCalledWith(
         expect.objectContaining({
@@ -84,7 +84,7 @@ describe("Webhook Tools", () => {
     it("should accept pagination params", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestSuccess(ctx, { webhooks: [] });
-      await ctx.callTool("sevalla.webhooks.list", {
+      await ctx.callTool("sevalla_webhooks_list", {
         limit: 10,
         offset: 20,
       });
@@ -101,7 +101,7 @@ describe("Webhook Tools", () => {
     it("should use provided company ID over env", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestSuccess(ctx, { webhooks: [] });
-      await ctx.callTool("sevalla.webhooks.list", {
+      await ctx.callTool("sevalla_webhooks_list", {
         company: "custom-company-uuid",
       });
       expect(ctx.mockClient.request).toHaveBeenCalledWith(
@@ -113,13 +113,13 @@ describe("Webhook Tools", () => {
   });
 
   // ---------------------------------------------------------------------------
-  // sevalla.webhooks.get
+  // sevalla_webhooks_get
   // ---------------------------------------------------------------------------
 
-  describe("sevalla.webhooks.get", () => {
+  describe("sevalla_webhooks_get", () => {
     it("should handle auth failure", async () => {
       mockClientAuthFailure(mock);
-      const result = await ctx.callTool("sevalla.webhooks.get", {
+      const result = await ctx.callTool("sevalla_webhooks_get", {
         id: "webhook-uuid-1",
       });
       expect(result).toHaveProperty("isError", true);
@@ -128,7 +128,7 @@ describe("Webhook Tools", () => {
     it("should handle API error", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestError(ctx, "NOT_FOUND", "not found");
-      const result = await ctx.callTool("sevalla.webhooks.get", {
+      const result = await ctx.callTool("sevalla_webhooks_get", {
         id: "webhook-uuid-1",
       });
       expect(result).toHaveProperty("isError", true);
@@ -140,7 +140,7 @@ describe("Webhook Tools", () => {
         id: "webhook-uuid-1",
         url: "https://example.com/hook",
       });
-      const result = await ctx.callTool("sevalla.webhooks.get", {
+      const result = await ctx.callTool("sevalla_webhooks_get", {
         id: "webhook-uuid-1",
       });
       expect(result).not.toHaveProperty("isError");
@@ -154,13 +154,13 @@ describe("Webhook Tools", () => {
   });
 
   // ---------------------------------------------------------------------------
-  // sevalla.webhooks.create
+  // sevalla_webhooks_create
   // ---------------------------------------------------------------------------
 
-  describe("sevalla.webhooks.create", () => {
+  describe("sevalla_webhooks_create", () => {
     it("should handle auth failure", async () => {
       mockClientAuthFailure(mock);
-      const result = await ctx.callTool("sevalla.webhooks.create", {
+      const result = await ctx.callTool("sevalla_webhooks_create", {
         url: "https://example.com/hook",
         events: ["deployment.started"],
       });
@@ -170,7 +170,7 @@ describe("Webhook Tools", () => {
     it("should return error when no company ID is available", async () => {
       mockGetCompanyId.mockReturnValue(undefined);
       mockClientSuccess(mock, ctx);
-      const result = await ctx.callTool("sevalla.webhooks.create", {
+      const result = await ctx.callTool("sevalla_webhooks_create", {
         url: "https://example.com/hook",
         events: ["deployment.started"],
       });
@@ -180,7 +180,7 @@ describe("Webhook Tools", () => {
     it("should handle API error", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestError(ctx, "VALIDATION_ERROR", "invalid");
-      const result = await ctx.callTool("sevalla.webhooks.create", {
+      const result = await ctx.callTool("sevalla_webhooks_create", {
         url: "https://example.com/hook",
         events: ["deployment.started"],
       });
@@ -193,7 +193,7 @@ describe("Webhook Tools", () => {
         id: "webhook-uuid-2",
         url: "https://example.com/hook",
       });
-      const result = await ctx.callTool("sevalla.webhooks.create", {
+      const result = await ctx.callTool("sevalla_webhooks_create", {
         company: "company-uuid-1",
         url: "https://example.com/hook",
         events: ["deployment.started", "deployment.completed"],
@@ -215,7 +215,7 @@ describe("Webhook Tools", () => {
     it("should use company ID from env when not provided", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestSuccess(ctx, { id: "webhook-uuid-3" });
-      await ctx.callTool("sevalla.webhooks.create", {
+      await ctx.callTool("sevalla_webhooks_create", {
         url: "https://example.com/hook",
         events: ["deployment.started"],
       });
@@ -228,13 +228,13 @@ describe("Webhook Tools", () => {
   });
 
   // ---------------------------------------------------------------------------
-  // sevalla.webhooks.update
+  // sevalla_webhooks_update
   // ---------------------------------------------------------------------------
 
-  describe("sevalla.webhooks.update", () => {
+  describe("sevalla_webhooks_update", () => {
     it("should handle auth failure", async () => {
       mockClientAuthFailure(mock);
-      const result = await ctx.callTool("sevalla.webhooks.update", {
+      const result = await ctx.callTool("sevalla_webhooks_update", {
         id: "webhook-uuid-1",
       });
       expect(result).toHaveProperty("isError", true);
@@ -243,7 +243,7 @@ describe("Webhook Tools", () => {
     it("should handle API error", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestError(ctx, "VALIDATION_ERROR", "invalid");
-      const result = await ctx.callTool("sevalla.webhooks.update", {
+      const result = await ctx.callTool("sevalla_webhooks_update", {
         id: "webhook-uuid-1",
         url: "https://example.com/new-hook",
       });
@@ -256,7 +256,7 @@ describe("Webhook Tools", () => {
         id: "webhook-uuid-1",
         url: "https://example.com/new-hook",
       });
-      const result = await ctx.callTool("sevalla.webhooks.update", {
+      const result = await ctx.callTool("sevalla_webhooks_update", {
         id: "webhook-uuid-1",
         url: "https://example.com/new-hook",
         events: ["deployment.started"],
@@ -276,13 +276,13 @@ describe("Webhook Tools", () => {
   });
 
   // ---------------------------------------------------------------------------
-  // sevalla.webhooks.delete
+  // sevalla_webhooks_delete
   // ---------------------------------------------------------------------------
 
-  describe("sevalla.webhooks.delete", () => {
+  describe("sevalla_webhooks_delete", () => {
     it("should handle auth failure", async () => {
       mockClientAuthFailure(mock);
-      const result = await ctx.callTool("sevalla.webhooks.delete", {
+      const result = await ctx.callTool("sevalla_webhooks_delete", {
         id: "webhook-uuid-1",
       });
       expect(result).toHaveProperty("isError", true);
@@ -291,7 +291,7 @@ describe("Webhook Tools", () => {
     it("should handle API error", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestError(ctx, "NOT_FOUND", "not found");
-      const result = await ctx.callTool("sevalla.webhooks.delete", {
+      const result = await ctx.callTool("sevalla_webhooks_delete", {
         id: "webhook-uuid-1",
       });
       expect(result).toHaveProperty("isError", true);
@@ -300,7 +300,7 @@ describe("Webhook Tools", () => {
     it("should send DELETE request", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestSuccess(ctx, { deleted: true });
-      const result = await ctx.callTool("sevalla.webhooks.delete", {
+      const result = await ctx.callTool("sevalla_webhooks_delete", {
         id: "webhook-uuid-1",
       });
       expect(result).not.toHaveProperty("isError");
@@ -314,13 +314,13 @@ describe("Webhook Tools", () => {
   });
 
   // ---------------------------------------------------------------------------
-  // sevalla.webhooks.toggle
+  // sevalla_webhooks_toggle
   // ---------------------------------------------------------------------------
 
-  describe("sevalla.webhooks.toggle", () => {
+  describe("sevalla_webhooks_toggle", () => {
     it("should handle auth failure", async () => {
       mockClientAuthFailure(mock);
-      const result = await ctx.callTool("sevalla.webhooks.toggle", {
+      const result = await ctx.callTool("sevalla_webhooks_toggle", {
         id: "webhook-uuid-1",
       });
       expect(result).toHaveProperty("isError", true);
@@ -329,7 +329,7 @@ describe("Webhook Tools", () => {
     it("should handle API error", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestError(ctx, "SERVER_ERROR", "fail");
-      const result = await ctx.callTool("sevalla.webhooks.toggle", {
+      const result = await ctx.callTool("sevalla_webhooks_toggle", {
         id: "webhook-uuid-1",
       });
       expect(result).toHaveProperty("isError", true);
@@ -338,7 +338,7 @@ describe("Webhook Tools", () => {
     it("should send POST with correct path", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestSuccess(ctx, { id: "webhook-uuid-1", enabled: true });
-      const result = await ctx.callTool("sevalla.webhooks.toggle", {
+      const result = await ctx.callTool("sevalla_webhooks_toggle", {
         id: "webhook-uuid-1",
       });
       expect(result).not.toHaveProperty("isError");
@@ -352,13 +352,13 @@ describe("Webhook Tools", () => {
   });
 
   // ---------------------------------------------------------------------------
-  // sevalla.webhooks.roll-secret
+  // sevalla_webhooks_roll_secret
   // ---------------------------------------------------------------------------
 
-  describe("sevalla.webhooks.roll-secret", () => {
+  describe("sevalla_webhooks_roll_secret", () => {
     it("should handle auth failure", async () => {
       mockClientAuthFailure(mock);
-      const result = await ctx.callTool("sevalla.webhooks.roll-secret", {
+      const result = await ctx.callTool("sevalla_webhooks_roll_secret", {
         id: "webhook-uuid-1",
       });
       expect(result).toHaveProperty("isError", true);
@@ -367,7 +367,7 @@ describe("Webhook Tools", () => {
     it("should handle API error", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestError(ctx, "SERVER_ERROR", "fail");
-      const result = await ctx.callTool("sevalla.webhooks.roll-secret", {
+      const result = await ctx.callTool("sevalla_webhooks_roll_secret", {
         id: "webhook-uuid-1",
       });
       expect(result).toHaveProperty("isError", true);
@@ -376,7 +376,7 @@ describe("Webhook Tools", () => {
     it("should send POST with correct path", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestSuccess(ctx, { id: "webhook-uuid-1", secret: "new-secret" });
-      const result = await ctx.callTool("sevalla.webhooks.roll-secret", {
+      const result = await ctx.callTool("sevalla_webhooks_roll_secret", {
         id: "webhook-uuid-1",
       });
       expect(result).not.toHaveProperty("isError");
@@ -390,14 +390,14 @@ describe("Webhook Tools", () => {
   });
 
   // ---------------------------------------------------------------------------
-  // sevalla.webhooks.event-deliveries.list
+  // sevalla_webhooks_event_deliveries_list
   // ---------------------------------------------------------------------------
 
-  describe("sevalla.webhooks.event-deliveries.list", () => {
+  describe("sevalla_webhooks_event_deliveries_list", () => {
     it("should handle auth failure", async () => {
       mockClientAuthFailure(mock);
       const result = await ctx.callTool(
-        "sevalla.webhooks.event-deliveries.list",
+        "sevalla_webhooks_event_deliveries_list",
         { id: "webhook-uuid-1" }
       );
       expect(result).toHaveProperty("isError", true);
@@ -407,7 +407,7 @@ describe("Webhook Tools", () => {
       mockClientSuccess(mock, ctx);
       mockRequestError(ctx, "SERVER_ERROR", "fail");
       const result = await ctx.callTool(
-        "sevalla.webhooks.event-deliveries.list",
+        "sevalla_webhooks_event_deliveries_list",
         { id: "webhook-uuid-1" }
       );
       expect(result).toHaveProperty("isError", true);
@@ -417,7 +417,7 @@ describe("Webhook Tools", () => {
       mockClientSuccess(mock, ctx);
       mockRequestSuccess(ctx, { deliveries: [] });
       const result = await ctx.callTool(
-        "sevalla.webhooks.event-deliveries.list",
+        "sevalla_webhooks_event_deliveries_list",
         { id: "webhook-uuid-1" }
       );
       expect(result).not.toHaveProperty("isError");
@@ -431,14 +431,14 @@ describe("Webhook Tools", () => {
   });
 
   // ---------------------------------------------------------------------------
-  // sevalla.webhooks.event-deliveries.get
+  // sevalla_webhooks_event_deliveries_get
   // ---------------------------------------------------------------------------
 
-  describe("sevalla.webhooks.event-deliveries.get", () => {
+  describe("sevalla_webhooks_event_deliveries_get", () => {
     it("should handle auth failure", async () => {
       mockClientAuthFailure(mock);
       const result = await ctx.callTool(
-        "sevalla.webhooks.event-deliveries.get",
+        "sevalla_webhooks_event_deliveries_get",
         { id: "webhook-uuid-1", delivery_id: "delivery-uuid-1" }
       );
       expect(result).toHaveProperty("isError", true);
@@ -448,7 +448,7 @@ describe("Webhook Tools", () => {
       mockClientSuccess(mock, ctx);
       mockRequestError(ctx, "NOT_FOUND", "not found");
       const result = await ctx.callTool(
-        "sevalla.webhooks.event-deliveries.get",
+        "sevalla_webhooks_event_deliveries_get",
         { id: "webhook-uuid-1", delivery_id: "delivery-uuid-1" }
       );
       expect(result).toHaveProperty("isError", true);
@@ -461,7 +461,7 @@ describe("Webhook Tools", () => {
         status: "delivered",
       });
       const result = await ctx.callTool(
-        "sevalla.webhooks.event-deliveries.get",
+        "sevalla_webhooks_event_deliveries_get",
         { id: "webhook-uuid-1", delivery_id: "delivery-uuid-1" }
       );
       expect(result).not.toHaveProperty("isError");

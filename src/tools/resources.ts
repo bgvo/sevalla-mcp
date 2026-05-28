@@ -14,9 +14,9 @@ import {
 } from "./utils.js";
 
 export function registerResourceTools(server: McpServer): void {
-  // sevalla.resources.clusters
+  // sevalla_resources_clusters
   server.registerTool(
-    "sevalla.resources.clusters",
+    "sevalla_resources_clusters",
     {
       title: "List Clusters",
       description: "List all available clusters/data center locations.",
@@ -42,9 +42,9 @@ export function registerResourceTools(server: McpServer): void {
     }
   );
 
-  // sevalla.resources.database-resource-types
+  // sevalla_resources_database_resource_types
   server.registerTool(
-    "sevalla.resources.database-resource-types",
+    "sevalla_resources_database_resource_types",
     {
       title: "List Database Resource Types",
       description: "List available database machine sizes and configurations.",
@@ -70,9 +70,9 @@ export function registerResourceTools(server: McpServer): void {
     }
   );
 
-  // sevalla.resources.process-resource-types
+  // sevalla_resources_process_resource_types
   server.registerTool(
-    "sevalla.resources.process-resource-types",
+    "sevalla_resources_process_resource_types",
     {
       title: "List Process Resource Types",
       description: "List available process machine sizes and configurations.",

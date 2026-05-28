@@ -17,9 +17,9 @@ import {
 } from "./utils.js";
 
 export function registerPipelineTools(server: McpServer): void {
-  // sevalla.pipelines.list
+  // sevalla_pipelines_list
   server.registerTool(
-    "sevalla.pipelines.list",
+    "sevalla_pipelines_list",
     {
       title: "List Pipelines",
       description: "List all deployment pipelines for a company.",
@@ -74,9 +74,9 @@ export function registerPipelineTools(server: McpServer): void {
     }
   );
 
-  // sevalla.pipelines.get
+  // sevalla_pipelines_get
   server.registerTool(
-    "sevalla.pipelines.get",
+    "sevalla_pipelines_get",
     {
       title: "Get Pipeline",
       description: "Get details of a specific pipeline.",
@@ -104,9 +104,9 @@ export function registerPipelineTools(server: McpServer): void {
     }
   );
 
-  // sevalla.pipelines.create
+  // sevalla_pipelines_create
   server.registerTool(
-    "sevalla.pipelines.create",
+    "sevalla_pipelines_create",
     {
       title: "Create Pipeline",
       description: "Create a new deployment pipeline.",
@@ -146,9 +146,9 @@ export function registerPipelineTools(server: McpServer): void {
     }
   );
 
-  // sevalla.pipelines.update
+  // sevalla_pipelines_update
   server.registerTool(
-    "sevalla.pipelines.update",
+    "sevalla_pipelines_update",
     {
       title: "Update Pipeline",
       description: "Update an existing pipeline.",
@@ -178,9 +178,9 @@ export function registerPipelineTools(server: McpServer): void {
     }
   );
 
-  // sevalla.pipelines.delete
+  // sevalla_pipelines_delete
   server.registerTool(
-    "sevalla.pipelines.delete",
+    "sevalla_pipelines_delete",
     {
       title: "Delete Pipeline",
       description:
@@ -209,9 +209,9 @@ export function registerPipelineTools(server: McpServer): void {
     }
   );
 
-  // sevalla.pipelines.promote
+  // sevalla_pipelines_promote
   server.registerTool(
-    "sevalla.pipelines.promote",
+    "sevalla_pipelines_promote",
     {
       title: "Promote Pipeline",
       description: "Promote builds between pipeline stages.",
@@ -235,9 +235,9 @@ export function registerPipelineTools(server: McpServer): void {
     }
   );
 
-  // sevalla.pipelines.stages.create
+  // sevalla_pipelines_stages_create
   server.registerTool(
-    "sevalla.pipelines.stages.create",
+    "sevalla_pipelines_stages_create",
     {
       title: "Create Pipeline Stage",
       description: "Create a new stage in a pipeline.",
@@ -267,9 +267,9 @@ export function registerPipelineTools(server: McpServer): void {
     }
   );
 
-  // sevalla.pipelines.stages.delete
+  // sevalla_pipelines_stages_delete
   server.registerTool(
-    "sevalla.pipelines.stages.delete",
+    "sevalla_pipelines_stages_delete",
     {
       title: "Delete Pipeline Stage",
       description: "Delete a stage from a pipeline.",
@@ -298,9 +298,9 @@ export function registerPipelineTools(server: McpServer): void {
     }
   );
 
-  // sevalla.pipelines.enable-preview
+  // sevalla_pipelines_enable_preview
   server.registerTool(
-    "sevalla.pipelines.enable-preview",
+    "sevalla_pipelines_enable_preview",
     {
       title: "Enable Pipeline Preview",
       description: "Enable preview environments for a pipeline.",
@@ -324,9 +324,9 @@ export function registerPipelineTools(server: McpServer): void {
     }
   );
 
-  // sevalla.pipelines.disable-preview
+  // sevalla_pipelines_disable_preview
   server.registerTool(
-    "sevalla.pipelines.disable-preview",
+    "sevalla_pipelines_disable_preview",
     {
       title: "Disable Pipeline Preview",
       description: "Disable preview environments for a pipeline.",

@@ -1,6 +1,6 @@
 {
   "name": "sevalla-mcp",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Model Context Protocol (MCP) server for Sevalla cloud hosting platform",
   "type": "module",
   "main": "./dist/index.js",

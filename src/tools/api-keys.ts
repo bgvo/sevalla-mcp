@@ -17,9 +17,9 @@ import {
 } from "./utils.js";
 
 export function registerApiKeyTools(server: McpServer): void {
-  // sevalla.api-keys.list
+  // sevalla_api_keys_list
   server.registerTool(
-    "sevalla.api-keys.list",
+    "sevalla_api_keys_list",
     {
       title: "List API Keys",
       description: "List all API keys for a company.",
@@ -61,9 +61,9 @@ export function registerApiKeyTools(server: McpServer): void {
     }
   );
 
-  // sevalla.api-keys.get
+  // sevalla_api_keys_get
   server.registerTool(
-    "sevalla.api-keys.get",
+    "sevalla_api_keys_get",
     {
       title: "Get API Key",
       description: "Get details of a specific API key.",
@@ -91,9 +91,9 @@ export function registerApiKeyTools(server: McpServer): void {
     }
   );
 
-  // sevalla.api-keys.create
+  // sevalla_api_keys_create
   server.registerTool(
-    "sevalla.api-keys.create",
+    "sevalla_api_keys_create",
     {
       title: "Create API Key",
       description:
@@ -134,9 +134,9 @@ export function registerApiKeyTools(server: McpServer): void {
     }
   );
 
-  // sevalla.api-keys.update
+  // sevalla_api_keys_update
   server.registerTool(
-    "sevalla.api-keys.update",
+    "sevalla_api_keys_update",
     {
       title: "Update API Key",
       description: "Update an API key's name, roles, or capabilities.",
@@ -166,9 +166,9 @@ export function registerApiKeyTools(server: McpServer): void {
     }
   );
 
-  // sevalla.api-keys.delete
+  // sevalla_api_keys_delete
   server.registerTool(
-    "sevalla.api-keys.delete",
+    "sevalla_api_keys_delete",
     {
       title: "Delete API Key",
       description:
@@ -197,9 +197,9 @@ export function registerApiKeyTools(server: McpServer): void {
     }
   );
 
-  // sevalla.api-keys.rotate
+  // sevalla_api_keys_rotate
   server.registerTool(
-    "sevalla.api-keys.rotate",
+    "sevalla_api_keys_rotate",
     {
       title: "Rotate API Key",
       description: "Generate a new token for an API key.",
@@ -223,9 +223,9 @@ export function registerApiKeyTools(server: McpServer): void {
     }
   );
 
-  // sevalla.api-keys.toggle
+  // sevalla_api_keys_toggle
   server.registerTool(
-    "sevalla.api-keys.toggle",
+    "sevalla_api_keys_toggle",
     {
       title: "Toggle API Key",
       description: "Enable or disable an API key.",

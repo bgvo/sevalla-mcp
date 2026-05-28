@@ -17,9 +17,9 @@ import {
 } from "./utils.js";
 
 export function registerDockerRegistryTools(server: McpServer): void {
-  // sevalla.docker-registries.list
+  // sevalla_docker_registries_list
   server.registerTool(
-    "sevalla.docker-registries.list",
+    "sevalla_docker_registries_list",
     {
       title: "List Docker Registries",
       description: "List all Docker registry credentials.",
@@ -74,9 +74,9 @@ export function registerDockerRegistryTools(server: McpServer): void {
     }
   );
 
-  // sevalla.docker-registries.get
+  // sevalla_docker_registries_get
   server.registerTool(
-    "sevalla.docker-registries.get",
+    "sevalla_docker_registries_get",
     {
       title: "Get Docker Registry",
       description: "Get details of a specific Docker registry credential.",
@@ -104,9 +104,9 @@ export function registerDockerRegistryTools(server: McpServer): void {
     }
   );
 
-  // sevalla.docker-registries.create
+  // sevalla_docker_registries_create
   server.registerTool(
-    "sevalla.docker-registries.create",
+    "sevalla_docker_registries_create",
     {
       title: "Create Docker Registry",
       description: "Create a new Docker registry credential.",
@@ -152,9 +152,9 @@ export function registerDockerRegistryTools(server: McpServer): void {
     }
   );
 
-  // sevalla.docker-registries.update
+  // sevalla_docker_registries_update
   server.registerTool(
-    "sevalla.docker-registries.update",
+    "sevalla_docker_registries_update",
     {
       title: "Update Docker Registry",
       description: "Update a Docker registry credential.",
@@ -188,9 +188,9 @@ export function registerDockerRegistryTools(server: McpServer): void {
     }
   );
 
-  // sevalla.docker-registries.delete
+  // sevalla_docker_registries_delete
   server.registerTool(
-    "sevalla.docker-registries.delete",
+    "sevalla_docker_registries_delete",
     {
       title: "Delete Docker Registry",
       description:

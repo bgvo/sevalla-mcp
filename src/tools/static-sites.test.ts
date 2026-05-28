@@ -31,45 +31,45 @@ describe("Static Site Tools", () => {
   });
 
   it("should register all static site tools", () => {
-    expect(ctx.tools.has("sevalla.static-sites.list")).toBe(true);
-    expect(ctx.tools.has("sevalla.static-sites.get")).toBe(true);
-    expect(ctx.tools.has("sevalla.static-sites.update")).toBe(true);
-    expect(ctx.tools.has("sevalla.static-sites.delete")).toBe(true);
-    expect(ctx.tools.has("sevalla.static-sites.deploy")).toBe(true);
-    expect(ctx.tools.has("sevalla.static-sites.get-deployment")).toBe(true);
-    expect(ctx.tools.has("sevalla.static-sites.create")).toBe(true);
-    expect(ctx.tools.has("sevalla.static-sites.purge-cache")).toBe(true);
+    expect(ctx.tools.has("sevalla_static_sites_list")).toBe(true);
+    expect(ctx.tools.has("sevalla_static_sites_get")).toBe(true);
+    expect(ctx.tools.has("sevalla_static_sites_update")).toBe(true);
+    expect(ctx.tools.has("sevalla_static_sites_delete")).toBe(true);
+    expect(ctx.tools.has("sevalla_static_sites_deploy")).toBe(true);
+    expect(ctx.tools.has("sevalla_static_sites_get_deployment")).toBe(true);
+    expect(ctx.tools.has("sevalla_static_sites_create")).toBe(true);
+    expect(ctx.tools.has("sevalla_static_sites_purge_cache")).toBe(true);
   });
 
   // ---------------------------------------------------------------------------
-  // sevalla.static-sites.list
+  // sevalla_static_sites_list
   // ---------------------------------------------------------------------------
 
-  describe("sevalla.static-sites.list", () => {
+  describe("sevalla_static_sites_list", () => {
     it("should handle auth failure", async () => {
       mockClientAuthFailure(mock);
-      const result = await ctx.callTool("sevalla.static-sites.list", {});
+      const result = await ctx.callTool("sevalla_static_sites_list", {});
       expect(result).toHaveProperty("isError", true);
     });
 
     it("should return error when no company ID is available", async () => {
       mockGetCompanyId.mockReturnValue(undefined);
       mockClientSuccess(mock, ctx);
-      const result = await ctx.callTool("sevalla.static-sites.list", {});
+      const result = await ctx.callTool("sevalla_static_sites_list", {});
       expect(result).toHaveProperty("isError", true);
     });
 
     it("should handle API error", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestError(ctx, "SERVER_ERROR", "fail");
-      const result = await ctx.callTool("sevalla.static-sites.list", {});
+      const result = await ctx.callTool("sevalla_static_sites_list", {});
       expect(result).toHaveProperty("isError", true);
     });
 
     it("should return success with default company", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestSuccess(ctx, { static_sites: [] });
-      const result = await ctx.callTool("sevalla.static-sites.list", {});
+      const result = await ctx.callTool("sevalla_static_sites_list", {});
       expect(result).not.toHaveProperty("isError");
       expect(ctx.mockClient.request).toHaveBeenCalledWith(
         expect.objectContaining({
@@ -83,7 +83,7 @@ describe("Static Site Tools", () => {
     it("should use provided company over default", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestSuccess(ctx, { static_sites: [] });
-      const result = await ctx.callTool("sevalla.static-sites.list", {
+      const result = await ctx.callTool("sevalla_static_sites_list", {
         company: "custom-company-id",
       });
       expect(result).not.toHaveProperty("isError");
@@ -97,7 +97,7 @@ describe("Static Site Tools", () => {
     it("should pass limit and offset as string params", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestSuccess(ctx, { static_sites: [] });
-      const result = await ctx.callTool("sevalla.static-sites.list", {
+      const result = await ctx.callTool("sevalla_static_sites_list", {
         limit: 10,
         offset: 20,
       });
@@ -111,13 +111,13 @@ describe("Static Site Tools", () => {
   });
 
   // ---------------------------------------------------------------------------
-  // sevalla.static-sites.get
+  // sevalla_static_sites_get
   // ---------------------------------------------------------------------------
 
-  describe("sevalla.static-sites.get", () => {
+  describe("sevalla_static_sites_get", () => {
     it("should handle auth failure", async () => {
       mockClientAuthFailure(mock);
-      const result = await ctx.callTool("sevalla.static-sites.get", {
+      const result = await ctx.callTool("sevalla_static_sites_get", {
         id: "site-uuid-1",
       });
       expect(result).toHaveProperty("isError", true);
@@ -126,7 +126,7 @@ describe("Static Site Tools", () => {
     it("should handle API error", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestError(ctx, "NOT_FOUND", "not found");
-      const result = await ctx.callTool("sevalla.static-sites.get", {
+      const result = await ctx.callTool("sevalla_static_sites_get", {
         id: "site-uuid-1",
       });
       expect(result).toHaveProperty("isError", true);
@@ -135,7 +135,7 @@ describe("Static Site Tools", () => {
     it("should return success", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestSuccess(ctx, { id: "site-uuid-1", name: "my-site" });
-      const result = await ctx.callTool("sevalla.static-sites.get", {
+      const result = await ctx.callTool("sevalla_static_sites_get", {
         id: "site-uuid-1",
       });
       expect(result).not.toHaveProperty("isError");
@@ -149,13 +149,13 @@ describe("Static Site Tools", () => {
   });
 
   // ---------------------------------------------------------------------------
-  // sevalla.static-sites.update
+  // sevalla_static_sites_update
   // ---------------------------------------------------------------------------
 
-  describe("sevalla.static-sites.update", () => {
+  describe("sevalla_static_sites_update", () => {
     it("should handle auth failure", async () => {
       mockClientAuthFailure(mock);
-      const result = await ctx.callTool("sevalla.static-sites.update", {
+      const result = await ctx.callTool("sevalla_static_sites_update", {
         id: "site-uuid-1",
         display_name: "Updated Site",
       });
@@ -165,7 +165,7 @@ describe("Static Site Tools", () => {
     it("should handle API error", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestError(ctx, "SERVER_ERROR", "fail");
-      const result = await ctx.callTool("sevalla.static-sites.update", {
+      const result = await ctx.callTool("sevalla_static_sites_update", {
         id: "site-uuid-1",
         display_name: "Updated Site",
       });
@@ -178,7 +178,7 @@ describe("Static Site Tools", () => {
         id: "site-uuid-1",
         display_name: "Updated Site",
       });
-      const result = await ctx.callTool("sevalla.static-sites.update", {
+      const result = await ctx.callTool("sevalla_static_sites_update", {
         id: "site-uuid-1",
         display_name: "Updated Site",
       });
@@ -194,13 +194,13 @@ describe("Static Site Tools", () => {
   });
 
   // ---------------------------------------------------------------------------
-  // sevalla.static-sites.delete
+  // sevalla_static_sites_delete
   // ---------------------------------------------------------------------------
 
-  describe("sevalla.static-sites.delete", () => {
+  describe("sevalla_static_sites_delete", () => {
     it("should handle auth failure", async () => {
       mockClientAuthFailure(mock);
-      const result = await ctx.callTool("sevalla.static-sites.delete", {
+      const result = await ctx.callTool("sevalla_static_sites_delete", {
         id: "site-uuid-1",
       });
       expect(result).toHaveProperty("isError", true);
@@ -209,7 +209,7 @@ describe("Static Site Tools", () => {
     it("should handle API error", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestError(ctx, "NOT_FOUND", "not found");
-      const result = await ctx.callTool("sevalla.static-sites.delete", {
+      const result = await ctx.callTool("sevalla_static_sites_delete", {
         id: "site-uuid-1",
       });
       expect(result).toHaveProperty("isError", true);
@@ -218,7 +218,7 @@ describe("Static Site Tools", () => {
     it("should return success", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestSuccess(ctx, { deleted: true });
-      const result = await ctx.callTool("sevalla.static-sites.delete", {
+      const result = await ctx.callTool("sevalla_static_sites_delete", {
         id: "site-uuid-1",
       });
       expect(result).not.toHaveProperty("isError");
@@ -232,13 +232,13 @@ describe("Static Site Tools", () => {
   });
 
   // ---------------------------------------------------------------------------
-  // sevalla.static-sites.deploy
+  // sevalla_static_sites_deploy
   // ---------------------------------------------------------------------------
 
-  describe("sevalla.static-sites.deploy", () => {
+  describe("sevalla_static_sites_deploy", () => {
     it("should handle auth failure", async () => {
       mockClientAuthFailure(mock);
-      const result = await ctx.callTool("sevalla.static-sites.deploy", {
+      const result = await ctx.callTool("sevalla_static_sites_deploy", {
         site_id: "site-uuid-1",
       });
       expect(result).toHaveProperty("isError", true);
@@ -247,7 +247,7 @@ describe("Static Site Tools", () => {
     it("should handle API error", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestError(ctx, "SERVER_ERROR", "fail");
-      const result = await ctx.callTool("sevalla.static-sites.deploy", {
+      const result = await ctx.callTool("sevalla_static_sites_deploy", {
         site_id: "site-uuid-1",
       });
       expect(result).toHaveProperty("isError", true);
@@ -256,7 +256,7 @@ describe("Static Site Tools", () => {
     it("should return success with required fields", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestSuccess(ctx, { id: "deploy-uuid-1" });
-      const result = await ctx.callTool("sevalla.static-sites.deploy", {
+      const result = await ctx.callTool("sevalla_static_sites_deploy", {
         site_id: "site-uuid-1",
       });
       expect(result).not.toHaveProperty("isError");
@@ -271,7 +271,7 @@ describe("Static Site Tools", () => {
     it("should pass optional branch in body", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestSuccess(ctx, { id: "deploy-uuid-1" });
-      const result = await ctx.callTool("sevalla.static-sites.deploy", {
+      const result = await ctx.callTool("sevalla_static_sites_deploy", {
         site_id: "site-uuid-1",
         branch: "main",
       });
@@ -287,13 +287,13 @@ describe("Static Site Tools", () => {
   });
 
   // ---------------------------------------------------------------------------
-  // sevalla.static-sites.get-deployment
+  // sevalla_static_sites_get_deployment
   // ---------------------------------------------------------------------------
 
-  describe("sevalla.static-sites.get-deployment", () => {
+  describe("sevalla_static_sites_get_deployment", () => {
     it("should handle auth failure", async () => {
       mockClientAuthFailure(mock);
-      const result = await ctx.callTool("sevalla.static-sites.get-deployment", {
+      const result = await ctx.callTool("sevalla_static_sites_get_deployment", {
         site_id: "site-uuid-1",
         deployment_id: "deploy-uuid-1",
       });
@@ -303,7 +303,7 @@ describe("Static Site Tools", () => {
     it("should handle API error", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestError(ctx, "NOT_FOUND", "not found");
-      const result = await ctx.callTool("sevalla.static-sites.get-deployment", {
+      const result = await ctx.callTool("sevalla_static_sites_get_deployment", {
         site_id: "site-uuid-1",
         deployment_id: "deploy-uuid-1",
       });
@@ -313,7 +313,7 @@ describe("Static Site Tools", () => {
     it("should return success", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestSuccess(ctx, { id: "deploy-uuid-1", status: "success" });
-      const result = await ctx.callTool("sevalla.static-sites.get-deployment", {
+      const result = await ctx.callTool("sevalla_static_sites_get_deployment", {
         site_id: "site-uuid-1",
         deployment_id: "deploy-uuid-1",
       });
@@ -328,13 +328,13 @@ describe("Static Site Tools", () => {
   });
 
   // ---------------------------------------------------------------------------
-  // sevalla.static-sites.create
+  // sevalla_static_sites_create
   // ---------------------------------------------------------------------------
 
-  describe("sevalla.static-sites.create", () => {
+  describe("sevalla_static_sites_create", () => {
     it("should handle auth failure", async () => {
       mockClientAuthFailure(mock);
-      const result = await ctx.callTool("sevalla.static-sites.create", {
+      const result = await ctx.callTool("sevalla_static_sites_create", {
         display_name: "Test Site",
         repository: "https://github.com/test/repo",
         branch: "main",
@@ -345,7 +345,7 @@ describe("Static Site Tools", () => {
     it("should return error when no company ID is available", async () => {
       mockGetCompanyId.mockReturnValue(undefined);
       mockClientSuccess(mock, ctx);
-      const result = await ctx.callTool("sevalla.static-sites.create", {
+      const result = await ctx.callTool("sevalla_static_sites_create", {
         display_name: "Test Site",
         repository: "https://github.com/test/repo",
         branch: "main",
@@ -356,7 +356,7 @@ describe("Static Site Tools", () => {
     it("should handle API error", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestError(ctx, "VALIDATION_ERROR", "invalid");
-      const result = await ctx.callTool("sevalla.static-sites.create", {
+      const result = await ctx.callTool("sevalla_static_sites_create", {
         display_name: "Test Site",
         repository: "https://github.com/test/repo",
         branch: "main",
@@ -367,7 +367,7 @@ describe("Static Site Tools", () => {
     it("should return success with required fields", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestSuccess(ctx, { id: "new-site-uuid" });
-      const result = await ctx.callTool("sevalla.static-sites.create", {
+      const result = await ctx.callTool("sevalla_static_sites_create", {
         display_name: "Test Site",
         repository: "https://github.com/test/repo",
         branch: "main",
@@ -389,13 +389,13 @@ describe("Static Site Tools", () => {
   });
 
   // ---------------------------------------------------------------------------
-  // sevalla.static-sites.purge-cache
+  // sevalla_static_sites_purge_cache
   // ---------------------------------------------------------------------------
 
-  describe("sevalla.static-sites.purge-cache", () => {
+  describe("sevalla_static_sites_purge_cache", () => {
     it("should handle auth failure", async () => {
       mockClientAuthFailure(mock);
-      const result = await ctx.callTool("sevalla.static-sites.purge-cache", {
+      const result = await ctx.callTool("sevalla_static_sites_purge_cache", {
         id: "site-uuid-1",
       });
       expect(result).toHaveProperty("isError", true);
@@ -404,7 +404,7 @@ describe("Static Site Tools", () => {
     it("should handle API error", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestError(ctx, "SERVER_ERROR", "fail");
-      const result = await ctx.callTool("sevalla.static-sites.purge-cache", {
+      const result = await ctx.callTool("sevalla_static_sites_purge_cache", {
         id: "site-uuid-1",
       });
       expect(result).toHaveProperty("isError", true);
@@ -413,7 +413,7 @@ describe("Static Site Tools", () => {
     it("should return success", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestSuccess(ctx, { purged: true });
-      const result = await ctx.callTool("sevalla.static-sites.purge-cache", {
+      const result = await ctx.callTool("sevalla_static_sites_purge_cache", {
         id: "site-uuid-1",
       });
       expect(result).not.toHaveProperty("isError");

@@ -17,9 +17,9 @@ import {
 } from "./utils.js";
 
 export function registerCompanyTools(server: McpServer): void {
-  // sevalla.company.users
+  // sevalla_company_users
   server.registerTool(
-    "sevalla.company.users",
+    "sevalla_company_users",
     {
       title: "List Company Users",
       description: "List all users for a company.",

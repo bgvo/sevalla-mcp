@@ -15,9 +15,9 @@ import {
 } from "./utils.js";
 
 export function registerAppDomainTools(server: McpServer): void {
-  // sevalla.applications.domains.list
+  // sevalla_applications_domains_list
   server.registerTool(
-    "sevalla.applications.domains.list",
+    "sevalla_applications_domains_list",
     {
       title: "List Application Domains",
       description: "List all custom domains for an application.",
@@ -45,9 +45,9 @@ export function registerAppDomainTools(server: McpServer): void {
     }
   );
 
-  // sevalla.applications.domains.add
+  // sevalla_applications_domains_add
   server.registerTool(
-    "sevalla.applications.domains.add",
+    "sevalla_applications_domains_add",
     {
       title: "Add Application Domain",
       description: "Add a custom domain to an application.",
@@ -73,9 +73,9 @@ export function registerAppDomainTools(server: McpServer): void {
     }
   );
 
-  // sevalla.applications.domains.delete
+  // sevalla_applications_domains_delete
   server.registerTool(
-    "sevalla.applications.domains.delete",
+    "sevalla_applications_domains_delete",
     {
       title: "Delete Application Domain",
       description: "Remove a custom domain from an application.",
@@ -104,9 +104,9 @@ export function registerAppDomainTools(server: McpServer): void {
     }
   );
 
-  // sevalla.applications.domains.set-primary
+  // sevalla_applications_domains_set_primary
   server.registerTool(
-    "sevalla.applications.domains.set-primary",
+    "sevalla_applications_domains_set_primary",
     {
       title: "Set Primary Domain",
       description: "Set a domain as the primary domain for an application.",
@@ -131,9 +131,9 @@ export function registerAppDomainTools(server: McpServer): void {
     }
   );
 
-  // sevalla.applications.domains.refresh-status
+  // sevalla_applications_domains_refresh_status
   server.registerTool(
-    "sevalla.applications.domains.refresh-status",
+    "sevalla_applications_domains_refresh_status",
     {
       title: "Refresh Domain Status",
       description: "Refresh the DNS/SSL verification status of a domain.",

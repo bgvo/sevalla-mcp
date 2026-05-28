@@ -35,10 +35,10 @@ export function registerPrompts(server: McpServer): void {
               (args.app_id ? `Application ID: ${args.app_id}\n` : "") +
               (args.branch ? `Branch: ${args.branch}\n` : "") +
               `\nSteps:\n` +
-              `1. ${args.app_id ? "Skip" : "Use sevalla.applications.list to show available applications and help me choose"}\n` +
+              `1. ${args.app_id ? "Skip" : "Use sevalla_applications_list to show available applications and help me choose"}\n` +
               `2. ${args.branch ? "Skip" : "Help me choose a branch to deploy"}\n` +
-              `3. Use sevalla.deployments.start to trigger the deployment\n` +
-              `4. Use sevalla.deployments.get to check deployment status\n` +
+              `3. Use sevalla_deployments_start to trigger the deployment\n` +
+              `4. Use sevalla_deployments_get to check deployment status\n` +
               `5. Report the deployment result`,
           },
         },
@@ -77,9 +77,9 @@ export function registerPrompts(server: McpServer): void {
               `\nSteps:\n` +
               `1. ${args.type ? "Skip" : "Help me choose a database type (PostgreSQL, MariaDB, MySQL, Redis, or Valkey)"}\n` +
               `2. ${args.display_name ? "Skip" : "Help me choose a name for the database"}\n` +
-              `3. Use sevalla.resources.clusters and sevalla.resources.database-resource-types for cluster_id and resource_type_id\n` +
-              `4. Collect version, db_name, and db_password, then use sevalla.databases.create\n` +
-              `5. Use sevalla.databases.get to confirm creation and show connection details`,
+              `3. Use sevalla_resources_clusters and sevalla_resources_database_resource_types for cluster_id and resource_type_id\n` +
+              `4. Collect version, db_name, and db_password, then use sevalla_databases_create\n` +
+              `5. Use sevalla_databases_get to confirm creation and show connection details`,
           },
         },
       ],
@@ -110,7 +110,7 @@ export function registerPrompts(server: McpServer): void {
               `   - For development: Create a .env file with SEVALLA_API_KEY=your_key_here\n` +
               `5. Optionally set SEVALLA_COMPANY_ID for list operations\n` +
               `6. Restart the MCP server\n` +
-              `7. Use sevalla.validate to verify the connection`,
+              `7. Use sevalla_validate to verify the connection`,
           },
         },
       ],

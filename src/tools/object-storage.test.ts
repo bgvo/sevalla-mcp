@@ -31,46 +31,46 @@ describe("Object Storage Tools", () => {
   });
 
   it("should register all object storage tools", () => {
-    expect(ctx.tools.has("sevalla.object-storage.list")).toBe(true);
-    expect(ctx.tools.has("sevalla.object-storage.get")).toBe(true);
-    expect(ctx.tools.has("sevalla.object-storage.create")).toBe(true);
-    expect(ctx.tools.has("sevalla.object-storage.update")).toBe(true);
-    expect(ctx.tools.has("sevalla.object-storage.delete")).toBe(true);
-    expect(ctx.tools.has("sevalla.object-storage.cdn.enable")).toBe(true);
-    expect(ctx.tools.has("sevalla.object-storage.cdn.disable")).toBe(true);
-    expect(ctx.tools.has("sevalla.object-storage.objects.list")).toBe(true);
-    expect(ctx.tools.has("sevalla.object-storage.objects.delete")).toBe(true);
+    expect(ctx.tools.has("sevalla_object_storage_list")).toBe(true);
+    expect(ctx.tools.has("sevalla_object_storage_get")).toBe(true);
+    expect(ctx.tools.has("sevalla_object_storage_create")).toBe(true);
+    expect(ctx.tools.has("sevalla_object_storage_update")).toBe(true);
+    expect(ctx.tools.has("sevalla_object_storage_delete")).toBe(true);
+    expect(ctx.tools.has("sevalla_object_storage_cdn_enable")).toBe(true);
+    expect(ctx.tools.has("sevalla_object_storage_cdn_disable")).toBe(true);
+    expect(ctx.tools.has("sevalla_object_storage_objects_list")).toBe(true);
+    expect(ctx.tools.has("sevalla_object_storage_objects_delete")).toBe(true);
   });
 
   // ---------------------------------------------------------------------------
-  // sevalla.object-storage.list
+  // sevalla_object_storage_list
   // ---------------------------------------------------------------------------
 
-  describe("sevalla.object-storage.list", () => {
+  describe("sevalla_object_storage_list", () => {
     it("should handle auth failure", async () => {
       mockClientAuthFailure(mock);
-      const result = await ctx.callTool("sevalla.object-storage.list", {});
+      const result = await ctx.callTool("sevalla_object_storage_list", {});
       expect(result).toHaveProperty("isError", true);
     });
 
     it("should return error when no company ID is available", async () => {
       mockGetCompanyId.mockReturnValue(undefined);
       mockClientSuccess(mock, ctx);
-      const result = await ctx.callTool("sevalla.object-storage.list", {});
+      const result = await ctx.callTool("sevalla_object_storage_list", {});
       expect(result).toHaveProperty("isError", true);
     });
 
     it("should handle API error", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestError(ctx, "SERVER_ERROR", "fail");
-      const result = await ctx.callTool("sevalla.object-storage.list", {});
+      const result = await ctx.callTool("sevalla_object_storage_list", {});
       expect(result).toHaveProperty("isError", true);
     });
 
     it("should return success with default company", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestSuccess(ctx, { object_storages: [] });
-      const result = await ctx.callTool("sevalla.object-storage.list", {});
+      const result = await ctx.callTool("sevalla_object_storage_list", {});
       expect(result).not.toHaveProperty("isError");
       expect(ctx.mockClient.request).toHaveBeenCalledWith(
         expect.objectContaining({
@@ -84,7 +84,7 @@ describe("Object Storage Tools", () => {
     it("should use provided company over default", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestSuccess(ctx, { object_storages: [] });
-      const result = await ctx.callTool("sevalla.object-storage.list", {
+      const result = await ctx.callTool("sevalla_object_storage_list", {
         company: "custom-company-id",
       });
       expect(result).not.toHaveProperty("isError");
@@ -98,7 +98,7 @@ describe("Object Storage Tools", () => {
     it("should pass limit and offset as string params", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestSuccess(ctx, { object_storages: [] });
-      const result = await ctx.callTool("sevalla.object-storage.list", {
+      const result = await ctx.callTool("sevalla_object_storage_list", {
         limit: 10,
         offset: 20,
       });
@@ -112,13 +112,13 @@ describe("Object Storage Tools", () => {
   });
 
   // ---------------------------------------------------------------------------
-  // sevalla.object-storage.get
+  // sevalla_object_storage_get
   // ---------------------------------------------------------------------------
 
-  describe("sevalla.object-storage.get", () => {
+  describe("sevalla_object_storage_get", () => {
     it("should handle auth failure", async () => {
       mockClientAuthFailure(mock);
-      const result = await ctx.callTool("sevalla.object-storage.get", {
+      const result = await ctx.callTool("sevalla_object_storage_get", {
         id: "os-uuid-1",
       });
       expect(result).toHaveProperty("isError", true);
@@ -127,7 +127,7 @@ describe("Object Storage Tools", () => {
     it("should handle API error", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestError(ctx, "NOT_FOUND", "not found");
-      const result = await ctx.callTool("sevalla.object-storage.get", {
+      const result = await ctx.callTool("sevalla_object_storage_get", {
         id: "os-uuid-1",
       });
       expect(result).toHaveProperty("isError", true);
@@ -136,7 +136,7 @@ describe("Object Storage Tools", () => {
     it("should return success", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestSuccess(ctx, { id: "os-uuid-1", name: "my-storage" });
-      const result = await ctx.callTool("sevalla.object-storage.get", {
+      const result = await ctx.callTool("sevalla_object_storage_get", {
         id: "os-uuid-1",
       });
       expect(result).not.toHaveProperty("isError");
@@ -150,13 +150,13 @@ describe("Object Storage Tools", () => {
   });
 
   // ---------------------------------------------------------------------------
-  // sevalla.object-storage.create
+  // sevalla_object_storage_create
   // ---------------------------------------------------------------------------
 
-  describe("sevalla.object-storage.create", () => {
+  describe("sevalla_object_storage_create", () => {
     it("should handle auth failure", async () => {
       mockClientAuthFailure(mock);
-      const result = await ctx.callTool("sevalla.object-storage.create", {
+      const result = await ctx.callTool("sevalla_object_storage_create", {
         display_name: "Test Storage",
       });
       expect(result).toHaveProperty("isError", true);
@@ -165,7 +165,7 @@ describe("Object Storage Tools", () => {
     it("should return error when no company ID is available", async () => {
       mockGetCompanyId.mockReturnValue(undefined);
       mockClientSuccess(mock, ctx);
-      const result = await ctx.callTool("sevalla.object-storage.create", {
+      const result = await ctx.callTool("sevalla_object_storage_create", {
         display_name: "Test Storage",
       });
       expect(result).toHaveProperty("isError", true);
@@ -174,7 +174,7 @@ describe("Object Storage Tools", () => {
     it("should handle API error", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestError(ctx, "VALIDATION_ERROR", "invalid");
-      const result = await ctx.callTool("sevalla.object-storage.create", {
+      const result = await ctx.callTool("sevalla_object_storage_create", {
         display_name: "Test Storage",
       });
       expect(result).toHaveProperty("isError", true);
@@ -183,7 +183,7 @@ describe("Object Storage Tools", () => {
     it("should return success with required fields", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestSuccess(ctx, { id: "new-os-uuid" });
-      const result = await ctx.callTool("sevalla.object-storage.create", {
+      const result = await ctx.callTool("sevalla_object_storage_create", {
         display_name: "Test Storage",
       });
       expect(result).not.toHaveProperty("isError");
@@ -202,7 +202,7 @@ describe("Object Storage Tools", () => {
     it("should pass optional fields in body", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestSuccess(ctx, { id: "new-os-uuid" });
-      const result = await ctx.callTool("sevalla.object-storage.create", {
+      const result = await ctx.callTool("sevalla_object_storage_create", {
         company: "custom-company-id",
         display_name: "Test Storage",
         location: "us-east-1",
@@ -223,13 +223,13 @@ describe("Object Storage Tools", () => {
   });
 
   // ---------------------------------------------------------------------------
-  // sevalla.object-storage.update
+  // sevalla_object_storage_update
   // ---------------------------------------------------------------------------
 
-  describe("sevalla.object-storage.update", () => {
+  describe("sevalla_object_storage_update", () => {
     it("should handle auth failure", async () => {
       mockClientAuthFailure(mock);
-      const result = await ctx.callTool("sevalla.object-storage.update", {
+      const result = await ctx.callTool("sevalla_object_storage_update", {
         id: "os-uuid-1",
         display_name: "Updated Storage",
       });
@@ -239,7 +239,7 @@ describe("Object Storage Tools", () => {
     it("should handle API error", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestError(ctx, "SERVER_ERROR", "fail");
-      const result = await ctx.callTool("sevalla.object-storage.update", {
+      const result = await ctx.callTool("sevalla_object_storage_update", {
         id: "os-uuid-1",
         display_name: "Updated Storage",
       });
@@ -252,7 +252,7 @@ describe("Object Storage Tools", () => {
         id: "os-uuid-1",
         display_name: "Updated Storage",
       });
-      const result = await ctx.callTool("sevalla.object-storage.update", {
+      const result = await ctx.callTool("sevalla_object_storage_update", {
         id: "os-uuid-1",
         display_name: "Updated Storage",
       });
@@ -270,13 +270,13 @@ describe("Object Storage Tools", () => {
   });
 
   // ---------------------------------------------------------------------------
-  // sevalla.object-storage.delete
+  // sevalla_object_storage_delete
   // ---------------------------------------------------------------------------
 
-  describe("sevalla.object-storage.delete", () => {
+  describe("sevalla_object_storage_delete", () => {
     it("should handle auth failure", async () => {
       mockClientAuthFailure(mock);
-      const result = await ctx.callTool("sevalla.object-storage.delete", {
+      const result = await ctx.callTool("sevalla_object_storage_delete", {
         id: "os-uuid-1",
       });
       expect(result).toHaveProperty("isError", true);
@@ -285,7 +285,7 @@ describe("Object Storage Tools", () => {
     it("should handle API error", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestError(ctx, "NOT_FOUND", "not found");
-      const result = await ctx.callTool("sevalla.object-storage.delete", {
+      const result = await ctx.callTool("sevalla_object_storage_delete", {
         id: "os-uuid-1",
       });
       expect(result).toHaveProperty("isError", true);
@@ -294,7 +294,7 @@ describe("Object Storage Tools", () => {
     it("should return success", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestSuccess(ctx, { deleted: true });
-      const result = await ctx.callTool("sevalla.object-storage.delete", {
+      const result = await ctx.callTool("sevalla_object_storage_delete", {
         id: "os-uuid-1",
       });
       expect(result).not.toHaveProperty("isError");
@@ -308,13 +308,13 @@ describe("Object Storage Tools", () => {
   });
 
   // ---------------------------------------------------------------------------
-  // sevalla.object-storage.cdn.enable
+  // sevalla_object_storage_cdn_enable
   // ---------------------------------------------------------------------------
 
-  describe("sevalla.object-storage.cdn.enable", () => {
+  describe("sevalla_object_storage_cdn_enable", () => {
     it("should handle auth failure", async () => {
       mockClientAuthFailure(mock);
-      const result = await ctx.callTool("sevalla.object-storage.cdn.enable", {
+      const result = await ctx.callTool("sevalla_object_storage_cdn_enable", {
         id: "os-uuid-1",
       });
       expect(result).toHaveProperty("isError", true);
@@ -323,7 +323,7 @@ describe("Object Storage Tools", () => {
     it("should handle API error", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestError(ctx, "SERVER_ERROR", "fail");
-      const result = await ctx.callTool("sevalla.object-storage.cdn.enable", {
+      const result = await ctx.callTool("sevalla_object_storage_cdn_enable", {
         id: "os-uuid-1",
       });
       expect(result).toHaveProperty("isError", true);
@@ -332,7 +332,7 @@ describe("Object Storage Tools", () => {
     it("should return success", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestSuccess(ctx, { id: "os-uuid-1" });
-      const result = await ctx.callTool("sevalla.object-storage.cdn.enable", {
+      const result = await ctx.callTool("sevalla_object_storage_cdn_enable", {
         id: "os-uuid-1",
       });
       expect(result).not.toHaveProperty("isError");
@@ -346,13 +346,13 @@ describe("Object Storage Tools", () => {
   });
 
   // ---------------------------------------------------------------------------
-  // sevalla.object-storage.cdn.disable
+  // sevalla_object_storage_cdn_disable
   // ---------------------------------------------------------------------------
 
-  describe("sevalla.object-storage.cdn.disable", () => {
+  describe("sevalla_object_storage_cdn_disable", () => {
     it("should handle auth failure", async () => {
       mockClientAuthFailure(mock);
-      const result = await ctx.callTool("sevalla.object-storage.cdn.disable", {
+      const result = await ctx.callTool("sevalla_object_storage_cdn_disable", {
         id: "os-uuid-1",
       });
       expect(result).toHaveProperty("isError", true);
@@ -361,7 +361,7 @@ describe("Object Storage Tools", () => {
     it("should handle API error", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestError(ctx, "SERVER_ERROR", "fail");
-      const result = await ctx.callTool("sevalla.object-storage.cdn.disable", {
+      const result = await ctx.callTool("sevalla_object_storage_cdn_disable", {
         id: "os-uuid-1",
       });
       expect(result).toHaveProperty("isError", true);
@@ -370,7 +370,7 @@ describe("Object Storage Tools", () => {
     it("should return success", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestSuccess(ctx, { id: "os-uuid-1" });
-      const result = await ctx.callTool("sevalla.object-storage.cdn.disable", {
+      const result = await ctx.callTool("sevalla_object_storage_cdn_disable", {
         id: "os-uuid-1",
       });
       expect(result).not.toHaveProperty("isError");
@@ -384,13 +384,13 @@ describe("Object Storage Tools", () => {
   });
 
   // ---------------------------------------------------------------------------
-  // sevalla.object-storage.objects.list
+  // sevalla_object_storage_objects_list
   // ---------------------------------------------------------------------------
 
-  describe("sevalla.object-storage.objects.list", () => {
+  describe("sevalla_object_storage_objects_list", () => {
     it("should handle auth failure", async () => {
       mockClientAuthFailure(mock);
-      const result = await ctx.callTool("sevalla.object-storage.objects.list", {
+      const result = await ctx.callTool("sevalla_object_storage_objects_list", {
         id: "os-uuid-1",
       });
       expect(result).toHaveProperty("isError", true);
@@ -399,7 +399,7 @@ describe("Object Storage Tools", () => {
     it("should handle API error", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestError(ctx, "SERVER_ERROR", "fail");
-      const result = await ctx.callTool("sevalla.object-storage.objects.list", {
+      const result = await ctx.callTool("sevalla_object_storage_objects_list", {
         id: "os-uuid-1",
       });
       expect(result).toHaveProperty("isError", true);
@@ -408,7 +408,7 @@ describe("Object Storage Tools", () => {
     it("should return success", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestSuccess(ctx, { objects: [] });
-      const result = await ctx.callTool("sevalla.object-storage.objects.list", {
+      const result = await ctx.callTool("sevalla_object_storage_objects_list", {
         id: "os-uuid-1",
       });
       expect(result).not.toHaveProperty("isError");
@@ -422,14 +422,14 @@ describe("Object Storage Tools", () => {
   });
 
   // ---------------------------------------------------------------------------
-  // sevalla.object-storage.objects.delete
+  // sevalla_object_storage_objects_delete
   // ---------------------------------------------------------------------------
 
-  describe("sevalla.object-storage.objects.delete", () => {
+  describe("sevalla_object_storage_objects_delete", () => {
     it("should handle auth failure", async () => {
       mockClientAuthFailure(mock);
       const result = await ctx.callTool(
-        "sevalla.object-storage.objects.delete",
+        "sevalla_object_storage_objects_delete",
         { id: "os-uuid-1", keys: ["file1.txt", "file2.txt"] }
       );
       expect(result).toHaveProperty("isError", true);
@@ -439,7 +439,7 @@ describe("Object Storage Tools", () => {
       mockClientSuccess(mock, ctx);
       mockRequestError(ctx, "SERVER_ERROR", "fail");
       const result = await ctx.callTool(
-        "sevalla.object-storage.objects.delete",
+        "sevalla_object_storage_objects_delete",
         { id: "os-uuid-1", keys: ["file1.txt"] }
       );
       expect(result).toHaveProperty("isError", true);
@@ -449,7 +449,7 @@ describe("Object Storage Tools", () => {
       mockClientSuccess(mock, ctx);
       mockRequestSuccess(ctx, { deleted: true });
       const result = await ctx.callTool(
-        "sevalla.object-storage.objects.delete",
+        "sevalla_object_storage_objects_delete",
         { id: "os-uuid-1", keys: ["file1.txt", "file2.txt"] }
       );
       expect(result).not.toHaveProperty("isError");

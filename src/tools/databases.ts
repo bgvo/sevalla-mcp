@@ -21,7 +21,7 @@ import {
 const clusterIdSchema = z
   .uuid()
   .describe(
-    "Cluster UUID (data center). Use sevalla.resources.clusters to list options."
+    "Cluster UUID (data center). Use sevalla_resources_clusters to list options."
   );
 
 const databaseTypeSchema = z
@@ -29,9 +29,9 @@ const databaseTypeSchema = z
   .describe("Database engine type");
 
 export function registerDatabaseTools(server: McpServer): void {
-  // sevalla.databases.list
+  // sevalla_databases_list
   server.registerTool(
-    "sevalla.databases.list",
+    "sevalla_databases_list",
     {
       title: "List Databases",
       description: "List all databases for a company.",
@@ -81,9 +81,9 @@ export function registerDatabaseTools(server: McpServer): void {
     }
   );
 
-  // sevalla.databases.get
+  // sevalla_databases_get
   server.registerTool(
-    "sevalla.databases.get",
+    "sevalla_databases_get",
     {
       title: "Get Database",
       description: "Get details of a specific database.",
@@ -111,13 +111,13 @@ export function registerDatabaseTools(server: McpServer): void {
     }
   );
 
-  // sevalla.databases.create
+  // sevalla_databases_create
   server.registerTool(
-    "sevalla.databases.create",
+    "sevalla_databases_create",
     {
       title: "Create Database",
       description:
-        "Create a new database. Requires cluster_id and resource_type_id from sevalla.resources.clusters and sevalla.resources.database-resource-types.",
+        "Create a new database. Requires cluster_id and resource_type_id from sevalla_resources_clusters and sevalla_resources_database_resource_types.",
       inputSchema: z.object({
         display_name: z.string().describe("Display name for the database"),
         type: databaseTypeSchema,
@@ -127,7 +127,7 @@ export function registerDatabaseTools(server: McpServer): void {
           .string()
           .optional()
           .describe(
-            "Database resource type UUID. Use sevalla.resources.database-resource-types."
+            "Database resource type UUID. Use sevalla_resources_database_resource_types."
           ),
         db_name: z
           .string()
@@ -165,13 +165,13 @@ export function registerDatabaseTools(server: McpServer): void {
       if (!clusterId) {
         return formatValidationError(
           args.location
-            ? `location "${args.location}" is not a cluster UUID. Call sevalla.resources.clusters and pass cluster_id.`
-            : "cluster_id is required. Call sevalla.resources.clusters to list cluster UUIDs."
+            ? `location "${args.location}" is not a cluster UUID. Call sevalla_resources_clusters and pass cluster_id.`
+            : "cluster_id is required. Call sevalla_resources_clusters to list cluster UUIDs."
         );
       }
       if (!resourceTypeId) {
         return formatValidationError(
-          "resource_type_id is required. Call sevalla.resources.database-resource-types to list options."
+          "resource_type_id is required. Call sevalla_resources_database_resource_types to list options."
         );
       }
 
@@ -199,9 +199,9 @@ export function registerDatabaseTools(server: McpServer): void {
     }
   );
 
-  // sevalla.databases.update
+  // sevalla_databases_update
   server.registerTool(
-    "sevalla.databases.update",
+    "sevalla_databases_update",
     {
       title: "Update Database",
       description: "Update an existing database's configuration.",
@@ -241,9 +241,9 @@ export function registerDatabaseTools(server: McpServer): void {
     }
   );
 
-  // sevalla.databases.delete
+  // sevalla_databases_delete
   server.registerTool(
-    "sevalla.databases.delete",
+    "sevalla_databases_delete",
     {
       title: "Delete Database",
       description:
@@ -272,9 +272,9 @@ export function registerDatabaseTools(server: McpServer): void {
     }
   );
 
-  // sevalla.databases.activate
+  // sevalla_databases_activate
   server.registerTool(
-    "sevalla.databases.activate",
+    "sevalla_databases_activate",
     {
       title: "Activate Database",
       description: "Activate a suspended database.",
@@ -298,9 +298,9 @@ export function registerDatabaseTools(server: McpServer): void {
     }
   );
 
-  // sevalla.databases.suspend
+  // sevalla_databases_suspend
   server.registerTool(
-    "sevalla.databases.suspend",
+    "sevalla_databases_suspend",
     {
       title: "Suspend Database",
       description: "Suspend a running database.",
@@ -324,9 +324,9 @@ export function registerDatabaseTools(server: McpServer): void {
     }
   );
 
-  // sevalla.databases.reset-password
+  // sevalla_databases_reset_password
   server.registerTool(
-    "sevalla.databases.reset-password",
+    "sevalla_databases_reset_password",
     {
       title: "Reset Database Password",
       description: "Reset the password for a database.",
@@ -350,9 +350,9 @@ export function registerDatabaseTools(server: McpServer): void {
     }
   );
 
-  // sevalla.databases.backups.list
+  // sevalla_databases_backups_list
   server.registerTool(
-    "sevalla.databases.backups.list",
+    "sevalla_databases_backups_list",
     {
       title: "List Database Backups",
       description: "List all backups for a database.",
@@ -380,9 +380,9 @@ export function registerDatabaseTools(server: McpServer): void {
     }
   );
 
-  // sevalla.databases.backups.create
+  // sevalla_databases_backups_create
   server.registerTool(
-    "sevalla.databases.backups.create",
+    "sevalla_databases_backups_create",
     {
       title: "Create Database Backup",
       description: "Create a new backup for a database.",
@@ -406,9 +406,9 @@ export function registerDatabaseTools(server: McpServer): void {
     }
   );
 
-  // sevalla.databases.backups.restore
+  // sevalla_databases_backups_restore
   server.registerTool(
-    "sevalla.databases.backups.restore",
+    "sevalla_databases_backups_restore",
     {
       title: "Restore Database Backup",
       description: "Restore a database from a backup.",

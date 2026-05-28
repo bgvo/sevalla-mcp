@@ -17,9 +17,9 @@ import {
 } from "./utils.js";
 
 export function registerStaticSiteTools(server: McpServer): void {
-  // sevalla.static-sites.list
+  // sevalla_static_sites_list
   server.registerTool(
-    "sevalla.static-sites.list",
+    "sevalla_static_sites_list",
     {
       title: "List Static Sites",
       description: "List all static sites for a company.",
@@ -74,9 +74,9 @@ export function registerStaticSiteTools(server: McpServer): void {
     }
   );
 
-  // sevalla.static-sites.get
+  // sevalla_static_sites_get
   server.registerTool(
-    "sevalla.static-sites.get",
+    "sevalla_static_sites_get",
     {
       title: "Get Static Site",
       description: "Get details of a specific static site.",
@@ -104,9 +104,9 @@ export function registerStaticSiteTools(server: McpServer): void {
     }
   );
 
-  // sevalla.static-sites.create
+  // sevalla_static_sites_create
   server.registerTool(
-    "sevalla.static-sites.create",
+    "sevalla_static_sites_create",
     {
       title: "Create Static Site",
       description: "Create a new static site.",
@@ -159,9 +159,9 @@ export function registerStaticSiteTools(server: McpServer): void {
     }
   );
 
-  // sevalla.static-sites.update
+  // sevalla_static_sites_update
   server.registerTool(
-    "sevalla.static-sites.update",
+    "sevalla_static_sites_update",
     {
       title: "Update Static Site",
       description: "Update an existing static site's configuration.",
@@ -191,9 +191,9 @@ export function registerStaticSiteTools(server: McpServer): void {
     }
   );
 
-  // sevalla.static-sites.delete
+  // sevalla_static_sites_delete
   server.registerTool(
-    "sevalla.static-sites.delete",
+    "sevalla_static_sites_delete",
     {
       title: "Delete Static Site",
       description:
@@ -222,9 +222,9 @@ export function registerStaticSiteTools(server: McpServer): void {
     }
   );
 
-  // sevalla.static-sites.deploy
+  // sevalla_static_sites_deploy
   server.registerTool(
-    "sevalla.static-sites.deploy",
+    "sevalla_static_sites_deploy",
     {
       title: "Deploy Static Site",
       description: "Trigger a new deployment for a static site.",
@@ -255,9 +255,9 @@ export function registerStaticSiteTools(server: McpServer): void {
     }
   );
 
-  // sevalla.static-sites.get-deployment
+  // sevalla_static_sites_get_deployment
   server.registerTool(
-    "sevalla.static-sites.get-deployment",
+    "sevalla_static_sites_get_deployment",
     {
       title: "Get Static Site Deployment",
       description: "Get details of a specific static site deployment.",
@@ -287,9 +287,9 @@ export function registerStaticSiteTools(server: McpServer): void {
     }
   );
 
-  // sevalla.static-sites.purge-cache
+  // sevalla_static_sites_purge_cache
   server.registerTool(
-    "sevalla.static-sites.purge-cache",
+    "sevalla_static_sites_purge_cache",
     {
       title: "Purge Static Site Cache",
       description: "Purge the edge cache for a static site.",

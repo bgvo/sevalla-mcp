@@ -16,9 +16,9 @@ import {
 } from "./utils.js";
 
 export function registerLogsMetricsTools(server: McpServer): void {
-  // sevalla.applications.logs.access
+  // sevalla_applications_logs_access
   server.registerTool(
-    "sevalla.applications.logs.access",
+    "sevalla_applications_logs_access",
     {
       title: "Get Access Logs",
       description: "Get access logs for an application.",
@@ -57,9 +57,9 @@ export function registerLogsMetricsTools(server: McpServer): void {
     }
   );
 
-  // sevalla.applications.logs.runtime
+  // sevalla_applications_logs_runtime
   server.registerTool(
-    "sevalla.applications.logs.runtime",
+    "sevalla_applications_logs_runtime",
     {
       title: "Get Runtime Logs",
       description: "Get runtime logs for an application.",
@@ -98,9 +98,9 @@ export function registerLogsMetricsTools(server: McpServer): void {
     }
   );
 
-  // sevalla.applications.logs.deployment
+  // sevalla_applications_logs_deployment
   server.registerTool(
-    "sevalla.applications.logs.deployment",
+    "sevalla_applications_logs_deployment",
     {
       title: "Get Deployment Logs",
       description: "Get build/deployment logs for an application.",

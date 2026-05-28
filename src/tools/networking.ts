@@ -15,9 +15,9 @@ import {
 } from "./utils.js";
 
 export function registerNetworkingTools(server: McpServer): void {
-  // sevalla.networking.purge-cache
+  // sevalla_networking_purge_cache
   server.registerTool(
-    "sevalla.networking.purge-cache",
+    "sevalla_networking_purge_cache",
     {
       title: "Purge Application Cache",
       description: "Purge the edge cache for an application.",
@@ -43,9 +43,9 @@ export function registerNetworkingTools(server: McpServer): void {
     }
   );
 
-  // sevalla.networking.create-internal-connection
+  // sevalla_networking_create_internal_connection
   server.registerTool(
-    "sevalla.networking.create-internal-connection",
+    "sevalla_networking_create_internal_connection",
     {
       title: "Create Internal Connection",
       description:
@@ -80,9 +80,9 @@ export function registerNetworkingTools(server: McpServer): void {
     }
   );
 
-  // sevalla.networking.toggle-cdn
+  // sevalla_networking_toggle_cdn
   server.registerTool(
-    "sevalla.networking.toggle-cdn",
+    "sevalla_networking_toggle_cdn",
     {
       title: "Toggle CDN",
       description: "Enable or disable CDN for an application.",

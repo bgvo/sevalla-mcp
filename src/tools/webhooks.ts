@@ -17,9 +17,9 @@ import {
 } from "./utils.js";
 
 export function registerWebhookTools(server: McpServer): void {
-  // sevalla.webhooks.list
+  // sevalla_webhooks_list
   server.registerTool(
-    "sevalla.webhooks.list",
+    "sevalla_webhooks_list",
     {
       title: "List Webhooks",
       description: "List all webhooks for a company.",
@@ -74,9 +74,9 @@ export function registerWebhookTools(server: McpServer): void {
     }
   );
 
-  // sevalla.webhooks.get
+  // sevalla_webhooks_get
   server.registerTool(
-    "sevalla.webhooks.get",
+    "sevalla_webhooks_get",
     {
       title: "Get Webhook",
       description: "Get details of a specific webhook.",
@@ -104,9 +104,9 @@ export function registerWebhookTools(server: McpServer): void {
     }
   );
 
-  // sevalla.webhooks.create
+  // sevalla_webhooks_create
   server.registerTool(
-    "sevalla.webhooks.create",
+    "sevalla_webhooks_create",
     {
       title: "Create Webhook",
       description: "Create a new webhook.",
@@ -150,9 +150,9 @@ export function registerWebhookTools(server: McpServer): void {
     }
   );
 
-  // sevalla.webhooks.update
+  // sevalla_webhooks_update
   server.registerTool(
-    "sevalla.webhooks.update",
+    "sevalla_webhooks_update",
     {
       title: "Update Webhook",
       description: "Update an existing webhook's configuration.",
@@ -187,9 +187,9 @@ export function registerWebhookTools(server: McpServer): void {
     }
   );
 
-  // sevalla.webhooks.delete
+  // sevalla_webhooks_delete
   server.registerTool(
-    "sevalla.webhooks.delete",
+    "sevalla_webhooks_delete",
     {
       title: "Delete Webhook",
       description:
@@ -218,9 +218,9 @@ export function registerWebhookTools(server: McpServer): void {
     }
   );
 
-  // sevalla.webhooks.toggle
+  // sevalla_webhooks_toggle
   server.registerTool(
-    "sevalla.webhooks.toggle",
+    "sevalla_webhooks_toggle",
     {
       title: "Toggle Webhook",
       description: "Toggle a webhook's enabled/disabled state.",
@@ -244,9 +244,9 @@ export function registerWebhookTools(server: McpServer): void {
     }
   );
 
-  // sevalla.webhooks.roll-secret
+  // sevalla_webhooks_roll_secret
   server.registerTool(
-    "sevalla.webhooks.roll-secret",
+    "sevalla_webhooks_roll_secret",
     {
       title: "Roll Webhook Secret",
       description: "Roll (regenerate) the signing secret for a webhook.",
@@ -270,9 +270,9 @@ export function registerWebhookTools(server: McpServer): void {
     }
   );
 
-  // sevalla.webhooks.event-deliveries.list
+  // sevalla_webhooks_event_deliveries_list
   server.registerTool(
-    "sevalla.webhooks.event-deliveries.list",
+    "sevalla_webhooks_event_deliveries_list",
     {
       title: "List Webhook Event Deliveries",
       description: "List event deliveries for a specific webhook.",
@@ -301,9 +301,9 @@ export function registerWebhookTools(server: McpServer): void {
     }
   );
 
-  // sevalla.webhooks.event-deliveries.get
+  // sevalla_webhooks_event_deliveries_get
   server.registerTool(
-    "sevalla.webhooks.event-deliveries.get",
+    "sevalla_webhooks_event_deliveries_get",
     {
       title: "Get Webhook Event Delivery",
       description: "Get details of a specific webhook event delivery.",

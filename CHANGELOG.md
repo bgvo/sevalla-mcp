@@ -15,13 +15,19 @@ and this project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 
 ### Security
 
+## [1.0.2] - 2026-05-28
+
+### Fixed
+
+- Rename all MCP tools to use underscores only (`sevalla_databases_create` instead of `sevalla.databases.create`) for Cursor and OpenAI-compatible clients
+
 ## [1.0.1] - 2026-05-28
 
 ### Fixed
 
-- Align `sevalla.databases.create` and `sevalla.applications.create` with Sevalla API v3 request bodies (`cluster_id`, `resource_type_id`, `repo_url`, `source`, etc.)
+- Align `sevalla_databases_create` and `sevalla_applications_create` with Sevalla API v3 request bodies (`cluster_id`, `resource_type_id`, `repo_url`, `source`, etc.)
 - Use `GET /api-keys/validate` instead of the non-existent `POST` route
-- Allow array responses in tool output schemas (fixes `sevalla.resources.clusters` and `database-resource-types`)
+- Allow array responses in tool output schemas (fixes `sevalla_resources_clusters` and `database-resource-types`)
 
 ## [1.0.0] - 2026-03-12
 

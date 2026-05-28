@@ -16,9 +16,9 @@ import {
 } from "./utils.js";
 
 export function registerDeploymentTools(server: McpServer): void {
-  // sevalla.deployments.list
+  // sevalla_deployments_list
   server.registerTool(
-    "sevalla.deployments.list",
+    "sevalla_deployments_list",
     {
       title: "List Deployments",
       description: "List all deployments for an application.",
@@ -63,9 +63,9 @@ export function registerDeploymentTools(server: McpServer): void {
     }
   );
 
-  // sevalla.deployments.get
+  // sevalla_deployments_get
   server.registerTool(
-    "sevalla.deployments.get",
+    "sevalla_deployments_get",
     {
       title: "Get Deployment",
       description: "Get details of a specific deployment.",
@@ -94,9 +94,9 @@ export function registerDeploymentTools(server: McpServer): void {
     }
   );
 
-  // sevalla.deployments.start
+  // sevalla_deployments_start
   server.registerTool(
-    "sevalla.deployments.start",
+    "sevalla_deployments_start",
     {
       title: "Start Deployment",
       description: "Trigger a new deployment for an application.",
@@ -130,9 +130,9 @@ export function registerDeploymentTools(server: McpServer): void {
     }
   );
 
-  // sevalla.deployments.cancel
+  // sevalla_deployments_cancel
   server.registerTool(
-    "sevalla.deployments.cancel",
+    "sevalla_deployments_cancel",
     {
       title: "Cancel Deployment",
       description: "Cancel an in-progress deployment.",
@@ -157,9 +157,9 @@ export function registerDeploymentTools(server: McpServer): void {
     }
   );
 
-  // sevalla.deployments.rollback
+  // sevalla_deployments_rollback
   server.registerTool(
-    "sevalla.deployments.rollback",
+    "sevalla_deployments_rollback",
     {
       title: "Rollback Deployment",
       description: "Rollback to a specific deployment.",

@@ -17,9 +17,9 @@ import {
 } from "./utils.js";
 
 export function registerObjectStorageTools(server: McpServer): void {
-  // sevalla.object-storage.list
+  // sevalla_object_storage_list
   server.registerTool(
-    "sevalla.object-storage.list",
+    "sevalla_object_storage_list",
     {
       title: "List Object Storages",
       description: "List all object storages for a company.",
@@ -74,9 +74,9 @@ export function registerObjectStorageTools(server: McpServer): void {
     }
   );
 
-  // sevalla.object-storage.get
+  // sevalla_object_storage_get
   server.registerTool(
-    "sevalla.object-storage.get",
+    "sevalla_object_storage_get",
     {
       title: "Get Object Storage",
       description: "Get details of a specific object storage.",
@@ -104,9 +104,9 @@ export function registerObjectStorageTools(server: McpServer): void {
     }
   );
 
-  // sevalla.object-storage.create
+  // sevalla_object_storage_create
   server.registerTool(
-    "sevalla.object-storage.create",
+    "sevalla_object_storage_create",
     {
       title: "Create Object Storage",
       description: "Create a new object storage.",
@@ -153,9 +153,9 @@ export function registerObjectStorageTools(server: McpServer): void {
     }
   );
 
-  // sevalla.object-storage.update
+  // sevalla_object_storage_update
   server.registerTool(
-    "sevalla.object-storage.update",
+    "sevalla_object_storage_update",
     {
       title: "Update Object Storage",
       description: "Update an existing object storage's configuration.",
@@ -185,9 +185,9 @@ export function registerObjectStorageTools(server: McpServer): void {
     }
   );
 
-  // sevalla.object-storage.delete
+  // sevalla_object_storage_delete
   server.registerTool(
-    "sevalla.object-storage.delete",
+    "sevalla_object_storage_delete",
     {
       title: "Delete Object Storage",
       description:
@@ -216,9 +216,9 @@ export function registerObjectStorageTools(server: McpServer): void {
     }
   );
 
-  // sevalla.object-storage.cdn.enable
+  // sevalla_object_storage_cdn_enable
   server.registerTool(
-    "sevalla.object-storage.cdn.enable",
+    "sevalla_object_storage_cdn_enable",
     {
       title: "Enable Object Storage CDN",
       description: "Enable CDN for an object storage.",
@@ -242,9 +242,9 @@ export function registerObjectStorageTools(server: McpServer): void {
     }
   );
 
-  // sevalla.object-storage.cdn.disable
+  // sevalla_object_storage_cdn_disable
   server.registerTool(
-    "sevalla.object-storage.cdn.disable",
+    "sevalla_object_storage_cdn_disable",
     {
       title: "Disable Object Storage CDN",
       description: "Disable CDN for an object storage.",
@@ -268,9 +268,9 @@ export function registerObjectStorageTools(server: McpServer): void {
     }
   );
 
-  // sevalla.object-storage.objects.list
+  // sevalla_object_storage_objects_list
   server.registerTool(
-    "sevalla.object-storage.objects.list",
+    "sevalla_object_storage_objects_list",
     {
       title: "List Object Storage Objects",
       description: "List all objects in an object storage.",
@@ -299,9 +299,9 @@ export function registerObjectStorageTools(server: McpServer): void {
     }
   );
 
-  // sevalla.object-storage.objects.delete
+  // sevalla_object_storage_objects_delete
   server.registerTool(
-    "sevalla.object-storage.objects.delete",
+    "sevalla_object_storage_objects_delete",
     {
       title: "Delete Object Storage Objects",
       description:

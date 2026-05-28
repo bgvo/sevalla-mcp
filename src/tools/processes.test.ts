@@ -24,22 +24,22 @@ describe("Process Tools", () => {
   });
 
   it("should register all tools", () => {
-    expect(ctx.tools.has("sevalla.processes.list")).toBe(true);
-    expect(ctx.tools.has("sevalla.processes.get")).toBe(true);
-    expect(ctx.tools.has("sevalla.processes.create")).toBe(true);
-    expect(ctx.tools.has("sevalla.processes.update")).toBe(true);
-    expect(ctx.tools.has("sevalla.processes.delete")).toBe(true);
-    expect(ctx.tools.has("sevalla.processes.trigger-cron")).toBe(true);
+    expect(ctx.tools.has("sevalla_processes_list")).toBe(true);
+    expect(ctx.tools.has("sevalla_processes_get")).toBe(true);
+    expect(ctx.tools.has("sevalla_processes_create")).toBe(true);
+    expect(ctx.tools.has("sevalla_processes_update")).toBe(true);
+    expect(ctx.tools.has("sevalla_processes_delete")).toBe(true);
+    expect(ctx.tools.has("sevalla_processes_trigger_cron")).toBe(true);
   });
 
   // -------------------------------------------------------------------------
-  // sevalla.processes.list
+  // sevalla_processes_list
   // -------------------------------------------------------------------------
 
-  describe("sevalla.processes.list", () => {
+  describe("sevalla_processes_list", () => {
     it("should handle auth failure", async () => {
       mockClientAuthFailure(mock);
-      const result = await ctx.callTool("sevalla.processes.list", {
+      const result = await ctx.callTool("sevalla_processes_list", {
         app_id: "app-uuid-1",
       });
       expect(result).toHaveProperty("isError", true);
@@ -48,7 +48,7 @@ describe("Process Tools", () => {
     it("should handle API error", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestError(ctx, "SERVER_ERROR", "fail");
-      const result = await ctx.callTool("sevalla.processes.list", {
+      const result = await ctx.callTool("sevalla_processes_list", {
         app_id: "app-uuid-1",
       });
       expect(result).toHaveProperty("isError", true);
@@ -57,7 +57,7 @@ describe("Process Tools", () => {
     it("should return success with correct path", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestSuccess(ctx, [{ id: "proc-uuid-1", name: "web" }]);
-      const result = await ctx.callTool("sevalla.processes.list", {
+      const result = await ctx.callTool("sevalla_processes_list", {
         app_id: "app-uuid-1",
       });
       expect(result).not.toHaveProperty("isError");
@@ -71,13 +71,13 @@ describe("Process Tools", () => {
   });
 
   // -------------------------------------------------------------------------
-  // sevalla.processes.get
+  // sevalla_processes_get
   // -------------------------------------------------------------------------
 
-  describe("sevalla.processes.get", () => {
+  describe("sevalla_processes_get", () => {
     it("should handle auth failure", async () => {
       mockClientAuthFailure(mock);
-      const result = await ctx.callTool("sevalla.processes.get", {
+      const result = await ctx.callTool("sevalla_processes_get", {
         app_id: "app-uuid-1",
         id: "proc-uuid-1",
       });
@@ -87,7 +87,7 @@ describe("Process Tools", () => {
     it("should handle API error", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestError(ctx, "NOT_FOUND", "not found");
-      const result = await ctx.callTool("sevalla.processes.get", {
+      const result = await ctx.callTool("sevalla_processes_get", {
         app_id: "app-uuid-1",
         id: "proc-uuid-1",
       });
@@ -97,7 +97,7 @@ describe("Process Tools", () => {
     it("should return success with correct path", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestSuccess(ctx, { id: "proc-uuid-1", name: "web" });
-      const result = await ctx.callTool("sevalla.processes.get", {
+      const result = await ctx.callTool("sevalla_processes_get", {
         app_id: "app-uuid-1",
         id: "proc-uuid-1",
       });
@@ -112,13 +112,13 @@ describe("Process Tools", () => {
   });
 
   // -------------------------------------------------------------------------
-  // sevalla.processes.create
+  // sevalla_processes_create
   // -------------------------------------------------------------------------
 
-  describe("sevalla.processes.create", () => {
+  describe("sevalla_processes_create", () => {
     it("should handle auth failure", async () => {
       mockClientAuthFailure(mock);
-      const result = await ctx.callTool("sevalla.processes.create", {
+      const result = await ctx.callTool("sevalla_processes_create", {
         app_id: "app-uuid-1",
         name: "worker",
         command: "npm start",
@@ -129,7 +129,7 @@ describe("Process Tools", () => {
     it("should handle API error", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestError(ctx, "VALIDATION_ERROR", "invalid");
-      const result = await ctx.callTool("sevalla.processes.create", {
+      const result = await ctx.callTool("sevalla_processes_create", {
         app_id: "app-uuid-1",
         name: "worker",
         command: "npm start",
@@ -140,7 +140,7 @@ describe("Process Tools", () => {
     it("should send POST with body", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestSuccess(ctx, { id: "proc-uuid-2", name: "worker" });
-      const result = await ctx.callTool("sevalla.processes.create", {
+      const result = await ctx.callTool("sevalla_processes_create", {
         app_id: "app-uuid-1",
         name: "worker",
         command: "npm start",
@@ -157,13 +157,13 @@ describe("Process Tools", () => {
   });
 
   // -------------------------------------------------------------------------
-  // sevalla.processes.update
+  // sevalla_processes_update
   // -------------------------------------------------------------------------
 
-  describe("sevalla.processes.update", () => {
+  describe("sevalla_processes_update", () => {
     it("should handle auth failure", async () => {
       mockClientAuthFailure(mock);
-      const result = await ctx.callTool("sevalla.processes.update", {
+      const result = await ctx.callTool("sevalla_processes_update", {
         app_id: "app-uuid-1",
         id: "proc-uuid-1",
       });
@@ -173,7 +173,7 @@ describe("Process Tools", () => {
     it("should handle API error", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestError(ctx, "VALIDATION_ERROR", "invalid");
-      const result = await ctx.callTool("sevalla.processes.update", {
+      const result = await ctx.callTool("sevalla_processes_update", {
         app_id: "app-uuid-1",
         id: "proc-uuid-1",
         pod_count: 3,
@@ -184,7 +184,7 @@ describe("Process Tools", () => {
     it("should send PATCH with body", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestSuccess(ctx, { id: "proc-uuid-1", pod_count: 3 });
-      const result = await ctx.callTool("sevalla.processes.update", {
+      const result = await ctx.callTool("sevalla_processes_update", {
         app_id: "app-uuid-1",
         id: "proc-uuid-1",
         pod_count: 3,
@@ -203,7 +203,7 @@ describe("Process Tools", () => {
     it("should filter out undefined body params", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestSuccess(ctx, { id: "proc-uuid-1", pod_count: 2 });
-      await ctx.callTool("sevalla.processes.update", {
+      await ctx.callTool("sevalla_processes_update", {
         app_id: "app-uuid-1",
         id: "proc-uuid-1",
         pod_count: 2,
@@ -217,13 +217,13 @@ describe("Process Tools", () => {
   });
 
   // -------------------------------------------------------------------------
-  // sevalla.processes.delete
+  // sevalla_processes_delete
   // -------------------------------------------------------------------------
 
-  describe("sevalla.processes.delete", () => {
+  describe("sevalla_processes_delete", () => {
     it("should handle auth failure", async () => {
       mockClientAuthFailure(mock);
-      const result = await ctx.callTool("sevalla.processes.delete", {
+      const result = await ctx.callTool("sevalla_processes_delete", {
         app_id: "app-uuid-1",
         id: "proc-uuid-1",
       });
@@ -233,7 +233,7 @@ describe("Process Tools", () => {
     it("should handle API error", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestError(ctx, "NOT_FOUND", "not found");
-      const result = await ctx.callTool("sevalla.processes.delete", {
+      const result = await ctx.callTool("sevalla_processes_delete", {
         app_id: "app-uuid-1",
         id: "proc-uuid-1",
       });
@@ -243,7 +243,7 @@ describe("Process Tools", () => {
     it("should send DELETE to correct path", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestSuccess(ctx, { deleted: true });
-      const result = await ctx.callTool("sevalla.processes.delete", {
+      const result = await ctx.callTool("sevalla_processes_delete", {
         app_id: "app-uuid-1",
         id: "proc-uuid-1",
       });
@@ -258,13 +258,13 @@ describe("Process Tools", () => {
   });
 
   // -------------------------------------------------------------------------
-  // sevalla.processes.trigger-cron
+  // sevalla_processes_trigger_cron
   // -------------------------------------------------------------------------
 
-  describe("sevalla.processes.trigger-cron", () => {
+  describe("sevalla_processes_trigger_cron", () => {
     it("should handle auth failure", async () => {
       mockClientAuthFailure(mock);
-      const result = await ctx.callTool("sevalla.processes.trigger-cron", {
+      const result = await ctx.callTool("sevalla_processes_trigger_cron", {
         app_id: "app-uuid-1",
         id: "proc-uuid-1",
       });
@@ -274,7 +274,7 @@ describe("Process Tools", () => {
     it("should handle API error", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestError(ctx, "SERVER_ERROR", "fail");
-      const result = await ctx.callTool("sevalla.processes.trigger-cron", {
+      const result = await ctx.callTool("sevalla_processes_trigger_cron", {
         app_id: "app-uuid-1",
         id: "proc-uuid-1",
       });
@@ -284,7 +284,7 @@ describe("Process Tools", () => {
     it("should send POST to correct path", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestSuccess(ctx, { triggered: true });
-      const result = await ctx.callTool("sevalla.processes.trigger-cron", {
+      const result = await ctx.callTool("sevalla_processes_trigger_cron", {
         app_id: "app-uuid-1",
         id: "proc-uuid-1",
       });

@@ -17,9 +17,9 @@ import {
 } from "./utils.js";
 
 export function registerGlobalEnvVarTools(server: McpServer): void {
-  // sevalla.global-env-vars.list
+  // sevalla_global_env_vars_list
   server.registerTool(
-    "sevalla.global-env-vars.list",
+    "sevalla_global_env_vars_list",
     {
       title: "List Global Environment Variables",
       description: "List all global environment variables for a company.",
@@ -62,9 +62,9 @@ export function registerGlobalEnvVarTools(server: McpServer): void {
     }
   );
 
-  // sevalla.global-env-vars.create
+  // sevalla_global_env_vars_create
   server.registerTool(
-    "sevalla.global-env-vars.create",
+    "sevalla_global_env_vars_create",
     {
       title: "Create Global Environment Variable",
       description: "Create a new global environment variable.",
@@ -107,9 +107,9 @@ export function registerGlobalEnvVarTools(server: McpServer): void {
     }
   );
 
-  // sevalla.global-env-vars.update
+  // sevalla_global_env_vars_update
   server.registerTool(
-    "sevalla.global-env-vars.update",
+    "sevalla_global_env_vars_update",
     {
       title: "Update Global Environment Variable",
       description: "Update an existing global environment variable.",
@@ -136,9 +136,9 @@ export function registerGlobalEnvVarTools(server: McpServer): void {
     }
   );
 
-  // sevalla.global-env-vars.delete
+  // sevalla_global_env_vars_delete
   server.registerTool(
-    "sevalla.global-env-vars.delete",
+    "sevalla_global_env_vars_delete",
     {
       title: "Delete Global Environment Variable",
       description: "Delete a global environment variable.",

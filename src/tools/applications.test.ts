@@ -31,38 +31,38 @@ describe("Application Tools", () => {
   });
 
   it("should register all tools", () => {
-    expect(ctx.tools.has("sevalla.applications.list")).toBe(true);
-    expect(ctx.tools.has("sevalla.applications.get")).toBe(true);
-    expect(ctx.tools.has("sevalla.applications.create")).toBe(true);
-    expect(ctx.tools.has("sevalla.applications.update")).toBe(true);
-    expect(ctx.tools.has("sevalla.applications.delete")).toBe(true);
-    expect(ctx.tools.has("sevalla.applications.activate")).toBe(true);
-    expect(ctx.tools.has("sevalla.applications.suspend")).toBe(true);
-    expect(ctx.tools.has("sevalla.applications.clone")).toBe(true);
+    expect(ctx.tools.has("sevalla_applications_list")).toBe(true);
+    expect(ctx.tools.has("sevalla_applications_get")).toBe(true);
+    expect(ctx.tools.has("sevalla_applications_create")).toBe(true);
+    expect(ctx.tools.has("sevalla_applications_update")).toBe(true);
+    expect(ctx.tools.has("sevalla_applications_delete")).toBe(true);
+    expect(ctx.tools.has("sevalla_applications_activate")).toBe(true);
+    expect(ctx.tools.has("sevalla_applications_suspend")).toBe(true);
+    expect(ctx.tools.has("sevalla_applications_clone")).toBe(true);
   });
 
   // -------------------------------------------------------------------------
-  // sevalla.applications.list
+  // sevalla_applications_list
   // -------------------------------------------------------------------------
 
-  describe("sevalla.applications.list", () => {
+  describe("sevalla_applications_list", () => {
     it("should handle auth failure", async () => {
       mockClientAuthFailure(mock);
-      const result = await ctx.callTool("sevalla.applications.list", {});
+      const result = await ctx.callTool("sevalla_applications_list", {});
       expect(result).toHaveProperty("isError", true);
     });
 
     it("should handle API error", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestError(ctx, "SERVER_ERROR", "fail");
-      const result = await ctx.callTool("sevalla.applications.list", {});
+      const result = await ctx.callTool("sevalla_applications_list", {});
       expect(result).toHaveProperty("isError", true);
     });
 
     it("should use company ID from env by default", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestSuccess(ctx, { applications: [] });
-      const result = await ctx.callTool("sevalla.applications.list", {});
+      const result = await ctx.callTool("sevalla_applications_list", {});
       expect(result).not.toHaveProperty("isError");
       expect(ctx.mockClient.request).toHaveBeenCalledWith(
         expect.objectContaining({
@@ -76,7 +76,7 @@ describe("Application Tools", () => {
     it("should accept pagination params", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestSuccess(ctx, { applications: [] });
-      await ctx.callTool("sevalla.applications.list", {
+      await ctx.callTool("sevalla_applications_list", {
         limit: 10,
         offset: 20,
       });
@@ -93,7 +93,7 @@ describe("Application Tools", () => {
     it("should use provided company ID over env", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestSuccess(ctx, { applications: [] });
-      await ctx.callTool("sevalla.applications.list", {
+      await ctx.callTool("sevalla_applications_list", {
         company: "custom-company-uuid",
       });
       expect(ctx.mockClient.request).toHaveBeenCalledWith(
@@ -105,13 +105,13 @@ describe("Application Tools", () => {
   });
 
   // -------------------------------------------------------------------------
-  // sevalla.applications.get
+  // sevalla_applications_get
   // -------------------------------------------------------------------------
 
-  describe("sevalla.applications.get", () => {
+  describe("sevalla_applications_get", () => {
     it("should handle auth failure", async () => {
       mockClientAuthFailure(mock);
-      const result = await ctx.callTool("sevalla.applications.get", {
+      const result = await ctx.callTool("sevalla_applications_get", {
         id: "app-uuid-1",
       });
       expect(result).toHaveProperty("isError", true);
@@ -120,7 +120,7 @@ describe("Application Tools", () => {
     it("should handle API error", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestError(ctx, "NOT_FOUND", "not found");
-      const result = await ctx.callTool("sevalla.applications.get", {
+      const result = await ctx.callTool("sevalla_applications_get", {
         id: "app-uuid-1",
       });
       expect(result).toHaveProperty("isError", true);
@@ -129,7 +129,7 @@ describe("Application Tools", () => {
     it("should return success with correct path", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestSuccess(ctx, { id: "app-uuid-1", name: "My App" });
-      const result = await ctx.callTool("sevalla.applications.get", {
+      const result = await ctx.callTool("sevalla_applications_get", {
         id: "app-uuid-1",
       });
       expect(result).not.toHaveProperty("isError");
@@ -143,15 +143,15 @@ describe("Application Tools", () => {
   });
 
   // -------------------------------------------------------------------------
-  // sevalla.applications.create
+  // sevalla_applications_create
   // -------------------------------------------------------------------------
 
-  describe("sevalla.applications.create", () => {
+  describe("sevalla_applications_create", () => {
     const clusterId = "fb5e5168-4281-4bec-94c5-0d1584e9e657";
 
     it("should handle auth failure", async () => {
       mockClientAuthFailure(mock);
-      const result = await ctx.callTool("sevalla.applications.create", {
+      const result = await ctx.callTool("sevalla_applications_create", {
         display_name: "New App",
         cluster_id: clusterId,
         source: "publicGit",
@@ -164,7 +164,7 @@ describe("Application Tools", () => {
     it("should handle API error", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestError(ctx, "VALIDATION_ERROR", "invalid");
-      const result = await ctx.callTool("sevalla.applications.create", {
+      const result = await ctx.callTool("sevalla_applications_create", {
         display_name: "New App",
         cluster_id: clusterId,
         source: "publicGit",
@@ -176,7 +176,7 @@ describe("Application Tools", () => {
 
     it("should return validation error without cluster_id", async () => {
       mockClientSuccess(mock, ctx);
-      const result = await ctx.callTool("sevalla.applications.create", {
+      const result = await ctx.callTool("sevalla_applications_create", {
         display_name: "New App",
         source: "publicGit",
         repo_url: "https://github.com/org/repo",
@@ -188,7 +188,7 @@ describe("Application Tools", () => {
     it("should send POST with v3 body fields", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestSuccess(ctx, { id: "app-uuid-2", display_name: "New App" });
-      const result = await ctx.callTool("sevalla.applications.create", {
+      const result = await ctx.callTool("sevalla_applications_create", {
         display_name: "New App",
         cluster_id: clusterId,
         source: "publicGit",
@@ -216,7 +216,7 @@ describe("Application Tools", () => {
     it("should map legacy repository, branch, and location aliases", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestSuccess(ctx, { id: "app-uuid-2" });
-      await ctx.callTool("sevalla.applications.create", {
+      await ctx.callTool("sevalla_applications_create", {
         display_name: "New App",
         location: clusterId,
         source: "publicGit",
@@ -236,13 +236,13 @@ describe("Application Tools", () => {
   });
 
   // -------------------------------------------------------------------------
-  // sevalla.applications.update
+  // sevalla_applications_update
   // -------------------------------------------------------------------------
 
-  describe("sevalla.applications.update", () => {
+  describe("sevalla_applications_update", () => {
     it("should handle auth failure", async () => {
       mockClientAuthFailure(mock);
-      const result = await ctx.callTool("sevalla.applications.update", {
+      const result = await ctx.callTool("sevalla_applications_update", {
         id: "app-uuid-1",
       });
       expect(result).toHaveProperty("isError", true);
@@ -251,7 +251,7 @@ describe("Application Tools", () => {
     it("should handle API error", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestError(ctx, "VALIDATION_ERROR", "invalid");
-      const result = await ctx.callTool("sevalla.applications.update", {
+      const result = await ctx.callTool("sevalla_applications_update", {
         id: "app-uuid-1",
         display_name: "New Name",
       });
@@ -261,7 +261,7 @@ describe("Application Tools", () => {
     it("should send PATCH with body", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestSuccess(ctx, { id: "app-uuid-1", display_name: "New Name" });
-      const result = await ctx.callTool("sevalla.applications.update", {
+      const result = await ctx.callTool("sevalla_applications_update", {
         id: "app-uuid-1",
         display_name: "New Name",
         note: "Updated note",
@@ -278,13 +278,13 @@ describe("Application Tools", () => {
   });
 
   // -------------------------------------------------------------------------
-  // sevalla.applications.delete
+  // sevalla_applications_delete
   // -------------------------------------------------------------------------
 
-  describe("sevalla.applications.delete", () => {
+  describe("sevalla_applications_delete", () => {
     it("should handle auth failure", async () => {
       mockClientAuthFailure(mock);
-      const result = await ctx.callTool("sevalla.applications.delete", {
+      const result = await ctx.callTool("sevalla_applications_delete", {
         id: "app-uuid-1",
       });
       expect(result).toHaveProperty("isError", true);
@@ -293,7 +293,7 @@ describe("Application Tools", () => {
     it("should handle API error", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestError(ctx, "NOT_FOUND", "not found");
-      const result = await ctx.callTool("sevalla.applications.delete", {
+      const result = await ctx.callTool("sevalla_applications_delete", {
         id: "app-uuid-1",
       });
       expect(result).toHaveProperty("isError", true);
@@ -302,7 +302,7 @@ describe("Application Tools", () => {
     it("should send DELETE request", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestSuccess(ctx, { deleted: true });
-      const result = await ctx.callTool("sevalla.applications.delete", {
+      const result = await ctx.callTool("sevalla_applications_delete", {
         id: "app-uuid-1",
       });
       expect(result).not.toHaveProperty("isError");
@@ -316,13 +316,13 @@ describe("Application Tools", () => {
   });
 
   // -------------------------------------------------------------------------
-  // sevalla.applications.activate
+  // sevalla_applications_activate
   // -------------------------------------------------------------------------
 
-  describe("sevalla.applications.activate", () => {
+  describe("sevalla_applications_activate", () => {
     it("should handle auth failure", async () => {
       mockClientAuthFailure(mock);
-      const result = await ctx.callTool("sevalla.applications.activate", {
+      const result = await ctx.callTool("sevalla_applications_activate", {
         id: "app-uuid-1",
       });
       expect(result).toHaveProperty("isError", true);
@@ -331,7 +331,7 @@ describe("Application Tools", () => {
     it("should handle API error", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestError(ctx, "SERVER_ERROR", "fail");
-      const result = await ctx.callTool("sevalla.applications.activate", {
+      const result = await ctx.callTool("sevalla_applications_activate", {
         id: "app-uuid-1",
       });
       expect(result).toHaveProperty("isError", true);
@@ -340,7 +340,7 @@ describe("Application Tools", () => {
     it("should send POST with correct path", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestSuccess(ctx, { id: "app-uuid-1", status: "active" });
-      const result = await ctx.callTool("sevalla.applications.activate", {
+      const result = await ctx.callTool("sevalla_applications_activate", {
         id: "app-uuid-1",
       });
       expect(result).not.toHaveProperty("isError");
@@ -354,13 +354,13 @@ describe("Application Tools", () => {
   });
 
   // -------------------------------------------------------------------------
-  // sevalla.applications.suspend
+  // sevalla_applications_suspend
   // -------------------------------------------------------------------------
 
-  describe("sevalla.applications.suspend", () => {
+  describe("sevalla_applications_suspend", () => {
     it("should handle auth failure", async () => {
       mockClientAuthFailure(mock);
-      const result = await ctx.callTool("sevalla.applications.suspend", {
+      const result = await ctx.callTool("sevalla_applications_suspend", {
         id: "app-uuid-1",
       });
       expect(result).toHaveProperty("isError", true);
@@ -369,7 +369,7 @@ describe("Application Tools", () => {
     it("should handle API error", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestError(ctx, "SERVER_ERROR", "fail");
-      const result = await ctx.callTool("sevalla.applications.suspend", {
+      const result = await ctx.callTool("sevalla_applications_suspend", {
         id: "app-uuid-1",
       });
       expect(result).toHaveProperty("isError", true);
@@ -378,7 +378,7 @@ describe("Application Tools", () => {
     it("should send POST with correct path", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestSuccess(ctx, { id: "app-uuid-1", status: "suspended" });
-      const result = await ctx.callTool("sevalla.applications.suspend", {
+      const result = await ctx.callTool("sevalla_applications_suspend", {
         id: "app-uuid-1",
       });
       expect(result).not.toHaveProperty("isError");
@@ -392,13 +392,13 @@ describe("Application Tools", () => {
   });
 
   // -------------------------------------------------------------------------
-  // sevalla.applications.clone
+  // sevalla_applications_clone
   // -------------------------------------------------------------------------
 
-  describe("sevalla.applications.clone", () => {
+  describe("sevalla_applications_clone", () => {
     it("should handle auth failure", async () => {
       mockClientAuthFailure(mock);
-      const result = await ctx.callTool("sevalla.applications.clone", {
+      const result = await ctx.callTool("sevalla_applications_clone", {
         id: "app-uuid-1",
       });
       expect(result).toHaveProperty("isError", true);
@@ -407,7 +407,7 @@ describe("Application Tools", () => {
     it("should handle API error", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestError(ctx, "SERVER_ERROR", "fail");
-      const result = await ctx.callTool("sevalla.applications.clone", {
+      const result = await ctx.callTool("sevalla_applications_clone", {
         id: "app-uuid-1",
       });
       expect(result).toHaveProperty("isError", true);
@@ -416,7 +416,7 @@ describe("Application Tools", () => {
     it("should send POST with correct path", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestSuccess(ctx, { id: "app-uuid-2", cloned_from: "app-uuid-1" });
-      const result = await ctx.callTool("sevalla.applications.clone", {
+      const result = await ctx.callTool("sevalla_applications_clone", {
         id: "app-uuid-1",
       });
       expect(result).not.toHaveProperty("isError");

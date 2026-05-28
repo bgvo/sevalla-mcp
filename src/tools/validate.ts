@@ -1,5 +1,5 @@
 /**
- * sevalla.validate Tool
+ * sevalla_validate Tool
  *
  * Validate Sevalla API credentials.
  */
@@ -15,7 +15,7 @@ import {
 
 export function registerValidateTool(server: McpServer): void {
   server.registerTool(
-    "sevalla.validate",
+    "sevalla_validate",
     {
       title: "Validate API Key",
       description:

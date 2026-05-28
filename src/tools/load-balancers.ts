@@ -17,9 +17,9 @@ import {
 } from "./utils.js";
 
 export function registerLoadBalancerTools(server: McpServer): void {
-  // sevalla.load-balancers.list
+  // sevalla_load_balancers_list
   server.registerTool(
-    "sevalla.load-balancers.list",
+    "sevalla_load_balancers_list",
     {
       title: "List Load Balancers",
       description: "List all load balancers for a company.",
@@ -74,9 +74,9 @@ export function registerLoadBalancerTools(server: McpServer): void {
     }
   );
 
-  // sevalla.load-balancers.get
+  // sevalla_load_balancers_get
   server.registerTool(
-    "sevalla.load-balancers.get",
+    "sevalla_load_balancers_get",
     {
       title: "Get Load Balancer",
       description: "Get details of a specific load balancer.",
@@ -104,9 +104,9 @@ export function registerLoadBalancerTools(server: McpServer): void {
     }
   );
 
-  // sevalla.load-balancers.create
+  // sevalla_load_balancers_create
   server.registerTool(
-    "sevalla.load-balancers.create",
+    "sevalla_load_balancers_create",
     {
       title: "Create Load Balancer",
       description: "Create a new load balancer.",
@@ -151,9 +151,9 @@ export function registerLoadBalancerTools(server: McpServer): void {
     }
   );
 
-  // sevalla.load-balancers.update
+  // sevalla_load_balancers_update
   server.registerTool(
-    "sevalla.load-balancers.update",
+    "sevalla_load_balancers_update",
     {
       title: "Update Load Balancer",
       description: "Update an existing load balancer's configuration.",
@@ -186,9 +186,9 @@ export function registerLoadBalancerTools(server: McpServer): void {
     }
   );
 
-  // sevalla.load-balancers.delete
+  // sevalla_load_balancers_delete
   server.registerTool(
-    "sevalla.load-balancers.delete",
+    "sevalla_load_balancers_delete",
     {
       title: "Delete Load Balancer",
       description:
@@ -217,9 +217,9 @@ export function registerLoadBalancerTools(server: McpServer): void {
     }
   );
 
-  // sevalla.load-balancers.destinations.list
+  // sevalla_load_balancers_destinations_list
   server.registerTool(
-    "sevalla.load-balancers.destinations.list",
+    "sevalla_load_balancers_destinations_list",
     {
       title: "List Load Balancer Destinations",
       description: "List all destinations for a load balancer.",
@@ -248,9 +248,9 @@ export function registerLoadBalancerTools(server: McpServer): void {
     }
   );
 
-  // sevalla.load-balancers.destinations.add
+  // sevalla_load_balancers_destinations_add
   server.registerTool(
-    "sevalla.load-balancers.destinations.add",
+    "sevalla_load_balancers_destinations_add",
     {
       title: "Add Load Balancer Destination",
       description: "Add a destination to a load balancer.",
@@ -281,9 +281,9 @@ export function registerLoadBalancerTools(server: McpServer): void {
     }
   );
 
-  // sevalla.load-balancers.destinations.remove
+  // sevalla_load_balancers_destinations_remove
   server.registerTool(
-    "sevalla.load-balancers.destinations.remove",
+    "sevalla_load_balancers_destinations_remove",
     {
       title: "Remove Load Balancer Destination",
       description: "Remove a destination from a load balancer.",
@@ -313,9 +313,9 @@ export function registerLoadBalancerTools(server: McpServer): void {
     }
   );
 
-  // sevalla.load-balancers.destinations.toggle
+  // sevalla_load_balancers_destinations_toggle
   server.registerTool(
-    "sevalla.load-balancers.destinations.toggle",
+    "sevalla_load_balancers_destinations_toggle",
     {
       title: "Toggle Load Balancer Destination",
       description: "Toggle a destination on or off for a load balancer.",

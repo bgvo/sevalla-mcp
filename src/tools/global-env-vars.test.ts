@@ -31,23 +31,23 @@ describe("Global Environment Variable Tools", () => {
   });
 
   it("should register all tools", () => {
-    expect(ctx.tools.has("sevalla.global-env-vars.list")).toBe(true);
-    expect(ctx.tools.has("sevalla.global-env-vars.create")).toBe(true);
-    expect(ctx.tools.has("sevalla.global-env-vars.update")).toBe(true);
-    expect(ctx.tools.has("sevalla.global-env-vars.delete")).toBe(true);
+    expect(ctx.tools.has("sevalla_global_env_vars_list")).toBe(true);
+    expect(ctx.tools.has("sevalla_global_env_vars_create")).toBe(true);
+    expect(ctx.tools.has("sevalla_global_env_vars_update")).toBe(true);
+    expect(ctx.tools.has("sevalla_global_env_vars_delete")).toBe(true);
   });
 
-  describe("sevalla.global-env-vars.list", () => {
+  describe("sevalla_global_env_vars_list", () => {
     it("should handle auth failure", async () => {
       mockClientAuthFailure(mock);
-      const result = await ctx.callTool("sevalla.global-env-vars.list", {});
+      const result = await ctx.callTool("sevalla_global_env_vars_list", {});
       expect(result).toHaveProperty("isError", true);
     });
 
     it("should return clear error when no company ID is available", async () => {
       mockGetCompanyId.mockReturnValue(undefined);
       mockClientSuccess(mock, ctx);
-      const result = await ctx.callTool("sevalla.global-env-vars.list", {});
+      const result = await ctx.callTool("sevalla_global_env_vars_list", {});
       expect(result).toHaveProperty("isError", true);
       expect(result).toHaveProperty(
         "content.0.text",
@@ -59,14 +59,14 @@ describe("Global Environment Variable Tools", () => {
     it("should handle API error", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestError(ctx, "SERVER_ERROR", "fail");
-      const result = await ctx.callTool("sevalla.global-env-vars.list", {});
+      const result = await ctx.callTool("sevalla_global_env_vars_list", {});
       expect(result).toHaveProperty("isError", true);
     });
 
     it("should return success with correct path", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestSuccess(ctx, { variables: [] });
-      const result = await ctx.callTool("sevalla.global-env-vars.list", {});
+      const result = await ctx.callTool("sevalla_global_env_vars_list", {});
       expect(result).not.toHaveProperty("isError");
       expect(ctx.mockClient.request).toHaveBeenCalledWith(
         expect.objectContaining({
@@ -78,10 +78,10 @@ describe("Global Environment Variable Tools", () => {
     });
   });
 
-  describe("sevalla.global-env-vars.create", () => {
+  describe("sevalla_global_env_vars_create", () => {
     it("should handle auth failure", async () => {
       mockClientAuthFailure(mock);
-      const result = await ctx.callTool("sevalla.global-env-vars.create", {
+      const result = await ctx.callTool("sevalla_global_env_vars_create", {
         key: "NODE_ENV",
         value: "production",
       });
@@ -91,7 +91,7 @@ describe("Global Environment Variable Tools", () => {
     it("should return clear error when no company ID is available", async () => {
       mockGetCompanyId.mockReturnValue(undefined);
       mockClientSuccess(mock, ctx);
-      const result = await ctx.callTool("sevalla.global-env-vars.create", {
+      const result = await ctx.callTool("sevalla_global_env_vars_create", {
         key: "NODE_ENV",
         value: "production",
       });
@@ -106,7 +106,7 @@ describe("Global Environment Variable Tools", () => {
     it("should handle API error", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestError(ctx, "SERVER_ERROR", "fail");
-      const result = await ctx.callTool("sevalla.global-env-vars.create", {
+      const result = await ctx.callTool("sevalla_global_env_vars_create", {
         key: "NODE_ENV",
         value: "production",
       });
@@ -116,7 +116,7 @@ describe("Global Environment Variable Tools", () => {
     it("should send POST with body", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestSuccess(ctx, { id: "gev-uuid-1" });
-      const result = await ctx.callTool("sevalla.global-env-vars.create", {
+      const result = await ctx.callTool("sevalla_global_env_vars_create", {
         key: "NODE_ENV",
         value: "production",
       });
@@ -135,10 +135,10 @@ describe("Global Environment Variable Tools", () => {
     });
   });
 
-  describe("sevalla.global-env-vars.update", () => {
+  describe("sevalla_global_env_vars_update", () => {
     it("should handle auth failure", async () => {
       mockClientAuthFailure(mock);
-      const result = await ctx.callTool("sevalla.global-env-vars.update", {
+      const result = await ctx.callTool("sevalla_global_env_vars_update", {
         id: "gev-uuid-1",
         value: "staging",
       });
@@ -148,7 +148,7 @@ describe("Global Environment Variable Tools", () => {
     it("should handle API error", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestError(ctx, "NOT_FOUND", "not found");
-      const result = await ctx.callTool("sevalla.global-env-vars.update", {
+      const result = await ctx.callTool("sevalla_global_env_vars_update", {
         id: "gev-uuid-1",
         value: "staging",
       });
@@ -158,7 +158,7 @@ describe("Global Environment Variable Tools", () => {
     it("should send PATCH with body", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestSuccess(ctx, { id: "gev-uuid-1" });
-      const result = await ctx.callTool("sevalla.global-env-vars.update", {
+      const result = await ctx.callTool("sevalla_global_env_vars_update", {
         id: "gev-uuid-1",
         value: "staging",
       });
@@ -173,10 +173,10 @@ describe("Global Environment Variable Tools", () => {
     });
   });
 
-  describe("sevalla.global-env-vars.delete", () => {
+  describe("sevalla_global_env_vars_delete", () => {
     it("should handle auth failure", async () => {
       mockClientAuthFailure(mock);
-      const result = await ctx.callTool("sevalla.global-env-vars.delete", {
+      const result = await ctx.callTool("sevalla_global_env_vars_delete", {
         id: "gev-uuid-1",
       });
       expect(result).toHaveProperty("isError", true);
@@ -185,7 +185,7 @@ describe("Global Environment Variable Tools", () => {
     it("should handle API error", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestError(ctx, "NOT_FOUND", "not found");
-      const result = await ctx.callTool("sevalla.global-env-vars.delete", {
+      const result = await ctx.callTool("sevalla_global_env_vars_delete", {
         id: "gev-uuid-1",
       });
       expect(result).toHaveProperty("isError", true);
@@ -194,7 +194,7 @@ describe("Global Environment Variable Tools", () => {
     it("should send DELETE request", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestSuccess(ctx, { deleted: true });
-      const result = await ctx.callTool("sevalla.global-env-vars.delete", {
+      const result = await ctx.callTool("sevalla_global_env_vars_delete", {
         id: "gev-uuid-1",
       });
       expect(result).not.toHaveProperty("isError");

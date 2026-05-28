@@ -24,33 +24,33 @@ describe("Resource Tools", () => {
   });
 
   it("should register all tools", () => {
-    expect(ctx.tools.has("sevalla.resources.clusters")).toBe(true);
-    expect(ctx.tools.has("sevalla.resources.database-resource-types")).toBe(
+    expect(ctx.tools.has("sevalla_resources_clusters")).toBe(true);
+    expect(ctx.tools.has("sevalla_resources_database_resource_types")).toBe(
       true
     );
-    expect(ctx.tools.has("sevalla.resources.process-resource-types")).toBe(
+    expect(ctx.tools.has("sevalla_resources_process_resource_types")).toBe(
       true
     );
   });
 
-  describe("sevalla.resources.clusters", () => {
+  describe("sevalla_resources_clusters", () => {
     it("should handle auth failure", async () => {
       mockClientAuthFailure(mock);
-      const result = await ctx.callTool("sevalla.resources.clusters", {});
+      const result = await ctx.callTool("sevalla_resources_clusters", {});
       expect(result).toHaveProperty("isError", true);
     });
 
     it("should handle API error", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestError(ctx, "SERVER_ERROR", "fail");
-      const result = await ctx.callTool("sevalla.resources.clusters", {});
+      const result = await ctx.callTool("sevalla_resources_clusters", {});
       expect(result).toHaveProperty("isError", true);
     });
 
     it("should return success with correct path", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestSuccess(ctx, { clusters: [] });
-      const result = await ctx.callTool("sevalla.resources.clusters", {});
+      const result = await ctx.callTool("sevalla_resources_clusters", {});
       expect(result).not.toHaveProperty("isError");
       expect(ctx.mockClient.request).toHaveBeenCalledWith(
         expect.objectContaining({
@@ -61,11 +61,11 @@ describe("Resource Tools", () => {
     });
   });
 
-  describe("sevalla.resources.database-resource-types", () => {
+  describe("sevalla_resources_database_resource_types", () => {
     it("should handle auth failure", async () => {
       mockClientAuthFailure(mock);
       const result = await ctx.callTool(
-        "sevalla.resources.database-resource-types",
+        "sevalla_resources_database_resource_types",
         {}
       );
       expect(result).toHaveProperty("isError", true);
@@ -75,7 +75,7 @@ describe("Resource Tools", () => {
       mockClientSuccess(mock, ctx);
       mockRequestError(ctx, "SERVER_ERROR", "fail");
       const result = await ctx.callTool(
-        "sevalla.resources.database-resource-types",
+        "sevalla_resources_database_resource_types",
         {}
       );
       expect(result).toHaveProperty("isError", true);
@@ -85,7 +85,7 @@ describe("Resource Tools", () => {
       mockClientSuccess(mock, ctx);
       mockRequestSuccess(ctx, { resource_types: [] });
       const result = await ctx.callTool(
-        "sevalla.resources.database-resource-types",
+        "sevalla_resources_database_resource_types",
         {}
       );
       expect(result).not.toHaveProperty("isError");
@@ -98,11 +98,11 @@ describe("Resource Tools", () => {
     });
   });
 
-  describe("sevalla.resources.process-resource-types", () => {
+  describe("sevalla_resources_process_resource_types", () => {
     it("should handle auth failure", async () => {
       mockClientAuthFailure(mock);
       const result = await ctx.callTool(
-        "sevalla.resources.process-resource-types",
+        "sevalla_resources_process_resource_types",
         {}
       );
       expect(result).toHaveProperty("isError", true);
@@ -112,7 +112,7 @@ describe("Resource Tools", () => {
       mockClientSuccess(mock, ctx);
       mockRequestError(ctx, "SERVER_ERROR", "fail");
       const result = await ctx.callTool(
-        "sevalla.resources.process-resource-types",
+        "sevalla_resources_process_resource_types",
         {}
       );
       expect(result).toHaveProperty("isError", true);
@@ -122,7 +122,7 @@ describe("Resource Tools", () => {
       mockClientSuccess(mock, ctx);
       mockRequestSuccess(ctx, { resource_types: [] });
       const result = await ctx.callTool(
-        "sevalla.resources.process-resource-types",
+        "sevalla_resources_process_resource_types",
         {}
       );
       expect(result).not.toHaveProperty("isError");

@@ -31,26 +31,26 @@ describe("API Key Tools", () => {
   });
 
   it("should register all tools", () => {
-    expect(ctx.tools.has("sevalla.api-keys.list")).toBe(true);
-    expect(ctx.tools.has("sevalla.api-keys.get")).toBe(true);
-    expect(ctx.tools.has("sevalla.api-keys.create")).toBe(true);
-    expect(ctx.tools.has("sevalla.api-keys.update")).toBe(true);
-    expect(ctx.tools.has("sevalla.api-keys.delete")).toBe(true);
-    expect(ctx.tools.has("sevalla.api-keys.rotate")).toBe(true);
-    expect(ctx.tools.has("sevalla.api-keys.toggle")).toBe(true);
+    expect(ctx.tools.has("sevalla_api_keys_list")).toBe(true);
+    expect(ctx.tools.has("sevalla_api_keys_get")).toBe(true);
+    expect(ctx.tools.has("sevalla_api_keys_create")).toBe(true);
+    expect(ctx.tools.has("sevalla_api_keys_update")).toBe(true);
+    expect(ctx.tools.has("sevalla_api_keys_delete")).toBe(true);
+    expect(ctx.tools.has("sevalla_api_keys_rotate")).toBe(true);
+    expect(ctx.tools.has("sevalla_api_keys_toggle")).toBe(true);
   });
 
-  describe("sevalla.api-keys.list", () => {
+  describe("sevalla_api_keys_list", () => {
     it("should handle auth failure", async () => {
       mockClientAuthFailure(mock);
-      const result = await ctx.callTool("sevalla.api-keys.list", {});
+      const result = await ctx.callTool("sevalla_api_keys_list", {});
       expect(result).toHaveProperty("isError", true);
     });
 
     it("should return clear error when no company ID is available", async () => {
       mockGetCompanyId.mockReturnValue(undefined);
       mockClientSuccess(mock, ctx);
-      const result = await ctx.callTool("sevalla.api-keys.list", {});
+      const result = await ctx.callTool("sevalla_api_keys_list", {});
       expect(result).toHaveProperty("isError", true);
       expect(result).toHaveProperty(
         "content.0.text",
@@ -62,14 +62,14 @@ describe("API Key Tools", () => {
     it("should handle API error", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestError(ctx, "SERVER_ERROR", "fail");
-      const result = await ctx.callTool("sevalla.api-keys.list", {});
+      const result = await ctx.callTool("sevalla_api_keys_list", {});
       expect(result).toHaveProperty("isError", true);
     });
 
     it("should return success with correct path", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestSuccess(ctx, { api_keys: [] });
-      const result = await ctx.callTool("sevalla.api-keys.list", {});
+      const result = await ctx.callTool("sevalla_api_keys_list", {});
       expect(result).not.toHaveProperty("isError");
       expect(ctx.mockClient.request).toHaveBeenCalledWith(
         expect.objectContaining({
@@ -81,10 +81,10 @@ describe("API Key Tools", () => {
     });
   });
 
-  describe("sevalla.api-keys.get", () => {
+  describe("sevalla_api_keys_get", () => {
     it("should handle auth failure", async () => {
       mockClientAuthFailure(mock);
-      const result = await ctx.callTool("sevalla.api-keys.get", {
+      const result = await ctx.callTool("sevalla_api_keys_get", {
         id: "key-uuid-1",
       });
       expect(result).toHaveProperty("isError", true);
@@ -93,7 +93,7 @@ describe("API Key Tools", () => {
     it("should handle API error", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestError(ctx, "NOT_FOUND", "not found");
-      const result = await ctx.callTool("sevalla.api-keys.get", {
+      const result = await ctx.callTool("sevalla_api_keys_get", {
         id: "key-uuid-1",
       });
       expect(result).toHaveProperty("isError", true);
@@ -102,7 +102,7 @@ describe("API Key Tools", () => {
     it("should return success", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestSuccess(ctx, { id: "key-uuid-1" });
-      const result = await ctx.callTool("sevalla.api-keys.get", {
+      const result = await ctx.callTool("sevalla_api_keys_get", {
         id: "key-uuid-1",
       });
       expect(result).not.toHaveProperty("isError");
@@ -115,10 +115,10 @@ describe("API Key Tools", () => {
     });
   });
 
-  describe("sevalla.api-keys.create", () => {
+  describe("sevalla_api_keys_create", () => {
     it("should handle auth failure", async () => {
       mockClientAuthFailure(mock);
-      const result = await ctx.callTool("sevalla.api-keys.create", {
+      const result = await ctx.callTool("sevalla_api_keys_create", {
         name: "My Key",
       });
       expect(result).toHaveProperty("isError", true);
@@ -127,7 +127,7 @@ describe("API Key Tools", () => {
     it("should return clear error when no company ID is available", async () => {
       mockGetCompanyId.mockReturnValue(undefined);
       mockClientSuccess(mock, ctx);
-      const result = await ctx.callTool("sevalla.api-keys.create", {
+      const result = await ctx.callTool("sevalla_api_keys_create", {
         name: "My Key",
       });
       expect(result).toHaveProperty("isError", true);
@@ -141,7 +141,7 @@ describe("API Key Tools", () => {
     it("should handle API error", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestError(ctx, "SERVER_ERROR", "fail");
-      const result = await ctx.callTool("sevalla.api-keys.create", {
+      const result = await ctx.callTool("sevalla_api_keys_create", {
         name: "My Key",
       });
       expect(result).toHaveProperty("isError", true);
@@ -150,7 +150,7 @@ describe("API Key Tools", () => {
     it("should send POST with body", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestSuccess(ctx, { id: "key-uuid-new" });
-      const result = await ctx.callTool("sevalla.api-keys.create", {
+      const result = await ctx.callTool("sevalla_api_keys_create", {
         name: "My Key",
       });
       expect(result).not.toHaveProperty("isError");
@@ -167,10 +167,10 @@ describe("API Key Tools", () => {
     });
   });
 
-  describe("sevalla.api-keys.update", () => {
+  describe("sevalla_api_keys_update", () => {
     it("should handle auth failure", async () => {
       mockClientAuthFailure(mock);
-      const result = await ctx.callTool("sevalla.api-keys.update", {
+      const result = await ctx.callTool("sevalla_api_keys_update", {
         id: "key-uuid-1",
         name: "Updated",
       });
@@ -180,7 +180,7 @@ describe("API Key Tools", () => {
     it("should handle API error", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestError(ctx, "SERVER_ERROR", "fail");
-      const result = await ctx.callTool("sevalla.api-keys.update", {
+      const result = await ctx.callTool("sevalla_api_keys_update", {
         id: "key-uuid-1",
         name: "Updated",
       });
@@ -190,7 +190,7 @@ describe("API Key Tools", () => {
     it("should send PATCH with body", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestSuccess(ctx, { id: "key-uuid-1" });
-      const result = await ctx.callTool("sevalla.api-keys.update", {
+      const result = await ctx.callTool("sevalla_api_keys_update", {
         id: "key-uuid-1",
         name: "Updated",
       });
@@ -205,10 +205,10 @@ describe("API Key Tools", () => {
     });
   });
 
-  describe("sevalla.api-keys.delete", () => {
+  describe("sevalla_api_keys_delete", () => {
     it("should handle auth failure", async () => {
       mockClientAuthFailure(mock);
-      const result = await ctx.callTool("sevalla.api-keys.delete", {
+      const result = await ctx.callTool("sevalla_api_keys_delete", {
         id: "key-uuid-1",
       });
       expect(result).toHaveProperty("isError", true);
@@ -217,7 +217,7 @@ describe("API Key Tools", () => {
     it("should handle API error", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestError(ctx, "NOT_FOUND", "not found");
-      const result = await ctx.callTool("sevalla.api-keys.delete", {
+      const result = await ctx.callTool("sevalla_api_keys_delete", {
         id: "key-uuid-1",
       });
       expect(result).toHaveProperty("isError", true);
@@ -226,7 +226,7 @@ describe("API Key Tools", () => {
     it("should send DELETE request", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestSuccess(ctx, { deleted: true });
-      const result = await ctx.callTool("sevalla.api-keys.delete", {
+      const result = await ctx.callTool("sevalla_api_keys_delete", {
         id: "key-uuid-1",
       });
       expect(result).not.toHaveProperty("isError");
@@ -239,10 +239,10 @@ describe("API Key Tools", () => {
     });
   });
 
-  describe("sevalla.api-keys.rotate", () => {
+  describe("sevalla_api_keys_rotate", () => {
     it("should handle auth failure", async () => {
       mockClientAuthFailure(mock);
-      const result = await ctx.callTool("sevalla.api-keys.rotate", {
+      const result = await ctx.callTool("sevalla_api_keys_rotate", {
         id: "key-uuid-1",
       });
       expect(result).toHaveProperty("isError", true);
@@ -251,7 +251,7 @@ describe("API Key Tools", () => {
     it("should handle API error", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestError(ctx, "SERVER_ERROR", "fail");
-      const result = await ctx.callTool("sevalla.api-keys.rotate", {
+      const result = await ctx.callTool("sevalla_api_keys_rotate", {
         id: "key-uuid-1",
       });
       expect(result).toHaveProperty("isError", true);
@@ -260,7 +260,7 @@ describe("API Key Tools", () => {
     it("should send POST to correct path", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestSuccess(ctx, { token: "new-token" });
-      const result = await ctx.callTool("sevalla.api-keys.rotate", {
+      const result = await ctx.callTool("sevalla_api_keys_rotate", {
         id: "key-uuid-1",
       });
       expect(result).not.toHaveProperty("isError");
@@ -273,10 +273,10 @@ describe("API Key Tools", () => {
     });
   });
 
-  describe("sevalla.api-keys.toggle", () => {
+  describe("sevalla_api_keys_toggle", () => {
     it("should handle auth failure", async () => {
       mockClientAuthFailure(mock);
-      const result = await ctx.callTool("sevalla.api-keys.toggle", {
+      const result = await ctx.callTool("sevalla_api_keys_toggle", {
         id: "key-uuid-1",
       });
       expect(result).toHaveProperty("isError", true);
@@ -285,7 +285,7 @@ describe("API Key Tools", () => {
     it("should handle API error", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestError(ctx, "SERVER_ERROR", "fail");
-      const result = await ctx.callTool("sevalla.api-keys.toggle", {
+      const result = await ctx.callTool("sevalla_api_keys_toggle", {
         id: "key-uuid-1",
       });
       expect(result).toHaveProperty("isError", true);
@@ -294,7 +294,7 @@ describe("API Key Tools", () => {
     it("should send POST to correct path", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestSuccess(ctx, { enabled: false });
-      const result = await ctx.callTool("sevalla.api-keys.toggle", {
+      const result = await ctx.callTool("sevalla_api_keys_toggle", {
         id: "key-uuid-1",
       });
       expect(result).not.toHaveProperty("isError");

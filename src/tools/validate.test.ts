@@ -24,27 +24,27 @@ describe("Validate Tool", () => {
   });
 
   it("should register the tool", () => {
-    expect(ctx.tools.has("sevalla.validate")).toBe(true);
+    expect(ctx.tools.has("sevalla_validate")).toBe(true);
   });
 
-  describe("sevalla.validate", () => {
+  describe("sevalla_validate", () => {
     it("should handle auth failure", async () => {
       mockClientAuthFailure(mock);
-      const result = await ctx.callTool("sevalla.validate", {});
+      const result = await ctx.callTool("sevalla_validate", {});
       expect(result).toHaveProperty("isError", true);
     });
 
     it("should handle API error", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestError(ctx, "SERVER_ERROR", "fail");
-      const result = await ctx.callTool("sevalla.validate", {});
+      const result = await ctx.callTool("sevalla_validate", {});
       expect(result).toHaveProperty("isError", true);
     });
 
     it("should return success", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestSuccess(ctx, { valid: true });
-      const result = await ctx.callTool("sevalla.validate", {});
+      const result = await ctx.callTool("sevalla_validate", {});
       expect(result).not.toHaveProperty("isError");
       expect(ctx.mockClient.request).toHaveBeenCalledWith(
         expect.objectContaining({

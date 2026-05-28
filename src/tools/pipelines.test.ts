@@ -31,47 +31,47 @@ describe("Pipeline Tools", () => {
   });
 
   it("should register all pipeline tools", () => {
-    expect(ctx.tools.has("sevalla.pipelines.list")).toBe(true);
-    expect(ctx.tools.has("sevalla.pipelines.get")).toBe(true);
-    expect(ctx.tools.has("sevalla.pipelines.create")).toBe(true);
-    expect(ctx.tools.has("sevalla.pipelines.update")).toBe(true);
-    expect(ctx.tools.has("sevalla.pipelines.delete")).toBe(true);
-    expect(ctx.tools.has("sevalla.pipelines.promote")).toBe(true);
-    expect(ctx.tools.has("sevalla.pipelines.stages.create")).toBe(true);
-    expect(ctx.tools.has("sevalla.pipelines.stages.delete")).toBe(true);
-    expect(ctx.tools.has("sevalla.pipelines.enable-preview")).toBe(true);
-    expect(ctx.tools.has("sevalla.pipelines.disable-preview")).toBe(true);
+    expect(ctx.tools.has("sevalla_pipelines_list")).toBe(true);
+    expect(ctx.tools.has("sevalla_pipelines_get")).toBe(true);
+    expect(ctx.tools.has("sevalla_pipelines_create")).toBe(true);
+    expect(ctx.tools.has("sevalla_pipelines_update")).toBe(true);
+    expect(ctx.tools.has("sevalla_pipelines_delete")).toBe(true);
+    expect(ctx.tools.has("sevalla_pipelines_promote")).toBe(true);
+    expect(ctx.tools.has("sevalla_pipelines_stages_create")).toBe(true);
+    expect(ctx.tools.has("sevalla_pipelines_stages_delete")).toBe(true);
+    expect(ctx.tools.has("sevalla_pipelines_enable_preview")).toBe(true);
+    expect(ctx.tools.has("sevalla_pipelines_disable_preview")).toBe(true);
   });
 
   // ---------------------------------------------------------------------------
-  // sevalla.pipelines.list
+  // sevalla_pipelines_list
   // ---------------------------------------------------------------------------
 
-  describe("sevalla.pipelines.list", () => {
+  describe("sevalla_pipelines_list", () => {
     it("should handle auth failure", async () => {
       mockClientAuthFailure(mock);
-      const result = await ctx.callTool("sevalla.pipelines.list", {});
+      const result = await ctx.callTool("sevalla_pipelines_list", {});
       expect(result).toHaveProperty("isError", true);
     });
 
     it("should return error when no company ID is available", async () => {
       mockGetCompanyId.mockReturnValue(undefined);
       mockClientSuccess(mock, ctx);
-      const result = await ctx.callTool("sevalla.pipelines.list", {});
+      const result = await ctx.callTool("sevalla_pipelines_list", {});
       expect(result).toHaveProperty("isError", true);
     });
 
     it("should handle API error", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestError(ctx, "SERVER_ERROR", "fail");
-      const result = await ctx.callTool("sevalla.pipelines.list", {});
+      const result = await ctx.callTool("sevalla_pipelines_list", {});
       expect(result).toHaveProperty("isError", true);
     });
 
     it("should return success with default company", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestSuccess(ctx, { pipelines: [] });
-      const result = await ctx.callTool("sevalla.pipelines.list", {});
+      const result = await ctx.callTool("sevalla_pipelines_list", {});
       expect(result).not.toHaveProperty("isError");
       expect(ctx.mockClient.request).toHaveBeenCalledWith(
         expect.objectContaining({
@@ -85,7 +85,7 @@ describe("Pipeline Tools", () => {
     it("should use provided company over default", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestSuccess(ctx, { pipelines: [] });
-      const result = await ctx.callTool("sevalla.pipelines.list", {
+      const result = await ctx.callTool("sevalla_pipelines_list", {
         company: "custom-company-id",
       });
       expect(result).not.toHaveProperty("isError");
@@ -99,7 +99,7 @@ describe("Pipeline Tools", () => {
     it("should pass limit and offset as string params", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestSuccess(ctx, { pipelines: [] });
-      const result = await ctx.callTool("sevalla.pipelines.list", {
+      const result = await ctx.callTool("sevalla_pipelines_list", {
         limit: 10,
         offset: 20,
       });
@@ -113,13 +113,13 @@ describe("Pipeline Tools", () => {
   });
 
   // ---------------------------------------------------------------------------
-  // sevalla.pipelines.get
+  // sevalla_pipelines_get
   // ---------------------------------------------------------------------------
 
-  describe("sevalla.pipelines.get", () => {
+  describe("sevalla_pipelines_get", () => {
     it("should handle auth failure", async () => {
       mockClientAuthFailure(mock);
-      const result = await ctx.callTool("sevalla.pipelines.get", {
+      const result = await ctx.callTool("sevalla_pipelines_get", {
         id: "pipeline-uuid-1",
       });
       expect(result).toHaveProperty("isError", true);
@@ -128,7 +128,7 @@ describe("Pipeline Tools", () => {
     it("should handle API error", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestError(ctx, "NOT_FOUND", "not found");
-      const result = await ctx.callTool("sevalla.pipelines.get", {
+      const result = await ctx.callTool("sevalla_pipelines_get", {
         id: "pipeline-uuid-1",
       });
       expect(result).toHaveProperty("isError", true);
@@ -137,7 +137,7 @@ describe("Pipeline Tools", () => {
     it("should return success", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestSuccess(ctx, { id: "pipeline-uuid-1", name: "my-pipeline" });
-      const result = await ctx.callTool("sevalla.pipelines.get", {
+      const result = await ctx.callTool("sevalla_pipelines_get", {
         id: "pipeline-uuid-1",
       });
       expect(result).not.toHaveProperty("isError");
@@ -151,13 +151,13 @@ describe("Pipeline Tools", () => {
   });
 
   // ---------------------------------------------------------------------------
-  // sevalla.pipelines.create
+  // sevalla_pipelines_create
   // ---------------------------------------------------------------------------
 
-  describe("sevalla.pipelines.create", () => {
+  describe("sevalla_pipelines_create", () => {
     it("should handle auth failure", async () => {
       mockClientAuthFailure(mock);
-      const result = await ctx.callTool("sevalla.pipelines.create", {
+      const result = await ctx.callTool("sevalla_pipelines_create", {
         name: "Test Pipeline",
       });
       expect(result).toHaveProperty("isError", true);
@@ -166,7 +166,7 @@ describe("Pipeline Tools", () => {
     it("should return error when no company ID is available", async () => {
       mockGetCompanyId.mockReturnValue(undefined);
       mockClientSuccess(mock, ctx);
-      const result = await ctx.callTool("sevalla.pipelines.create", {
+      const result = await ctx.callTool("sevalla_pipelines_create", {
         name: "Test Pipeline",
       });
       expect(result).toHaveProperty("isError", true);
@@ -175,7 +175,7 @@ describe("Pipeline Tools", () => {
     it("should handle API error", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestError(ctx, "VALIDATION_ERROR", "invalid");
-      const result = await ctx.callTool("sevalla.pipelines.create", {
+      const result = await ctx.callTool("sevalla_pipelines_create", {
         name: "Test Pipeline",
       });
       expect(result).toHaveProperty("isError", true);
@@ -184,7 +184,7 @@ describe("Pipeline Tools", () => {
     it("should return success with required fields", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestSuccess(ctx, { id: "new-pipeline-uuid" });
-      const result = await ctx.callTool("sevalla.pipelines.create", {
+      const result = await ctx.callTool("sevalla_pipelines_create", {
         name: "Test Pipeline",
       });
       expect(result).not.toHaveProperty("isError");
@@ -202,13 +202,13 @@ describe("Pipeline Tools", () => {
   });
 
   // ---------------------------------------------------------------------------
-  // sevalla.pipelines.update
+  // sevalla_pipelines_update
   // ---------------------------------------------------------------------------
 
-  describe("sevalla.pipelines.update", () => {
+  describe("sevalla_pipelines_update", () => {
     it("should handle auth failure", async () => {
       mockClientAuthFailure(mock);
-      const result = await ctx.callTool("sevalla.pipelines.update", {
+      const result = await ctx.callTool("sevalla_pipelines_update", {
         id: "pipeline-uuid-1",
         name: "Updated",
       });
@@ -218,7 +218,7 @@ describe("Pipeline Tools", () => {
     it("should handle API error", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestError(ctx, "SERVER_ERROR", "fail");
-      const result = await ctx.callTool("sevalla.pipelines.update", {
+      const result = await ctx.callTool("sevalla_pipelines_update", {
         id: "pipeline-uuid-1",
         name: "Updated",
       });
@@ -228,7 +228,7 @@ describe("Pipeline Tools", () => {
     it("should return success", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestSuccess(ctx, { id: "pipeline-uuid-1", name: "Updated" });
-      const result = await ctx.callTool("sevalla.pipelines.update", {
+      const result = await ctx.callTool("sevalla_pipelines_update", {
         id: "pipeline-uuid-1",
         name: "Updated",
       });
@@ -244,13 +244,13 @@ describe("Pipeline Tools", () => {
   });
 
   // ---------------------------------------------------------------------------
-  // sevalla.pipelines.delete
+  // sevalla_pipelines_delete
   // ---------------------------------------------------------------------------
 
-  describe("sevalla.pipelines.delete", () => {
+  describe("sevalla_pipelines_delete", () => {
     it("should handle auth failure", async () => {
       mockClientAuthFailure(mock);
-      const result = await ctx.callTool("sevalla.pipelines.delete", {
+      const result = await ctx.callTool("sevalla_pipelines_delete", {
         id: "pipeline-uuid-1",
       });
       expect(result).toHaveProperty("isError", true);
@@ -259,7 +259,7 @@ describe("Pipeline Tools", () => {
     it("should handle API error", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestError(ctx, "NOT_FOUND", "not found");
-      const result = await ctx.callTool("sevalla.pipelines.delete", {
+      const result = await ctx.callTool("sevalla_pipelines_delete", {
         id: "pipeline-uuid-1",
       });
       expect(result).toHaveProperty("isError", true);
@@ -268,7 +268,7 @@ describe("Pipeline Tools", () => {
     it("should return success", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestSuccess(ctx, { deleted: true });
-      const result = await ctx.callTool("sevalla.pipelines.delete", {
+      const result = await ctx.callTool("sevalla_pipelines_delete", {
         id: "pipeline-uuid-1",
       });
       expect(result).not.toHaveProperty("isError");
@@ -282,13 +282,13 @@ describe("Pipeline Tools", () => {
   });
 
   // ---------------------------------------------------------------------------
-  // sevalla.pipelines.promote
+  // sevalla_pipelines_promote
   // ---------------------------------------------------------------------------
 
-  describe("sevalla.pipelines.promote", () => {
+  describe("sevalla_pipelines_promote", () => {
     it("should handle auth failure", async () => {
       mockClientAuthFailure(mock);
-      const result = await ctx.callTool("sevalla.pipelines.promote", {
+      const result = await ctx.callTool("sevalla_pipelines_promote", {
         id: "pipeline-uuid-1",
       });
       expect(result).toHaveProperty("isError", true);
@@ -297,7 +297,7 @@ describe("Pipeline Tools", () => {
     it("should handle API error", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestError(ctx, "SERVER_ERROR", "fail");
-      const result = await ctx.callTool("sevalla.pipelines.promote", {
+      const result = await ctx.callTool("sevalla_pipelines_promote", {
         id: "pipeline-uuid-1",
       });
       expect(result).toHaveProperty("isError", true);
@@ -306,7 +306,7 @@ describe("Pipeline Tools", () => {
     it("should return success", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestSuccess(ctx, { promoted: true });
-      const result = await ctx.callTool("sevalla.pipelines.promote", {
+      const result = await ctx.callTool("sevalla_pipelines_promote", {
         id: "pipeline-uuid-1",
       });
       expect(result).not.toHaveProperty("isError");
@@ -320,13 +320,13 @@ describe("Pipeline Tools", () => {
   });
 
   // ---------------------------------------------------------------------------
-  // sevalla.pipelines.stages.create
+  // sevalla_pipelines_stages_create
   // ---------------------------------------------------------------------------
 
-  describe("sevalla.pipelines.stages.create", () => {
+  describe("sevalla_pipelines_stages_create", () => {
     it("should handle auth failure", async () => {
       mockClientAuthFailure(mock);
-      const result = await ctx.callTool("sevalla.pipelines.stages.create", {
+      const result = await ctx.callTool("sevalla_pipelines_stages_create", {
         id: "pipeline-uuid-1",
         name: "staging",
       });
@@ -336,7 +336,7 @@ describe("Pipeline Tools", () => {
     it("should handle API error", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestError(ctx, "VALIDATION_ERROR", "invalid");
-      const result = await ctx.callTool("sevalla.pipelines.stages.create", {
+      const result = await ctx.callTool("sevalla_pipelines_stages_create", {
         id: "pipeline-uuid-1",
         name: "staging",
       });
@@ -346,7 +346,7 @@ describe("Pipeline Tools", () => {
     it("should return success", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestSuccess(ctx, { id: "stage-uuid-1" });
-      const result = await ctx.callTool("sevalla.pipelines.stages.create", {
+      const result = await ctx.callTool("sevalla_pipelines_stages_create", {
         id: "pipeline-uuid-1",
         name: "staging",
       });
@@ -362,13 +362,13 @@ describe("Pipeline Tools", () => {
   });
 
   // ---------------------------------------------------------------------------
-  // sevalla.pipelines.stages.delete
+  // sevalla_pipelines_stages_delete
   // ---------------------------------------------------------------------------
 
-  describe("sevalla.pipelines.stages.delete", () => {
+  describe("sevalla_pipelines_stages_delete", () => {
     it("should handle auth failure", async () => {
       mockClientAuthFailure(mock);
-      const result = await ctx.callTool("sevalla.pipelines.stages.delete", {
+      const result = await ctx.callTool("sevalla_pipelines_stages_delete", {
         id: "pipeline-uuid-1",
         stage_id: "stage-uuid-1",
       });
@@ -378,7 +378,7 @@ describe("Pipeline Tools", () => {
     it("should handle API error", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestError(ctx, "NOT_FOUND", "not found");
-      const result = await ctx.callTool("sevalla.pipelines.stages.delete", {
+      const result = await ctx.callTool("sevalla_pipelines_stages_delete", {
         id: "pipeline-uuid-1",
         stage_id: "stage-uuid-1",
       });
@@ -388,7 +388,7 @@ describe("Pipeline Tools", () => {
     it("should return success", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestSuccess(ctx, { deleted: true });
-      const result = await ctx.callTool("sevalla.pipelines.stages.delete", {
+      const result = await ctx.callTool("sevalla_pipelines_stages_delete", {
         id: "pipeline-uuid-1",
         stage_id: "stage-uuid-1",
       });
@@ -403,13 +403,13 @@ describe("Pipeline Tools", () => {
   });
 
   // ---------------------------------------------------------------------------
-  // sevalla.pipelines.enable-preview
+  // sevalla_pipelines_enable_preview
   // ---------------------------------------------------------------------------
 
-  describe("sevalla.pipelines.enable-preview", () => {
+  describe("sevalla_pipelines_enable_preview", () => {
     it("should handle auth failure", async () => {
       mockClientAuthFailure(mock);
-      const result = await ctx.callTool("sevalla.pipelines.enable-preview", {
+      const result = await ctx.callTool("sevalla_pipelines_enable_preview", {
         id: "pipeline-uuid-1",
       });
       expect(result).toHaveProperty("isError", true);
@@ -418,7 +418,7 @@ describe("Pipeline Tools", () => {
     it("should handle API error", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestError(ctx, "SERVER_ERROR", "fail");
-      const result = await ctx.callTool("sevalla.pipelines.enable-preview", {
+      const result = await ctx.callTool("sevalla_pipelines_enable_preview", {
         id: "pipeline-uuid-1",
       });
       expect(result).toHaveProperty("isError", true);
@@ -427,7 +427,7 @@ describe("Pipeline Tools", () => {
     it("should return success", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestSuccess(ctx, { enabled: true });
-      const result = await ctx.callTool("sevalla.pipelines.enable-preview", {
+      const result = await ctx.callTool("sevalla_pipelines_enable_preview", {
         id: "pipeline-uuid-1",
       });
       expect(result).not.toHaveProperty("isError");
@@ -441,13 +441,13 @@ describe("Pipeline Tools", () => {
   });
 
   // ---------------------------------------------------------------------------
-  // sevalla.pipelines.disable-preview
+  // sevalla_pipelines_disable_preview
   // ---------------------------------------------------------------------------
 
-  describe("sevalla.pipelines.disable-preview", () => {
+  describe("sevalla_pipelines_disable_preview", () => {
     it("should handle auth failure", async () => {
       mockClientAuthFailure(mock);
-      const result = await ctx.callTool("sevalla.pipelines.disable-preview", {
+      const result = await ctx.callTool("sevalla_pipelines_disable_preview", {
         id: "pipeline-uuid-1",
       });
       expect(result).toHaveProperty("isError", true);
@@ -456,7 +456,7 @@ describe("Pipeline Tools", () => {
     it("should handle API error", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestError(ctx, "SERVER_ERROR", "fail");
-      const result = await ctx.callTool("sevalla.pipelines.disable-preview", {
+      const result = await ctx.callTool("sevalla_pipelines_disable_preview", {
         id: "pipeline-uuid-1",
       });
       expect(result).toHaveProperty("isError", true);
@@ -465,7 +465,7 @@ describe("Pipeline Tools", () => {
     it("should return success", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestSuccess(ctx, { disabled: true });
-      const result = await ctx.callTool("sevalla.pipelines.disable-preview", {
+      const result = await ctx.callTool("sevalla_pipelines_disable_preview", {
         id: "pipeline-uuid-1",
       });
       expect(result).not.toHaveProperty("isError");

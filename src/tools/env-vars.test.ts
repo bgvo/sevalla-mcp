@@ -24,20 +24,20 @@ describe("Environment Variable Tools", () => {
   });
 
   it("should register all env var tools", () => {
-    expect(ctx.tools.has("sevalla.applications.env-vars.list")).toBe(true);
-    expect(ctx.tools.has("sevalla.applications.env-vars.create")).toBe(true);
-    expect(ctx.tools.has("sevalla.applications.env-vars.update")).toBe(true);
-    expect(ctx.tools.has("sevalla.applications.env-vars.delete")).toBe(true);
+    expect(ctx.tools.has("sevalla_applications_env_vars_list")).toBe(true);
+    expect(ctx.tools.has("sevalla_applications_env_vars_create")).toBe(true);
+    expect(ctx.tools.has("sevalla_applications_env_vars_update")).toBe(true);
+    expect(ctx.tools.has("sevalla_applications_env_vars_delete")).toBe(true);
   });
 
   // ---------------------------------------------------------------------------
-  // sevalla.applications.env-vars.list
+  // sevalla_applications_env_vars_list
   // ---------------------------------------------------------------------------
 
-  describe("sevalla.applications.env-vars.list", () => {
+  describe("sevalla_applications_env_vars_list", () => {
     it("should handle auth failure", async () => {
       mockClientAuthFailure(mock);
-      const result = await ctx.callTool("sevalla.applications.env-vars.list", {
+      const result = await ctx.callTool("sevalla_applications_env_vars_list", {
         app_id: "app-uuid-1",
       });
       expect(result).toHaveProperty("isError", true);
@@ -46,7 +46,7 @@ describe("Environment Variable Tools", () => {
     it("should handle API error", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestError(ctx, "SERVER_ERROR", "fail");
-      const result = await ctx.callTool("sevalla.applications.env-vars.list", {
+      const result = await ctx.callTool("sevalla_applications_env_vars_list", {
         app_id: "app-uuid-1",
       });
       expect(result).toHaveProperty("isError", true);
@@ -55,7 +55,7 @@ describe("Environment Variable Tools", () => {
     it("should return success with correct path", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestSuccess(ctx, { env_vars: [] });
-      const result = await ctx.callTool("sevalla.applications.env-vars.list", {
+      const result = await ctx.callTool("sevalla_applications_env_vars_list", {
         app_id: "app-uuid-1",
       });
       expect(result).not.toHaveProperty("isError");
@@ -69,14 +69,14 @@ describe("Environment Variable Tools", () => {
   });
 
   // ---------------------------------------------------------------------------
-  // sevalla.applications.env-vars.create
+  // sevalla_applications_env_vars_create
   // ---------------------------------------------------------------------------
 
-  describe("sevalla.applications.env-vars.create", () => {
+  describe("sevalla_applications_env_vars_create", () => {
     it("should handle auth failure", async () => {
       mockClientAuthFailure(mock);
       const result = await ctx.callTool(
-        "sevalla.applications.env-vars.create",
+        "sevalla_applications_env_vars_create",
         { app_id: "app-uuid-1", key: "NODE_ENV", value: "production" }
       );
       expect(result).toHaveProperty("isError", true);
@@ -86,7 +86,7 @@ describe("Environment Variable Tools", () => {
       mockClientSuccess(mock, ctx);
       mockRequestError(ctx, "SERVER_ERROR", "fail");
       const result = await ctx.callTool(
-        "sevalla.applications.env-vars.create",
+        "sevalla_applications_env_vars_create",
         { app_id: "app-uuid-1", key: "NODE_ENV", value: "production" }
       );
       expect(result).toHaveProperty("isError", true);
@@ -96,7 +96,7 @@ describe("Environment Variable Tools", () => {
       mockClientSuccess(mock, ctx);
       mockRequestSuccess(ctx, { id: "env-var-uuid-1" });
       const result = await ctx.callTool(
-        "sevalla.applications.env-vars.create",
+        "sevalla_applications_env_vars_create",
         { app_id: "app-uuid-1", key: "NODE_ENV", value: "production" }
       );
       expect(result).not.toHaveProperty("isError");
@@ -111,14 +111,14 @@ describe("Environment Variable Tools", () => {
   });
 
   // ---------------------------------------------------------------------------
-  // sevalla.applications.env-vars.update
+  // sevalla_applications_env_vars_update
   // ---------------------------------------------------------------------------
 
-  describe("sevalla.applications.env-vars.update", () => {
+  describe("sevalla_applications_env_vars_update", () => {
     it("should handle auth failure", async () => {
       mockClientAuthFailure(mock);
       const result = await ctx.callTool(
-        "sevalla.applications.env-vars.update",
+        "sevalla_applications_env_vars_update",
         { app_id: "app-uuid-1", env_var_id: "env-var-uuid-1", value: "staging" }
       );
       expect(result).toHaveProperty("isError", true);
@@ -128,7 +128,7 @@ describe("Environment Variable Tools", () => {
       mockClientSuccess(mock, ctx);
       mockRequestError(ctx, "NOT_FOUND", "not found");
       const result = await ctx.callTool(
-        "sevalla.applications.env-vars.update",
+        "sevalla_applications_env_vars_update",
         { app_id: "app-uuid-1", env_var_id: "env-var-uuid-1", value: "staging" }
       );
       expect(result).toHaveProperty("isError", true);
@@ -138,7 +138,7 @@ describe("Environment Variable Tools", () => {
       mockClientSuccess(mock, ctx);
       mockRequestSuccess(ctx, { id: "env-var-uuid-1", value: "staging" });
       const result = await ctx.callTool(
-        "sevalla.applications.env-vars.update",
+        "sevalla_applications_env_vars_update",
         { app_id: "app-uuid-1", env_var_id: "env-var-uuid-1", value: "staging" }
       );
       expect(result).not.toHaveProperty("isError");
@@ -153,14 +153,14 @@ describe("Environment Variable Tools", () => {
   });
 
   // ---------------------------------------------------------------------------
-  // sevalla.applications.env-vars.delete
+  // sevalla_applications_env_vars_delete
   // ---------------------------------------------------------------------------
 
-  describe("sevalla.applications.env-vars.delete", () => {
+  describe("sevalla_applications_env_vars_delete", () => {
     it("should handle auth failure", async () => {
       mockClientAuthFailure(mock);
       const result = await ctx.callTool(
-        "sevalla.applications.env-vars.delete",
+        "sevalla_applications_env_vars_delete",
         { app_id: "app-uuid-1", env_var_id: "env-var-uuid-1" }
       );
       expect(result).toHaveProperty("isError", true);
@@ -170,7 +170,7 @@ describe("Environment Variable Tools", () => {
       mockClientSuccess(mock, ctx);
       mockRequestError(ctx, "NOT_FOUND", "not found");
       const result = await ctx.callTool(
-        "sevalla.applications.env-vars.delete",
+        "sevalla_applications_env_vars_delete",
         { app_id: "app-uuid-1", env_var_id: "env-var-uuid-1" }
       );
       expect(result).toHaveProperty("isError", true);
@@ -180,7 +180,7 @@ describe("Environment Variable Tools", () => {
       mockClientSuccess(mock, ctx);
       mockRequestSuccess(ctx, { deleted: true });
       const result = await ctx.callTool(
-        "sevalla.applications.env-vars.delete",
+        "sevalla_applications_env_vars_delete",
         { app_id: "app-uuid-1", env_var_id: "env-var-uuid-1" }
       );
       expect(result).not.toHaveProperty("isError");

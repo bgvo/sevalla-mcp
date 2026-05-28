@@ -24,19 +24,19 @@ describe("Logs & Metrics Tools", () => {
   });
 
   it("should register all logs tools", () => {
-    expect(ctx.tools.has("sevalla.applications.logs.access")).toBe(true);
-    expect(ctx.tools.has("sevalla.applications.logs.runtime")).toBe(true);
-    expect(ctx.tools.has("sevalla.applications.logs.deployment")).toBe(true);
+    expect(ctx.tools.has("sevalla_applications_logs_access")).toBe(true);
+    expect(ctx.tools.has("sevalla_applications_logs_runtime")).toBe(true);
+    expect(ctx.tools.has("sevalla_applications_logs_deployment")).toBe(true);
   });
 
   // ---------------------------------------------------------------------------
-  // sevalla.applications.logs.access
+  // sevalla_applications_logs_access
   // ---------------------------------------------------------------------------
 
-  describe("sevalla.applications.logs.access", () => {
+  describe("sevalla_applications_logs_access", () => {
     it("should handle auth failure", async () => {
       mockClientAuthFailure(mock);
-      const result = await ctx.callTool("sevalla.applications.logs.access", {
+      const result = await ctx.callTool("sevalla_applications_logs_access", {
         app_id: "app-uuid-1",
       });
       expect(result).toHaveProperty("isError", true);
@@ -45,7 +45,7 @@ describe("Logs & Metrics Tools", () => {
     it("should handle API error", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestError(ctx, "SERVER_ERROR", "fail");
-      const result = await ctx.callTool("sevalla.applications.logs.access", {
+      const result = await ctx.callTool("sevalla_applications_logs_access", {
         app_id: "app-uuid-1",
       });
       expect(result).toHaveProperty("isError", true);
@@ -54,7 +54,7 @@ describe("Logs & Metrics Tools", () => {
     it("should return success with correct path", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestSuccess(ctx, { logs: [] });
-      const result = await ctx.callTool("sevalla.applications.logs.access", {
+      const result = await ctx.callTool("sevalla_applications_logs_access", {
         app_id: "app-uuid-1",
       });
       expect(result).not.toHaveProperty("isError");
@@ -69,7 +69,7 @@ describe("Logs & Metrics Tools", () => {
     it("should pass lines param", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestSuccess(ctx, { logs: [] });
-      await ctx.callTool("sevalla.applications.logs.access", {
+      await ctx.callTool("sevalla_applications_logs_access", {
         app_id: "app-uuid-1",
         lines: 100,
       });
@@ -82,13 +82,13 @@ describe("Logs & Metrics Tools", () => {
   });
 
   // ---------------------------------------------------------------------------
-  // sevalla.applications.logs.runtime
+  // sevalla_applications_logs_runtime
   // ---------------------------------------------------------------------------
 
-  describe("sevalla.applications.logs.runtime", () => {
+  describe("sevalla_applications_logs_runtime", () => {
     it("should handle auth failure", async () => {
       mockClientAuthFailure(mock);
-      const result = await ctx.callTool("sevalla.applications.logs.runtime", {
+      const result = await ctx.callTool("sevalla_applications_logs_runtime", {
         app_id: "app-uuid-1",
       });
       expect(result).toHaveProperty("isError", true);
@@ -97,7 +97,7 @@ describe("Logs & Metrics Tools", () => {
     it("should handle API error", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestError(ctx, "SERVER_ERROR", "fail");
-      const result = await ctx.callTool("sevalla.applications.logs.runtime", {
+      const result = await ctx.callTool("sevalla_applications_logs_runtime", {
         app_id: "app-uuid-1",
       });
       expect(result).toHaveProperty("isError", true);
@@ -106,7 +106,7 @@ describe("Logs & Metrics Tools", () => {
     it("should return success with correct path", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestSuccess(ctx, { logs: [] });
-      const result = await ctx.callTool("sevalla.applications.logs.runtime", {
+      const result = await ctx.callTool("sevalla_applications_logs_runtime", {
         app_id: "app-uuid-1",
       });
       expect(result).not.toHaveProperty("isError");
@@ -120,14 +120,14 @@ describe("Logs & Metrics Tools", () => {
   });
 
   // ---------------------------------------------------------------------------
-  // sevalla.applications.logs.deployment
+  // sevalla_applications_logs_deployment
   // ---------------------------------------------------------------------------
 
-  describe("sevalla.applications.logs.deployment", () => {
+  describe("sevalla_applications_logs_deployment", () => {
     it("should handle auth failure", async () => {
       mockClientAuthFailure(mock);
       const result = await ctx.callTool(
-        "sevalla.applications.logs.deployment",
+        "sevalla_applications_logs_deployment",
         { app_id: "app-uuid-1" }
       );
       expect(result).toHaveProperty("isError", true);
@@ -137,7 +137,7 @@ describe("Logs & Metrics Tools", () => {
       mockClientSuccess(mock, ctx);
       mockRequestError(ctx, "SERVER_ERROR", "fail");
       const result = await ctx.callTool(
-        "sevalla.applications.logs.deployment",
+        "sevalla_applications_logs_deployment",
         { app_id: "app-uuid-1" }
       );
       expect(result).toHaveProperty("isError", true);
@@ -147,7 +147,7 @@ describe("Logs & Metrics Tools", () => {
       mockClientSuccess(mock, ctx);
       mockRequestSuccess(ctx, { logs: [] });
       const result = await ctx.callTool(
-        "sevalla.applications.logs.deployment",
+        "sevalla_applications_logs_deployment",
         { app_id: "app-uuid-1" }
       );
       expect(result).not.toHaveProperty("isError");

@@ -16,9 +16,9 @@ import {
 } from "./utils.js";
 
 export function registerProcessTools(server: McpServer): void {
-  // sevalla.processes.list
+  // sevalla_processes_list
   server.registerTool(
-    "sevalla.processes.list",
+    "sevalla_processes_list",
     {
       title: "List Processes",
       description: "List all processes for an application.",
@@ -46,9 +46,9 @@ export function registerProcessTools(server: McpServer): void {
     }
   );
 
-  // sevalla.processes.get
+  // sevalla_processes_get
   server.registerTool(
-    "sevalla.processes.get",
+    "sevalla_processes_get",
     {
       title: "Get Process",
       description: "Get details of a specific application process.",
@@ -77,9 +77,9 @@ export function registerProcessTools(server: McpServer): void {
     }
   );
 
-  // sevalla.processes.create
+  // sevalla_processes_create
   server.registerTool(
-    "sevalla.processes.create",
+    "sevalla_processes_create",
     {
       title: "Create Process",
       description: "Create a new process for an application.",
@@ -119,9 +119,9 @@ export function registerProcessTools(server: McpServer): void {
     }
   );
 
-  // sevalla.processes.update
+  // sevalla_processes_update
   server.registerTool(
-    "sevalla.processes.update",
+    "sevalla_processes_update",
     {
       title: "Update Process",
       description: "Update an application process configuration.",
@@ -160,9 +160,9 @@ export function registerProcessTools(server: McpServer): void {
     }
   );
 
-  // sevalla.processes.delete
+  // sevalla_processes_delete
   server.registerTool(
-    "sevalla.processes.delete",
+    "sevalla_processes_delete",
     {
       title: "Delete Process",
       description: "Delete an application process.",
@@ -191,9 +191,9 @@ export function registerProcessTools(server: McpServer): void {
     }
   );
 
-  // sevalla.processes.trigger-cron
+  // sevalla_processes_trigger_cron
   server.registerTool(
-    "sevalla.processes.trigger-cron",
+    "sevalla_processes_trigger_cron",
     {
       title: "Trigger Cron Job",
       description: "Manually trigger a cron job process.",

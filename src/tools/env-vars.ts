@@ -15,9 +15,9 @@ import {
 } from "./utils.js";
 
 export function registerEnvVarTools(server: McpServer): void {
-  // sevalla.applications.env-vars.list
+  // sevalla_applications_env_vars_list
   server.registerTool(
-    "sevalla.applications.env-vars.list",
+    "sevalla_applications_env_vars_list",
     {
       title: "List Environment Variables",
       description: "List all environment variables for an application.",
@@ -46,9 +46,9 @@ export function registerEnvVarTools(server: McpServer): void {
     }
   );
 
-  // sevalla.applications.env-vars.create
+  // sevalla_applications_env_vars_create
   server.registerTool(
-    "sevalla.applications.env-vars.create",
+    "sevalla_applications_env_vars_create",
     {
       title: "Create Environment Variable",
       description: "Create a new environment variable for an application.",
@@ -76,9 +76,9 @@ export function registerEnvVarTools(server: McpServer): void {
     }
   );
 
-  // sevalla.applications.env-vars.update
+  // sevalla_applications_env_vars_update
   server.registerTool(
-    "sevalla.applications.env-vars.update",
+    "sevalla_applications_env_vars_update",
     {
       title: "Update Environment Variable",
       description: "Update an existing environment variable.",
@@ -106,9 +106,9 @@ export function registerEnvVarTools(server: McpServer): void {
     }
   );
 
-  // sevalla.applications.env-vars.delete
+  // sevalla_applications_env_vars_delete
   server.registerTool(
-    "sevalla.applications.env-vars.delete",
+    "sevalla_applications_env_vars_delete",
     {
       title: "Delete Environment Variable",
       description: "Delete an environment variable from an application.",

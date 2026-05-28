@@ -24,21 +24,21 @@ describe("Deployment Tools", () => {
   });
 
   it("should register all tools", () => {
-    expect(ctx.tools.has("sevalla.deployments.get")).toBe(true);
-    expect(ctx.tools.has("sevalla.deployments.start")).toBe(true);
-    expect(ctx.tools.has("sevalla.deployments.list")).toBe(true);
-    expect(ctx.tools.has("sevalla.deployments.cancel")).toBe(true);
-    expect(ctx.tools.has("sevalla.deployments.rollback")).toBe(true);
+    expect(ctx.tools.has("sevalla_deployments_get")).toBe(true);
+    expect(ctx.tools.has("sevalla_deployments_start")).toBe(true);
+    expect(ctx.tools.has("sevalla_deployments_list")).toBe(true);
+    expect(ctx.tools.has("sevalla_deployments_cancel")).toBe(true);
+    expect(ctx.tools.has("sevalla_deployments_rollback")).toBe(true);
   });
 
   // -------------------------------------------------------------------------
-  // sevalla.deployments.get
+  // sevalla_deployments_get
   // -------------------------------------------------------------------------
 
-  describe("sevalla.deployments.get", () => {
+  describe("sevalla_deployments_get", () => {
     it("should handle auth failure", async () => {
       mockClientAuthFailure(mock);
-      const result = await ctx.callTool("sevalla.deployments.get", {
+      const result = await ctx.callTool("sevalla_deployments_get", {
         app_id: "app-uuid-1",
         id: "deploy-uuid-1",
       });
@@ -48,7 +48,7 @@ describe("Deployment Tools", () => {
     it("should handle API error", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestError(ctx, "NOT_FOUND", "not found");
-      const result = await ctx.callTool("sevalla.deployments.get", {
+      const result = await ctx.callTool("sevalla_deployments_get", {
         app_id: "app-uuid-1",
         id: "deploy-uuid-1",
       });
@@ -58,7 +58,7 @@ describe("Deployment Tools", () => {
     it("should return success with correct path", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestSuccess(ctx, { id: "deploy-uuid-1", status: "running" });
-      const result = await ctx.callTool("sevalla.deployments.get", {
+      const result = await ctx.callTool("sevalla_deployments_get", {
         app_id: "app-uuid-1",
         id: "deploy-uuid-1",
       });
@@ -73,13 +73,13 @@ describe("Deployment Tools", () => {
   });
 
   // -------------------------------------------------------------------------
-  // sevalla.deployments.start
+  // sevalla_deployments_start
   // -------------------------------------------------------------------------
 
-  describe("sevalla.deployments.start", () => {
+  describe("sevalla_deployments_start", () => {
     it("should handle auth failure", async () => {
       mockClientAuthFailure(mock);
-      const result = await ctx.callTool("sevalla.deployments.start", {
+      const result = await ctx.callTool("sevalla_deployments_start", {
         app_id: "app-uuid-1",
       });
       expect(result).toHaveProperty("isError", true);
@@ -88,7 +88,7 @@ describe("Deployment Tools", () => {
     it("should handle API error", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestError(ctx, "SERVER_ERROR", "fail");
-      const result = await ctx.callTool("sevalla.deployments.start", {
+      const result = await ctx.callTool("sevalla_deployments_start", {
         app_id: "app-uuid-1",
       });
       expect(result).toHaveProperty("isError", true);
@@ -97,7 +97,7 @@ describe("Deployment Tools", () => {
     it("should send POST with correct path", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestSuccess(ctx, { id: "deploy-uuid-2", status: "queued" });
-      const result = await ctx.callTool("sevalla.deployments.start", {
+      const result = await ctx.callTool("sevalla_deployments_start", {
         app_id: "app-uuid-1",
       });
       expect(result).not.toHaveProperty("isError");
@@ -112,7 +112,7 @@ describe("Deployment Tools", () => {
     it("should include branch when provided", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestSuccess(ctx, { id: "deploy-uuid-3", status: "queued" });
-      await ctx.callTool("sevalla.deployments.start", {
+      await ctx.callTool("sevalla_deployments_start", {
         app_id: "app-uuid-1",
         branch: "main",
       });
@@ -127,7 +127,7 @@ describe("Deployment Tools", () => {
     it("should include tag when provided", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestSuccess(ctx, { id: "deploy-uuid-4", status: "queued" });
-      await ctx.callTool("sevalla.deployments.start", {
+      await ctx.callTool("sevalla_deployments_start", {
         app_id: "app-uuid-1",
         tag: "v1.0.0",
       });
@@ -141,13 +141,13 @@ describe("Deployment Tools", () => {
   });
 
   // -------------------------------------------------------------------------
-  // sevalla.deployments.list
+  // sevalla_deployments_list
   // -------------------------------------------------------------------------
 
-  describe("sevalla.deployments.list", () => {
+  describe("sevalla_deployments_list", () => {
     it("should handle auth failure", async () => {
       mockClientAuthFailure(mock);
-      const result = await ctx.callTool("sevalla.deployments.list", {
+      const result = await ctx.callTool("sevalla_deployments_list", {
         app_id: "app-uuid-1",
       });
       expect(result).toHaveProperty("isError", true);
@@ -156,7 +156,7 @@ describe("Deployment Tools", () => {
     it("should handle API error", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestError(ctx, "SERVER_ERROR", "fail");
-      const result = await ctx.callTool("sevalla.deployments.list", {
+      const result = await ctx.callTool("sevalla_deployments_list", {
         app_id: "app-uuid-1",
       });
       expect(result).toHaveProperty("isError", true);
@@ -165,7 +165,7 @@ describe("Deployment Tools", () => {
     it("should return success with correct path", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestSuccess(ctx, { deployments: [] });
-      const result = await ctx.callTool("sevalla.deployments.list", {
+      const result = await ctx.callTool("sevalla_deployments_list", {
         app_id: "app-uuid-1",
       });
       expect(result).not.toHaveProperty("isError");
@@ -179,13 +179,13 @@ describe("Deployment Tools", () => {
   });
 
   // -------------------------------------------------------------------------
-  // sevalla.deployments.cancel
+  // sevalla_deployments_cancel
   // -------------------------------------------------------------------------
 
-  describe("sevalla.deployments.cancel", () => {
+  describe("sevalla_deployments_cancel", () => {
     it("should handle auth failure", async () => {
       mockClientAuthFailure(mock);
-      const result = await ctx.callTool("sevalla.deployments.cancel", {
+      const result = await ctx.callTool("sevalla_deployments_cancel", {
         app_id: "app-uuid-1",
         id: "deploy-uuid-1",
       });
@@ -195,7 +195,7 @@ describe("Deployment Tools", () => {
     it("should handle API error", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestError(ctx, "SERVER_ERROR", "fail");
-      const result = await ctx.callTool("sevalla.deployments.cancel", {
+      const result = await ctx.callTool("sevalla_deployments_cancel", {
         app_id: "app-uuid-1",
         id: "deploy-uuid-1",
       });
@@ -205,7 +205,7 @@ describe("Deployment Tools", () => {
     it("should send POST with correct path", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestSuccess(ctx, { id: "deploy-uuid-1", status: "cancelled" });
-      const result = await ctx.callTool("sevalla.deployments.cancel", {
+      const result = await ctx.callTool("sevalla_deployments_cancel", {
         app_id: "app-uuid-1",
         id: "deploy-uuid-1",
       });
@@ -220,13 +220,13 @@ describe("Deployment Tools", () => {
   });
 
   // -------------------------------------------------------------------------
-  // sevalla.deployments.rollback
+  // sevalla_deployments_rollback
   // -------------------------------------------------------------------------
 
-  describe("sevalla.deployments.rollback", () => {
+  describe("sevalla_deployments_rollback", () => {
     it("should handle auth failure", async () => {
       mockClientAuthFailure(mock);
-      const result = await ctx.callTool("sevalla.deployments.rollback", {
+      const result = await ctx.callTool("sevalla_deployments_rollback", {
         app_id: "app-uuid-1",
         deployment_id: "deploy-uuid-1",
       });
@@ -236,7 +236,7 @@ describe("Deployment Tools", () => {
     it("should handle API error", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestError(ctx, "SERVER_ERROR", "fail");
-      const result = await ctx.callTool("sevalla.deployments.rollback", {
+      const result = await ctx.callTool("sevalla_deployments_rollback", {
         app_id: "app-uuid-1",
         deployment_id: "deploy-uuid-1",
       });
@@ -246,7 +246,7 @@ describe("Deployment Tools", () => {
     it("should send POST with correct path", async () => {
       mockClientSuccess(mock, ctx);
       mockRequestSuccess(ctx, { id: "deploy-uuid-1", status: "queued" });
-      const result = await ctx.callTool("sevalla.deployments.rollback", {
+      const result = await ctx.callTool("sevalla_deployments_rollback", {
         app_id: "app-uuid-1",
         deployment_id: "deploy-uuid-1",
       });

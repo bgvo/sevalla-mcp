@@ -57,7 +57,7 @@ describe("registerPrompts", () => {
       });
 
       const text = result.messages[0].content.text;
-      expect(text).toContain("sevalla.applications.list");
+      expect(text).toContain("sevalla_applications_list");
       expect(text).toContain("help me choose");
     });
   });
@@ -103,7 +103,7 @@ describe("registerPrompts", () => {
       const text = result.messages[0].content.text;
       expect(text).toContain("SEVALLA_API_KEY");
       expect(text).toContain("app.sevalla.com");
-      expect(text).toContain("sevalla.validate");
+      expect(text).toContain("sevalla_validate");
     });
   });
 });

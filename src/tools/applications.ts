@@ -22,7 +22,7 @@ const clusterIdSchema = z
   .uuid()
   .optional()
   .describe(
-    "Cluster UUID (data center). Use sevalla.resources.clusters to list options."
+    "Cluster UUID (data center). Use sevalla_resources_clusters to list options."
   );
 
 const applicationSourceSchema = z
@@ -32,9 +32,9 @@ const applicationSourceSchema = z
   );
 
 export function registerApplicationTools(server: McpServer): void {
-  // sevalla.applications.list
+  // sevalla_applications_list
   server.registerTool(
-    "sevalla.applications.list",
+    "sevalla_applications_list",
     {
       title: "List Applications",
       description: "List all applications for a company.",
@@ -84,9 +84,9 @@ export function registerApplicationTools(server: McpServer): void {
     }
   );
 
-  // sevalla.applications.get
+  // sevalla_applications_get
   server.registerTool(
-    "sevalla.applications.get",
+    "sevalla_applications_get",
     {
       title: "Get Application",
       description: "Get details of a specific application.",
@@ -114,13 +114,13 @@ export function registerApplicationTools(server: McpServer): void {
     }
   );
 
-  // sevalla.applications.create
+  // sevalla_applications_create
   server.registerTool(
-    "sevalla.applications.create",
+    "sevalla_applications_create",
     {
       title: "Create Application",
       description:
-        "Create a new application from Git or Docker. Requires cluster_id from sevalla.resources.clusters.",
+        "Create a new application from Git or Docker. Requires cluster_id from sevalla_resources_clusters.",
       inputSchema: z.object({
         display_name: z.string().describe("Display name for the application"),
         cluster_id: clusterIdSchema,
@@ -174,8 +174,8 @@ export function registerApplicationTools(server: McpServer): void {
       if (!clusterId) {
         return formatValidationError(
           args.location
-            ? `location "${args.location}" is not a cluster UUID. Call sevalla.resources.clusters and pass cluster_id.`
-            : "cluster_id is required. Call sevalla.resources.clusters to list cluster UUIDs."
+            ? `location "${args.location}" is not a cluster UUID. Call sevalla_resources_clusters and pass cluster_id.`
+            : "cluster_id is required. Call sevalla_resources_clusters to list cluster UUIDs."
         );
       }
 
@@ -216,9 +216,9 @@ export function registerApplicationTools(server: McpServer): void {
     }
   );
 
-  // sevalla.applications.update
+  // sevalla_applications_update
   server.registerTool(
-    "sevalla.applications.update",
+    "sevalla_applications_update",
     {
       title: "Update Application",
       description: "Update an existing application's configuration.",
@@ -258,9 +258,9 @@ export function registerApplicationTools(server: McpServer): void {
     }
   );
 
-  // sevalla.applications.delete
+  // sevalla_applications_delete
   server.registerTool(
-    "sevalla.applications.delete",
+    "sevalla_applications_delete",
     {
       title: "Delete Application",
       description:
@@ -289,9 +289,9 @@ export function registerApplicationTools(server: McpServer): void {
     }
   );
 
-  // sevalla.applications.activate
+  // sevalla_applications_activate
   server.registerTool(
-    "sevalla.applications.activate",
+    "sevalla_applications_activate",
     {
       title: "Activate Application",
       description: "Activate a suspended application.",
@@ -315,9 +315,9 @@ export function registerApplicationTools(server: McpServer): void {
     }
   );
 
-  // sevalla.applications.suspend
+  // sevalla_applications_suspend
   server.registerTool(
-    "sevalla.applications.suspend",
+    "sevalla_applications_suspend",
     {
       title: "Suspend Application",
       description: "Suspend a running application.",
@@ -341,9 +341,9 @@ export function registerApplicationTools(server: McpServer): void {
     }
   );
 
-  // sevalla.applications.clone
+  // sevalla_applications_clone
   server.registerTool(
-    "sevalla.applications.clone",
+    "sevalla_applications_clone",
     {
       title: "Clone Application",
       description: "Clone an existing application.",
